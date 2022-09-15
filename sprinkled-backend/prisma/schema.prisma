@@ -8,9 +8,106 @@ datasource db {
 }
 
 model User {
-  id            Int    @id @default(autoincrement())
-  username      String @unique
+  id            Int          @id @default(autoincrement())
+  username      String       @unique
   password      String
   access_token  String
   refresh_token String
+  teams         Team[]
+  createdTeams  Team[]       @relation("creator")
+  pictures      Picture[]
+  places        Place[]
+  plantEntries  PlantEntry[]
+  events        Event[]
+  reminders     Reminder[]
+}
+
+model Team {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  users     User[]
+  place     Place[]
+  creator   User    @relation(fields: [creatorId], references: [id], name: "creator")
+  creatorId Int
+}
+
+model Place {
+  id           Int          @id @default(autoincrement())
+  name         String
+  team         Team?        @relation(fields: [teamId], references: [id])
+  teamId       Int?
+  user         User?        @relation(fields: [userId], references: [id])
+  userId       Int?
+  plantEntries PlantEntry[]
+}
+
+model Picture {
+  id           Int        @id @default(autoincrement())
+  url          String
+  createdAt    DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  PlantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
+  plantEntryId Int
+}
+
+model PlantEntry {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  creator   User       @relation(fields: [creatorId], references: [id])
+  creatorId Int
+  place     Place      @relation(fields: [placeId], references: [id])
+  placeId   Int
+  plant     Plant      @relation(fields: [plantId], references: [id])
+  plantId   Int
+  pictures  Picture[]
+  events    Event[]
+  reminders Reminder[]
+}
+
+model Plant {
+  id           Int          @id @default(autoincrement())
+  latinName    String
+  commonName   String
+  pictureUrl   String
+  description  String
+  height       Decimal
+  spread       Decimal
+  minTemp      Int
+  maxTemp      Int
+  leafColor    String
+  bloomColor   String
+  light        String
+  zone         String
+  plantEntries PlantEntry[]
+}
+
+model Event {
+  id           Int        @id @default(autoincrement())
+  date         DateTime
+  user         User       @relation(fields: [userId], references: [id])
+  userId       Int
+  plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
+  plantEntryId Int
+  action       Action     @relation(fields: [actionId], references: [id])
+  actionId     Int
+}
+
+model Action {
+  id       Int        @id @default(autoincrement())
+  type     String
+  events   Event[]
+  reminder Reminder[]
+}
+
+model Reminder {
+  id           Int        @id @default(autoincrement())
+  date         DateTime
+  period       Int
+  action       Action     @relation(fields: [actionId], references: [id])
+  actionId     Int
+  plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
+  plantEntryId Int
+  creator      User       @relation(fields: [creatorId], references: [id])
+  creatorId    Int
 }
