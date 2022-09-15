@@ -12,13 +12,13 @@ export class UserController {
 
   @Get()
   async getUsers(): Promise<User[]> {
-    return this.userService.getUsers();
+    return this.userService.findAll();
   }
 
   @Get(':id')
   async getUser(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number,
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
   ): Promise<User> {
-    return this.userService.getUser(id);
+    return this.userService.findOne(id);
   }
 }

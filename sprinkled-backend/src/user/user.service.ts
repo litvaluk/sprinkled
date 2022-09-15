@@ -7,26 +7,26 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getUsers(): Promise<User[]> {
-    return this.prisma.user.findMany();
-  }
-
-  async getUser(userId: number): Promise<User> {
-    return this.prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-  }
-
   // creates user with no tokens
-  async createUser(username: string, password: string): Promise<User> {
+  async create(username: string, password: string): Promise<User> {
     return await this.prisma.user.create({
       data: {
         username: username,
         password: password,
         access_token: '',
         refresh_token: '',
+      },
+    });
+  }
+
+  async findAll(): Promise<User[]> {
+    return await this.prisma.user.findMany();
+  }
+
+  async findOne(id: number): Promise<User> {
+    return await this.prisma.user.findUnique({
+      where: {
+        id: id,
       },
     });
   }

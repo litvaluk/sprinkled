@@ -1,2 +1,2 @@
-export * from './jwtAccessToken.strategy';
-export * from './jwtRefreshToken.strategy';
+export * from './jwt-access-token.strategy';
+export * from './jwt-refresh-token.strategy';

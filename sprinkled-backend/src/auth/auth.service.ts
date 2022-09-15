@@ -25,7 +25,7 @@ export class AuthService {
     try {
       // create new user without access and refresh token
       const passwordHash = await argon2.hash(authDto.password);
-      const createdUser = await this.userService.createUser(authDto.username, passwordHash);
+      const createdUser = await this.userService.create(authDto.username, passwordHash);
 
       // generate tokens and update the user
       const tokens = await this._generateTokens(createdUser.id, createdUser.username);
