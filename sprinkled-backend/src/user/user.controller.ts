@@ -1,11 +1,11 @@
 import { Controller, Get, HttpStatus, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtAccessTokenGuard } from 'src/auth/guard';
 import { UserService } from './user.service';
 
 @Controller('user')
-@UseGuards(JwtGuard)
+@UseGuards(JwtAccessTokenGuard)
 @ApiTags('user')
 export class UserController {
   constructor(private userService: UserService) {}

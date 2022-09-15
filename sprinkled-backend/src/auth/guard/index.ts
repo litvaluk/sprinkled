@@ -1,1 +1,2 @@
-export * from './jwt.guard';
+export * from './jwtAccessToken.guard';
+export * from './jwtRefreshToken.guard';
