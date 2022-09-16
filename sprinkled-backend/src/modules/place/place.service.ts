@@ -1,16 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { Place } from '@prisma/client';
 import { PrismaService } from '../prisma';
-import { CreatePlaceDto, UpdatePlaceDto } from './dto';
+import { CreatePlaceDto, CreateTeamPlaceDto, UpdatePlaceDto } from './dto';
 
-Injectable();
+@Injectable()
 export class PlaceService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPlaceDto: CreatePlaceDto): Promise<Place> {
+  async createByUser(createPlaceDto: CreatePlaceDto, userId: number): Promise<Place> {
     return await this.prisma.place.create({
       data: {
         ...createPlaceDto,
+        userId: userId,
+      },
+    });
+  }
+
+  async createByTeam(createTeamPlaceDto: CreateTeamPlaceDto): Promise<Place> {
+    return await this.prisma.place.create({
+      data: {
+        ...createTeamPlaceDto,
       },
     });
   }

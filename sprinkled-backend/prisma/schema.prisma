@@ -20,6 +20,8 @@ model User {
   plantEntries  PlantEntry[]
   events        Event[]
   reminders     Reminder[]
+
+  @@map("users")
 }
 
 model Team {
@@ -29,6 +31,8 @@ model Team {
   place     Place[]
   creator   User    @relation(fields: [creatorId], references: [id], name: "creator")
   creatorId Int
+
+  @@map("teams")
 }
 
 model Place {
@@ -39,6 +43,8 @@ model Place {
   user         User?        @relation(fields: [userId], references: [id])
   userId       Int?
   plantEntries PlantEntry[]
+
+  @@map("places")
 }
 
 model Picture {
@@ -49,6 +55,8 @@ model Picture {
   userId       Int
   PlantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
   plantEntryId Int
+
+  @@map("pictures")
 }
 
 model PlantEntry {
@@ -63,6 +71,8 @@ model PlantEntry {
   pictures  Picture[]
   events    Event[]
   reminders Reminder[]
+
+  @@map("plant_entries")
 }
 
 model Plant {
@@ -80,6 +90,8 @@ model Plant {
   light        String
   zone         Int
   plantEntries PlantEntry[]
+
+  @@map("plants")
 }
 
 model Event {
@@ -91,6 +103,8 @@ model Event {
   plantEntryId Int
   action       Action     @relation(fields: [actionId], references: [id])
   actionId     Int
+
+  @@map("events")
 }
 
 model Action {
@@ -98,6 +112,8 @@ model Action {
   type     String
   events   Event[]
   reminder Reminder[]
+
+  @@map("actions")
 }
 
 model Reminder {
@@ -110,4 +126,6 @@ model Reminder {
   plantEntryId Int
   creator      User       @relation(fields: [creatorId], references: [id])
   creatorId    Int
+
+  @@map("reminders")
 }

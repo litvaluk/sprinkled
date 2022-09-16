@@ -1,4 +1,18 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreatePlaceDto } from './create-place.dto';
+import { IsInt, IsNotEmpty, IsOptional, IsPositive, IsString } from 'class-validator';
 
-export class UpdatePlaceDto extends PartialType(CreatePlaceDto) {}
+export class UpdatePlaceDto {
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsOptional()
+  @IsInt()
+  @IsPositive()
+  userId: number;
+
+  @IsOptional()
+  @IsInt()
+  @IsPositive()
+  teamId: number;
+}
