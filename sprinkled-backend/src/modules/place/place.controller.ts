@@ -1,16 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-  Put,
-  ParseIntPipe,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Put, ParseIntPipe, HttpStatus } from '@nestjs/common';
 import { PlaceService } from './place.service';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { ApiTags } from '@nestjs/swagger';
@@ -25,12 +13,12 @@ export class PlaceController {
   constructor(private readonly placeService: PlaceService) {}
 
   @Post('user')
-  async createByUser(@Body() createPlaceDto: CreatePlaceDto, @UserId() userId: number): Promise<Place> {
+  async createPlaceByUser(@Body() createPlaceDto: CreatePlaceDto, @UserId() userId: number): Promise<Place> {
     return await this.placeService.createByUser(createPlaceDto, userId);
   }
 
   @Post('team')
-  async createByTeam(@Body() createTeamPlaceDto: CreateTeamPlaceDto): Promise<Place> {
+  async createPlaceByTeam(@Body() createTeamPlaceDto: CreateTeamPlaceDto): Promise<Place> {
     return await this.placeService.createByTeam(createTeamPlaceDto);
   }
 

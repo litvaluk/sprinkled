@@ -7,6 +7,8 @@ async function main() {
   await createUsers();
   await createTeams();
   await createPlaces();
+  await createPlantEntries();
+  await createPictures();
 }
 
 async function createPlants() {
@@ -172,6 +174,61 @@ async function createPlaces() {
     data: {
       name: 'place3',
       userId: 3,
+    },
+  });
+}
+
+async function createPlantEntries() {
+  await prisma.plantEntry.create({
+    data: {
+      name: 'plantEntry1',
+      plantId: 1,
+      creatorId: 2,
+      placeId: 1,
+    },
+  });
+
+  await prisma.plantEntry.create({
+    data: {
+      name: 'plantEntry2',
+      plantId: 1,
+      creatorId: 3,
+      placeId: 2,
+    },
+  });
+
+  await prisma.plantEntry.create({
+    data: {
+      name: 'plantEntry3',
+      plantId: 2,
+      creatorId: 2,
+      placeId: 1,
+    },
+  });
+}
+
+async function createPictures() {
+  await prisma.picture.create({
+    data: {
+      userId: 2,
+      plantEntryId: 1,
+      url: 'https://images.squarespace-cdn.com/content/v1/5637bd4be4b06d0197275f73/1585727885128-CB50IK9ADQ24G4GTSJWV/10%2522+ZZ.jpg?format=1000w',
+    },
+  });
+
+  await prisma.picture.create({
+    data: {
+      userId: 2,
+      plantEntryId: 1,
+      url: 'https://media.istockphoto.com/photos/zanzibar-gem-or-zz-plant-on-the-windowsill-picture-id1219720875?k=20&m=1219720875&s=612x612&w=0&h=PmhEAJSKX1atRrnIOEyyVr0wNFWghFA9dlkkhxTW7eo=',
+    },
+  });
+
+  await prisma.picture.create({
+    data: {
+      userId: 3,
+      plantEntryId: 3,
+      url: 'https://www.nkz.cz/sites/default/files/public/styles/content_lg/public/2019-12/shutterstock1328790263.jpg?itok=MXMLYCdf',
     },
   });
 }

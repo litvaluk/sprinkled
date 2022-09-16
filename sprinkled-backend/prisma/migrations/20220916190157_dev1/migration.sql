@@ -42,6 +42,7 @@ CREATE TABLE "pictures" (
 -- CreateTable
 CREATE TABLE "plant_entries" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "creatorId" INTEGER NOT NULL,
     "placeId" INTEGER NOT NULL,
