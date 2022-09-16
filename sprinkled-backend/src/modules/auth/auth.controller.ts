@@ -1,9 +1,10 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto';
 import { JwtRefreshTokenGuard } from './guard';
 import { Request } from 'express';
+import { CreateUserDto } from '../user/dto';
+import { LoginDto } from './dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -12,15 +13,15 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Body() authDto: AuthDto,
+    @Body() createUserDto: CreateUserDto,
   ): Promise<{ id: number; username: string; access_token: string; refresh_token: string }> {
-    return this.authService.register(authDto);
+    return this.authService.register(createUserDto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() authDto: AuthDto): Promise<{ access_token: string; refresh_token: string }> {
-    const tokens = await this.authService.login(authDto);
+  async login(@Body() loginDto: LoginDto): Promise<{ access_token: string; refresh_token: string }> {
+    const tokens = await this.authService.login(loginDto);
     return {
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,

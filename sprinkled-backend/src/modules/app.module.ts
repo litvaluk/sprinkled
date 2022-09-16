@@ -1,10 +1,10 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { TeamModule } from './team/team.module';
+import { PrismaModule } from './prisma';
+import { AuthModule } from './auth';
+import { UserModule } from './user';
+import { TeamModule } from './team';
+import { PlantModule } from './plant';
 import { HttpRequestLoggerMiddleware } from '../middleware';
-import { PlantModule } from './plant/plant.module';
 
 @Module({
   imports: [PrismaModule, AuthModule, UserModule, TeamModule, PlantModule],

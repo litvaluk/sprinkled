@@ -5,13 +5,14 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthDto } from './dto';
 import * as argon2 from 'argon2';
-import { PrismaService } from 'src/modules/prisma/prisma.service';
+import { PrismaService } from 'src/modules/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from 'src/modules/user';
 import { Tokens } from './types';
+import { CreateUserDto } from '../user/dto';
+import { LoginDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -20,12 +21,11 @@ export class AuthService {
   constructor(private prisma: PrismaService, private userService: UserService, private jwt: JwtService) {}
 
   async register(
-    authDto: AuthDto,
+    createUserDto: CreateUserDto,
   ): Promise<{ id: number; username: string; access_token: string; refresh_token: string }> {
     try {
       // create new user without access and refresh token
-      const passwordHash = await argon2.hash(authDto.password);
-      const createdUser = await this.userService.create(authDto.username, passwordHash);
+      const createdUser = await this.userService.create(createUserDto);
 
       // generate tokens and update the user
       const tokens = await this._generateTokens(createdUser.id, createdUser.username);
@@ -48,10 +48,10 @@ export class AuthService {
     }
   }
 
-  async login(authDto: AuthDto): Promise<Tokens> {
+  async login(loginDto: LoginDto): Promise<Tokens> {
     const user = await this.prisma.user.findUnique({
       where: {
-        username: authDto.username,
+        username: loginDto.username,
       },
     });
 
@@ -59,7 +59,7 @@ export class AuthService {
       throw new ForbiddenException('Invalid username or password');
     }
 
-    const passwordValid = await argon2.verify(user.password, authDto.password);
+    const passwordValid = await argon2.verify(user.password, loginDto.password);
     if (!passwordValid) {
       throw new ForbiddenException('Invalid username or password');
     }
