@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { AuthDto } from './dto';
 import * as argon2 from 'argon2';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 import { Tokens } from './types';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Team } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 
@@ -11,7 +11,7 @@ export class TeamService {
   async create(createTeamDto: CreateTeamDto, creatorId: number): Promise<Team> {
     return await this.prisma.team.create({
       data: {
-        name: createTeamDto.name,
+        ...createTeamDto,
         creatorId: creatorId,
         users: {
           connect: {

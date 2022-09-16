@@ -3,8 +3,8 @@ import { TeamService } from './team.service';
 import { CreateTeamDto } from './dto/create-team.dto';
 import { UpdateTeamDto } from './dto/update-team.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { JwtAccessTokenGuard } from 'src/auth/guard';
-import { UserId } from 'src/auth/decorator';
+import { JwtAccessTokenGuard } from 'src/modules/auth/guard';
+import { UserId } from 'src/modules/auth/decorator';
 import { Team } from '@prisma/client';
 
 @Controller('team')
