@@ -13,6 +13,11 @@ export class TeamService {
       data: {
         name: createTeamDto.name,
         creatorId: creatorId,
+        users: {
+          connect: {
+            id: creatorId,
+          },
+        },
       },
     });
   }
