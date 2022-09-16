@@ -36,6 +36,6 @@ export class CreatePlantDto {
   @IsString()
   light: string;
 
-  @IsString()
-  zone: string;
+  @IsInt()
+  zone: number;
 }

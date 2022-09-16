@@ -1,0 +1,8 @@
+{
+  "debug.javascript.autoAttachSmartPattern": [
+    "${workspaceFolder}/**",
+    "!${workspaceFolder}/prisma/seed.ts",
+    "!**/node_modules/**",
+    "**/$KNOWN_TOOLS$/**"
+  ]
+}

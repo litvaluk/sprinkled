@@ -1,4 +1,15 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "access_token" TEXT NOT NULL,
+    "refresh_token" TEXT NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Team" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -53,7 +64,7 @@ CREATE TABLE "Plant" (
     "leafColor" TEXT NOT NULL,
     "bloomColor" TEXT NOT NULL,
     "light" TEXT NOT NULL,
-    "zone" TEXT NOT NULL,
+    "zone" INTEGER NOT NULL,
 
     CONSTRAINT "Plant_pkey" PRIMARY KEY ("id")
 );
@@ -94,6 +105,9 @@ CREATE TABLE "_TeamToUser" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Team_name_key" ON "Team"("name");

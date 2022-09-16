@@ -78,7 +78,7 @@ model Plant {
   leafColor    String
   bloomColor   String
   light        String
-  zone         String
+  zone         Int
   plantEntries PlantEntry[]
 }
 
