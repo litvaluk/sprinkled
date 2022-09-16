@@ -6,6 +6,7 @@ async function main() {
   await createPlants();
   await createUsers();
   await createTeams();
+  await createPlaces();
 }
 
 async function createPlants() {
@@ -148,6 +149,29 @@ async function createTeams() {
           id: 2,
         },
       },
+    },
+  });
+}
+
+async function createPlaces() {
+  await prisma.place.create({
+    data: {
+      name: 'place1',
+      userId: 2,
+    },
+  });
+
+  await prisma.place.create({
+    data: {
+      name: 'place2',
+      userId: 2,
+    },
+  });
+
+  await prisma.place.create({
+    data: {
+      name: 'place3',
+      userId: 3,
     },
   });
 }
