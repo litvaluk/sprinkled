@@ -9,6 +9,8 @@ async function main() {
   await createPlaces();
   await createPlantEntries();
   await createPictures();
+  await createActions();
+  await createEvents();
 }
 
 async function createPlants() {
@@ -229,6 +231,55 @@ async function createPictures() {
       userId: 3,
       plantEntryId: 3,
       url: 'https://www.nkz.cz/sites/default/files/public/styles/content_lg/public/2019-12/shutterstock1328790263.jpg?itok=MXMLYCdf',
+    },
+  });
+}
+
+async function createActions() {
+  await prisma.action.create({
+    data: {
+      type: 'water',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'prune',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'repot',
+    },
+  });
+}
+
+async function createEvents() {
+  await prisma.event.create({
+    data: {
+      date: new Date('2022-09-17T11:00:00'),
+      actionId: 1,
+      plantEntryId: 1,
+      userId: 2,
+    },
+  });
+
+  await prisma.event.create({
+    data: {
+      date: new Date('2022-09-17T12:00:00'),
+      actionId: 2,
+      plantEntryId: 2,
+      userId: 2,
+    },
+  });
+
+  await prisma.event.create({
+    data: {
+      date: new Date('2022-09-18T10:00:00'),
+      actionId: 1,
+      plantEntryId: 1,
+      userId: 3,
     },
   });
 }
