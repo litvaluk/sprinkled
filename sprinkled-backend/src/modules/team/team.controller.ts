@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Team } from '@prisma/client';
-import { UserId } from 'src/decorator';
-import { JwtAccessTokenGuard } from 'src/modules/auth/guard';
+import { UserId } from '../../decorator';
+import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 import { TeamService } from './team.service';
 

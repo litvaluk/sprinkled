@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Event } from '@prisma/client';
-import { UserId } from 'src/decorator';
+import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateEventDto, UpdateEventDto } from './dto';
 import { EventService } from './event.service';

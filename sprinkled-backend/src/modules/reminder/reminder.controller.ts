@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UserId } from 'src/decorator';
+import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateReminderDto, UpdateReminderDto } from './dto';
 import { ReminderService } from './reminder.service';

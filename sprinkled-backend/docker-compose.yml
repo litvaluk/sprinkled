@@ -11,5 +11,16 @@ services:
       - 5432:5432
     networks:
       - sprinkled-network
+  sprinkled-test-db:
+    image: postgres:14.5-alpine
+    container_name: sprinkled-test-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sprinkled
+    ports:
+      - 5433:5432
+    networks:
+      - sprinkled-network
 networks:
   sprinkled-network:

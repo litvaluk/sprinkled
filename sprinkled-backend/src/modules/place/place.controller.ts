@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Place } from '@prisma/client';
-import { UserId } from 'src/decorator';
+import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePlaceDto, CreateTeamPlaceDto, UpdatePlaceDto } from './dto';
 import { PlaceService } from './place.service';
