@@ -11,6 +11,7 @@ async function main() {
   await createPictures();
   await createActions();
   await createEvents();
+  await createReminders();
 }
 
 async function createPlants() {
@@ -280,6 +281,38 @@ async function createEvents() {
       actionId: 1,
       plantEntryId: 1,
       userId: 3,
+    },
+  });
+}
+
+async function createReminders() {
+  await prisma.reminder.create({
+    data: {
+      date: new Date('2022-09-17T11:00:00'),
+      actionId: 1,
+      plantEntryId: 2,
+      creatorId: 2,
+      period: 10,
+    },
+  });
+
+  await prisma.reminder.create({
+    data: {
+      date: new Date('2022-09-17T12:00:00'),
+      actionId: 1,
+      plantEntryId: 1,
+      creatorId: 3,
+      period: 30,
+    },
+  });
+
+  await prisma.reminder.create({
+    data: {
+      date: new Date('2022-09-17T13:00:00'),
+      actionId: 3,
+      plantEntryId: 1,
+      creatorId: 3,
+      period: 600,
     },
   });
 }

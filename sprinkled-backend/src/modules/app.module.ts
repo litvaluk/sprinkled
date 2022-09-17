@@ -7,6 +7,7 @@ import { PictureModule } from './picture';
 import { PlaceModule } from './place';
 import { PlantModule } from './plant';
 import { PlantEntryModule } from './plant-entry';
+import { ReminderModule } from './reminder';
 import { TeamModule } from './team';
 import { UserModule } from './user';
 
@@ -21,6 +22,7 @@ import { UserModule } from './user';
     PlantEntryModule,
     ActionModule,
     EventModule,
+    ReminderModule,
   ],
 })
 export class AppModule implements NestModule {
