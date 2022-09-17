@@ -3,6 +3,8 @@ name: Backend Tests
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'sprinkled-backend/**'
     branches:
       - master
 
@@ -17,7 +19,7 @@ jobs:
         run: |
           cd sprinkled-backend
           npm install 
-          npm run test
+          npm run test -- --passWithNoTests
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -28,4 +30,4 @@ jobs:
         run: |
           cd sprinkled-backend
           npm install 
-          npm run test:e2e
+          npm run test -- --passWithNoTests
