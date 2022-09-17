@@ -1,10 +1,10 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { JwtRefreshTokenGuard } from './guard';
 import { Request } from 'express';
 import { CreateUserDto } from '../user/dto';
+import { AuthService } from './auth.service';
 import { LoginDto } from './dto';
+import { JwtRefreshTokenGuard } from './guard';
 
 @Controller('auth')
 @ApiTags('auth')

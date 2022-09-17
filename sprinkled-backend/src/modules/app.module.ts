@@ -1,15 +1,25 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AuthModule } from './auth';
-import { UserModule } from './user';
-import { TeamModule } from './team';
-import { PlantModule } from './plant';
-import { PlaceModule } from './place';
-import { PictureModule } from './picture';
-import { PlantEntryModule } from './plant-entry';
 import { HttpRequestLoggerMiddleware } from '../middleware';
+import { ActionModule } from './action';
+import { AuthModule } from './auth';
+import { PictureModule } from './picture';
+import { PlaceModule } from './place';
+import { PlantModule } from './plant';
+import { PlantEntryModule } from './plant-entry';
+import { TeamModule } from './team';
+import { UserModule } from './user';
 
 @Module({
-  imports: [AuthModule, UserModule, TeamModule, PlantModule, PlaceModule, PictureModule, PlantEntryModule],
+  imports: [
+    AuthModule,
+    UserModule,
+    TeamModule,
+    PlantModule,
+    PlaceModule,
+    PictureModule,
+    PlantEntryModule,
+    ActionModule,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {

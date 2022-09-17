@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, HttpStatus, UseGuards, Put } from '@nestjs/common';
-import { PlantService } from './plant.service';
-import { CreatePlantDto, UpdatePlantDto } from './dto';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Plant } from '@prisma/client';
 import { JwtAccessTokenGuard } from 'src/modules/auth/guard';
-import { ApiTags } from '@nestjs/swagger';
+import { CreatePlantDto, UpdatePlantDto } from './dto';
+import { PlantService } from './plant.service';
 
 @Controller('plant')
 @UseGuards(JwtAccessTokenGuard)
