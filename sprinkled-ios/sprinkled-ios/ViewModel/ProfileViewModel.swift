@@ -1,12 +1,12 @@
 import Foundation
 import SwiftUI
 
-final class RootViewModel: ObservableObject {
-
-	@Published var tabBarSelection = 0
-	
+final class ProfileViewModel: ObservableObject {
 	@AppStorage("accessTokenValue") var accessTokenValue = ""
 	@AppStorage("refreshTokenValue") var refreshTokenValue = ""
 	
+	func logout() {
+		accessTokenValue = ""
+		refreshTokenValue = ""
+	}
 }
-

@@ -4,7 +4,7 @@ struct RootView: View {
 	@StateObject var viewModel: RootViewModel
 	
     var body: some View {
-		Group {
+		if (!viewModel.accessTokenValue.isEmpty) {
 			TabView(selection: $viewModel.tabBarSelection) {
 				TaskView().tabItem {
 					if (viewModel.tabBarSelection == 0) {
@@ -27,7 +27,7 @@ struct RootView: View {
 						Image("SearchViewIcon")
 					}
 				}.tag(2)
-				ProfileView().tabItem {
+				ProfileView(viewModel: ProfileViewModel()).tabItem {
 					if (viewModel.tabBarSelection == 3) {
 						Image("ProfileViewIconSelected")
 					} else {
@@ -37,6 +37,8 @@ struct RootView: View {
 				.tag(3)
 			}
 			.accentColor(Color(.label))
+		} else {
+			AuthView(viewModel: AuthViewModel())
 		}
     }
 }
