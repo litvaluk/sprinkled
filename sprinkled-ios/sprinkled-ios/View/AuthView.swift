@@ -42,6 +42,12 @@ struct AuthView: View {
 					.padding()
 			}
 			Spacer()
+			if (!viewModel.isSignInViewDisplayed) {
+				Text("By tapping \"Sign Up\" you agree to our [Terms](https://lukaslitvan.cz) & [Policies](https://lukaslitvan.cz)")
+					.frame(width: 250)
+					.font(.callout)
+					.multilineTextAlignment(.center)
+			}
 			Button(action: {
 				Task {
 					if (viewModel.isSignInViewDisplayed) {
