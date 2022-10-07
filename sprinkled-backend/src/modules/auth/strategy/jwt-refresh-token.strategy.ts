@@ -19,7 +19,7 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-ref
     const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
 
     const user = await this.userService.findOne(payload.sub);
-    if (!user || !argon2.verify(user.refresh_token, refreshToken)) {
+    if (!user || !argon2.verify(user.accessToken, refreshToken)) {
       throw new UnauthorizedException();
     }
 

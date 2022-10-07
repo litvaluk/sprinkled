@@ -2,11 +2,11 @@ import Foundation
 import SwiftUI
 
 final class ProfileViewModel: ObservableObject {
-	@AppStorage("accessTokenValue") var accessTokenValue = ""
-	@AppStorage("refreshTokenValue") var refreshTokenValue = ""
+	@AppStorage("accessToken") var accessToken = ""
+	@AppStorage("refreshToken") var refreshToken = ""
 	
 	func logout() {
-		accessTokenValue = ""
-		refreshTokenValue = ""
+		accessToken = ""
+		refreshToken = ""
 	}
 }

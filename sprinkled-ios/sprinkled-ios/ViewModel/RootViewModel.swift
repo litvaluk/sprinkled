@@ -5,8 +5,8 @@ final class RootViewModel: ObservableObject {
 
 	@Published var tabBarSelection = 0
 	
-	@AppStorage("accessTokenValue") var accessTokenValue = ""
-	@AppStorage("refreshTokenValue") var refreshTokenValue = ""
+	@AppStorage("accessToken") var accessToken = ""
+	@AppStorage("refreshToken") var refreshToken = ""
 	
 }
 

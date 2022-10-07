@@ -11,3 +11,13 @@ extension UINavigationController {
 		navigationBar.topItem?.backButtonDisplayMode = .minimal
 	}
 }
+
+extension JSONDecoder {
+	static let app: JSONDecoder = {
+		let decoder = JSONDecoder()
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+		decoder.dateDecodingStrategy = .formatted(dateFormatter)
+		return decoder
+	}()
+}

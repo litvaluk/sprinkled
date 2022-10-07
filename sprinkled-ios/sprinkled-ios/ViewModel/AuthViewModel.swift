@@ -5,27 +5,39 @@ final class AuthViewModel: ObservableObject {
 	@Published var isSignInViewDisplayed = true
 	@Published var isProcessing = false
 	@Published var errorMessage = ""
-	@Published var signInEmail = ""
+	@Published var signInUsername = ""
 	@Published var signInPassword = ""
+	@Published var signUpUsername = ""
 	@Published var signUpEmail = ""
 	@Published var signUpPassword = ""
 	@Published var signUpPasswordConfirmation = ""
 	
-	@AppStorage("accessTokenValue") var accessTokenValue = ""
-	@AppStorage("refreshTokenValue") var refreshTokenValue = ""
+	@AppStorage("accessToken") var accessToken = ""
+	@AppStorage("refreshToken") var refreshToken = ""
 	
-	func signInUser() {
+	typealias Dependencies = HasAPI
+	private let dependencies: Dependencies
+	
+	init(dependencies: Dependencies) {
+		self.dependencies = dependencies
+	}
+	
+	@MainActor
+	func signInUser() async {
 		errorMessage = ""
 		isProcessing = true
 		
-		// TODO
-		accessTokenValue = "accesTokenValue"
-		refreshTokenValue = "refreshTokenValue"
+		do {
+			try await self.dependencies.api.signIn(signInUsername, signInPassword)
+		} catch {
+			errorMessage = "Something went wrong."
+		}
 		
 		isProcessing = false
 	}
 	
-	func signUpUser() {
+	@MainActor
+	func signUpUser() async {
 		errorMessage = ""
 		isProcessing = true
 		
@@ -35,9 +47,11 @@ final class AuthViewModel: ObservableObject {
 			return
 		}
 		
-		// TODO
-		accessTokenValue = "accesTokenValue"
-		refreshTokenValue = "refreshTokenValue"
+		do {
+			try await self.dependencies.api.signUp(signUpUsername, signUpEmail, signUpPassword)
+		} catch {
+			errorMessage = "Something went wrong."
+		}
 		
 		isProcessing = false
 	}

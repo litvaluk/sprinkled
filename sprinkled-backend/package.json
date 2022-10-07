@@ -20,7 +20,7 @@
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json",
     "db:up": "docker compose up sprinkled-db -d",
     "db:rm": "docker compose rm sprinkled-db -s -f -v",
-    "db:restart": "npm run db:rm && npm run db:up && sleep 1 && npm run prisma:deploy && npm run prisma:seed",
+    "db:restart": "npm run db:rm && npm run db:up && sleep 3 && npm run prisma:deploy && npm run prisma:seed",
     "db:up:test": "docker compose up sprinkled-test-db -d",
     "db:rm:test": "docker compose rm sprinkled-test-db -s -f -v",
     "db:restart:test": "npm run db:rm:test && npm run db:up:test && sleep 1 && npm run prisma:deploy:test",

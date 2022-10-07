@@ -4,7 +4,7 @@ struct RootView: View {
 	@StateObject var viewModel: RootViewModel
 	
     var body: some View {
-		if (!viewModel.accessTokenValue.isEmpty) {
+		if (!viewModel.accessToken.isEmpty) {
 			TabView(selection: $viewModel.tabBarSelection) {
 				TaskView().tabItem {
 					if (viewModel.tabBarSelection == 0) {
@@ -38,7 +38,7 @@ struct RootView: View {
 			}
 			.accentColor(Color(.label))
 		} else {
-			AuthView(viewModel: AuthViewModel())
+			AuthView(viewModel: AuthViewModel(dependencies: dependencies))
 		}
     }
 }

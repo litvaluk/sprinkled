@@ -109,27 +109,30 @@ async function createUsers() {
   await prisma.user.create({
     data: {
       username: 'admin',
+      email: 'admin@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$6q1vWLX+uRCCUC4/saRVJg$iJVMC0DIKUPloYTOq1V2/+gFMb4dTkxb2Doiv8DGHzs', // password
-      access_token: '',
-      refresh_token: '',
+      accessToken: '',
+      refreshToken: '',
     },
   });
 
   await prisma.user.create({
     data: {
       username: 'user1',
+      email: 'user1@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$ud+OxjSz4Ejn5jxIerVslw$e0n9PUbYEZv9z0BMnB+67pyD0KKKZrbRIe+DZUxDQIw', // password
-      access_token: '',
-      refresh_token: '',
+      accessToken: '',
+      refreshToken: '',
     },
   });
 
   await prisma.user.create({
     data: {
       username: 'user2',
+      email: 'user2@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$1fMKD8ZIOImnN/mE35Qhpw$1A4JHG24dPjxGakMHwpAtqBmBkdiP/ZsglYzAB4G95M', // password
-      access_token: '',
-      refresh_token: '',
+      accessToken: '',
+      refreshToken: '',
     },
   });
 }

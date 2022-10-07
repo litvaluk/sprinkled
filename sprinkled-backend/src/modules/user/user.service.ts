@@ -13,9 +13,10 @@ export class UserService {
     return await this.prisma.user.create({
       data: {
         username: createUserDto.username,
+        email: createUserDto.email,
         password: await argon2.hash(createUserDto.password),
-        access_token: '',
-        refresh_token: '',
+        accessToken: '',
+        refreshToken: '',
       },
     });
   }
@@ -41,8 +42,8 @@ export class UserService {
         id: userId,
       },
       data: {
-        access_token: hashedAccessToken,
-        refresh_token: hashedRefreshToken,
+        accessToken: hashedAccessToken,
+        refreshToken: hashedRefreshToken,
       },
     });
   }

@@ -19,7 +19,7 @@ export class JwtAccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
     const accessToken = req.get('Authorization').replace('Bearer', '').trim();
 
     const user = await this.userService.findOne(payload.sub);
-    if (!user || !argon2.verify(user.access_token, accessToken)) {
+    if (!user || !argon2.verify(user.accessToken, accessToken)) {
       throw new UnauthorizedException();
     }
 

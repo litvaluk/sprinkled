@@ -14,29 +14,29 @@ export class AuthController {
   @Post('register')
   async register(
     @Body() createUserDto: CreateUserDto,
-  ): Promise<{ id: number; username: string; access_token: string; refresh_token: string }> {
+  ): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
     return this.authService.register(createUserDto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto): Promise<{ access_token: string; refresh_token: string }> {
+  async login(@Body() loginDto: LoginDto): Promise<{ accessToken: string; refreshToken: string }> {
     const tokens = await this.authService.login(loginDto);
     return {
-      access_token: tokens.accessToken,
-      refresh_token: tokens.refreshToken,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
     };
   }
 
   @Get('refresh')
   @UseGuards(JwtRefreshTokenGuard)
-  async refresh(@Req() req: Request): Promise<{ access_token: string; refresh_token: string }> {
+  async refresh(@Req() req: Request): Promise<{ accessToken: string; refreshToken: string }> {
     const userId = req.user['sub'];
     const refreshToken = req.user['refreshToken'];
     const newTokens = await this.authService.refresh(userId, refreshToken);
     return {
-      access_token: newTokens.accessToken,
-      refresh_token: newTokens.refreshToken,
+      accessToken: newTokens.accessToken,
+      refreshToken: newTokens.refreshToken,
     };
   }
 }

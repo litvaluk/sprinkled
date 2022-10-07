@@ -22,7 +22,7 @@ export class AuthService {
 
   async register(
     createUserDto: CreateUserDto,
-  ): Promise<{ id: number; username: string; access_token: string; refresh_token: string }> {
+  ): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
     try {
       // create new user without access and refresh token
       const createdUser = await this.userService.create(createUserDto);
@@ -34,8 +34,8 @@ export class AuthService {
       return {
         id: createdUser.id,
         username: createdUser.username,
-        access_token: tokens.accessToken,
-        refresh_token: tokens.refreshToken,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
       };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
@@ -76,7 +76,7 @@ export class AuthService {
       },
     });
 
-    if (!user || !user.refresh_token || !(await argon2.verify(user.refresh_token, refreshToken))) {
+    if (!user || !user.refreshToken || !(await argon2.verify(user.refreshToken, refreshToken))) {
       throw new UnauthorizedException();
     }
 

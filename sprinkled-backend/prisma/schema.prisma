@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id            Int          @id @default(autoincrement())
-  username      String       @unique
-  password      String
-  access_token  String
-  refresh_token String
-  teams         Team[]
-  createdTeams  Team[]       @relation("creator")
-  pictures      Picture[]
-  places        Place[]
-  plantEntries  PlantEntry[]
-  events        Event[]
-  reminders     Reminder[]
+  id           Int          @id @default(autoincrement())
+  username     String       @unique
+  email        String       @unique
+  password     String
+  accessToken  String
+  refreshToken String
+  teams        Team[]
+  createdTeams Team[]       @relation("creator")
+  pictures     Picture[]
+  places       Place[]
+  plantEntries PlantEntry[]
+  events       Event[]
+  reminders    Reminder[]
 
   @@map("users")
 }
