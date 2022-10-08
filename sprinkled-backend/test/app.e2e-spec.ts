@@ -32,7 +32,7 @@ describe('Sprinkled', () => {
   describe('Auth', () => {
     describe('Register', () => {
       it('should register a new user', () => {
-        const dto: CreateUserDto = { username: 'user', password: 'password' };
+        const dto: CreateUserDto = { username: 'user', email: 'user@gmail.com', password: 'password' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
@@ -41,12 +41,12 @@ describe('Sprinkled', () => {
           .expectJsonMatch({
             id: 1,
             username: 'user',
-            access_token: regex(JWT_TOKEN_REGEX),
-            refresh_token: regex(JWT_TOKEN_REGEX),
+            accessToken: regex(JWT_TOKEN_REGEX),
+            refreshToken: regex(JWT_TOKEN_REGEX),
           });
       });
       it('should not register a new user with an existing username', () => {
-        const dto: CreateUserDto = { username: 'user', password: 'password' };
+        const dto: CreateUserDto = { username: 'user', email: 'user@gmail.com', password: 'password' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
@@ -55,7 +55,7 @@ describe('Sprinkled', () => {
           .expectJsonLike({ message: 'Username already taken' });
       });
       it('should not register a new user with short password', () => {
-        const dto: CreateUserDto = { username: 'user2', password: 'pwd' };
+        const dto: CreateUserDto = { username: 'user2', email: 'user2@gmail.com', password: 'pwd' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
@@ -73,11 +73,11 @@ describe('Sprinkled', () => {
           .withJson(dto)
           .expectStatus(200)
           .expectJsonMatch({
-            access_token: regex(JWT_TOKEN_REGEX),
-            refresh_token: regex(JWT_TOKEN_REGEX),
+            accessToken: regex(JWT_TOKEN_REGEX),
+            refreshToken: regex(JWT_TOKEN_REGEX),
           })
-          .stores('accessToken', 'access_token')
-          .stores('refreshToken', 'refresh_token');
+          .stores('accessToken', 'accessToken')
+          .stores('refreshToken', 'refreshToken');
       });
       it('should not login a user with wrong password', () => {
         const dto: LoginDto = { username: 'user', password: 'wrong_password' };
@@ -106,11 +106,11 @@ describe('Sprinkled', () => {
           .withHeaders({ Authorization: 'Bearer $S{refreshToken}' })
           .expectStatus(200)
           .expectJsonMatch({
-            access_token: regex(JWT_TOKEN_REGEX),
-            refresh_token: regex(JWT_TOKEN_REGEX),
+            accessToken: regex(JWT_TOKEN_REGEX),
+            refreshToken: regex(JWT_TOKEN_REGEX),
           })
-          .stores('accessToken', 'access_token')
-          .stores('refreshToken', 'access_token');
+          .stores('accessToken', 'accessToken')
+          .stores('refreshToken', 'accessToken');
       });
       it('should not refresh a token without authorization header', () => {
         return pactum
