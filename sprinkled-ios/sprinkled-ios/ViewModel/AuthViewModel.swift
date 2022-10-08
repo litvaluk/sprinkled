@@ -11,6 +11,7 @@ final class AuthViewModel: ObservableObject {
 	@Published var signUpEmail = ""
 	@Published var signUpPassword = ""
 	@Published var signUpPasswordConfirmation = ""
+	@Published var isKeyboardPresented = false
 	
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""

@@ -19,6 +19,7 @@
 		8F24E76628EEF0B3008D5AEE /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76528EEF0B3008D5AEE /* AuthView.swift */; };
 		8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */; };
 		8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76928EEF664008D5AEE /* Extensions.swift */; };
+		8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8FA3C83E28F1992E00F1D070 /* JWTDecode */; };
 		8FA563A228EF0A1000C54AF2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */; };
 		8FA563A528F014BE00C54AF2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A428F014BE00C54AF2 /* API.swift */; };
 		8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A828F0240800C54AF2 /* AuthResponse.swift */; };
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +153,9 @@
 			dependencies = (
 			);
 			name = "sprinkled-ios";
+			packageProductDependencies = (
+				8FA3C83E28F1992E00F1D070 /* JWTDecode */,
+			);
 			productName = "sprinkled-ios";
 			productReference = 8F24E74528EECB86008D5AEE /* sprinkled-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -179,6 +184,9 @@
 				Base,
 			);
 			mainGroup = 8F24E73C28EECB86008D5AEE;
+			packageReferences = (
+				8FA3C83D28F1992E00F1D070 /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = 8F24E74628EECB86008D5AEE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -433,6 +441,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8FA3C83D28F1992E00F1D070 /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8FA3C83E28F1992E00F1D070 /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FA3C83D28F1992E00F1D070 /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8F24E73D28EECB86008D5AEE /* Project object */;
 }

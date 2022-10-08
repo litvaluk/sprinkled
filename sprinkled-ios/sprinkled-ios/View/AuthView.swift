@@ -4,11 +4,13 @@ struct AuthView: View {
 	@StateObject var viewModel: AuthViewModel
 	
 	var body: some View {
-		VStack (spacing: 15) {
-			Text("Sprinkled")
+		VStack (spacing: 8) {
+			if (!viewModel.isKeyboardPresented || viewModel.isSignInViewDisplayed) {
+				Text("Sprinkled")
 				.font(.system(size: 48))
-				.fontWeight(.medium)
-				.padding()
+					.fontWeight(.medium)
+					.padding()
+			}
 			if (viewModel.isSignInViewDisplayed) {
 				TextField("Username", text: $viewModel.signInUsername)
 					.textFieldStyle(AuthTextFieldStyle())
@@ -36,11 +38,6 @@ struct AuthView: View {
 				Text("\(viewModel.errorMessage)")
 					.foregroundColor(.red)
 			}
-			if (viewModel.isProcessing) {
-				ProgressView()
-					.scaleEffect(1.5)
-					.padding()
-			}
 			Spacer()
 			if (!viewModel.isSignInViewDisplayed) {
 				Text("By tapping \"Sign Up\" you agree to our [Terms](https://lukaslitvan.cz) & [Policies](https://lukaslitvan.cz)")
@@ -48,29 +45,37 @@ struct AuthView: View {
 					.font(.callout)
 					.multilineTextAlignment(.center)
 			}
-			Button(action: {
-				Task {
-					if (viewModel.isSignInViewDisplayed) {
-						await viewModel.signInUser()
-					} else {
-						await viewModel.signUpUser()
+			if (viewModel.isProcessing) {
+				ProgressView()
+					.scaleEffect(1.5)
+					.padding()
+			} else {
+				Button(action: {
+					Task {
+						if (viewModel.isSignInViewDisplayed) {
+							await viewModel.signInUser()
+						} else {
+							await viewModel.signUpUser()
+						}
 					}
+				}) {
+					Text(viewModel.isSignInViewDisplayed ? "Sign In" : "Sign Up")
+						.frame(maxWidth: .infinity, minHeight: 35)
 				}
-			}) {
-				Text(viewModel.isSignInViewDisplayed ? "Sign In" : "Sign Up")
-					.foregroundColor(.white)
+				.buttonStyle(.borderedProminent)
+				.cornerRadius(10)
+//				.disabled(viewModel.isProcessing || viewModel.isSignInViewDisplayed ? viewModel.signInUsername.isEmpty || viewModel.signInPassword.isEmpty : viewModel.signUpUsername.isEmpty || viewModel.signUpEmail.isEmpty || viewModel.signUpPassword.isEmpty || viewModel.signUpPasswordConfirmation.isEmpty)
 			}
-			.padding()
-			.frame(maxWidth: .infinity)
-			.background(Color.sprinkledGreen)
-			.cornerRadius(10)
-			.disabled(viewModel.isProcessing || viewModel.isSignInViewDisplayed ? viewModel.signInUsername.isEmpty || viewModel.signInPassword.isEmpty : viewModel.signUpUsername.isEmpty || viewModel.signUpEmail.isEmpty || viewModel.signUpPassword.isEmpty || viewModel.signUpPasswordConfirmation.isEmpty)
 			HStack {
 				Text(viewModel.isSignInViewDisplayed ? "Don't have an account?" : "Already have an account?")
 				Button(action: viewModel.toggleSignIn) {
 					Text(viewModel.isSignInViewDisplayed ? "Sign Up" : "Sign In")
 				}
 			}
+		}
+		.animation(.easeInOut(duration: 0.2), value: viewModel.isKeyboardPresented)
+		.onReceive(keyboardPublisher) { value in
+			viewModel.isKeyboardPresented = value
 		}
 		.padding()
 	}
@@ -86,7 +91,7 @@ struct AuthTextFieldStyle: TextFieldStyle {
 	@FocusState private var textFieldFocused: Bool
 	func _body(configuration: TextField<Self._Label>) -> some View {
 		configuration
-			.padding()
+			.padding(15)
 			.background(.thinMaterial)
 			.cornerRadius(10)
 			.focused($textFieldFocused)

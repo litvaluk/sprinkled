@@ -36,7 +36,6 @@ struct RootView: View {
 				}
 				.tag(3)
 			}
-			.accentColor(Color(.label))
 		} else {
 			AuthView(viewModel: AuthViewModel(dependencies: dependencies))
 		}
