@@ -7,8 +7,17 @@ final class ProfileViewModel: ObservableObject {
 	@AppStorage("refreshToken") var refreshToken = ""
 	
 	@Published var unitSystemSelection = 0
-	@Published var reminderNotificationsEnabled = false
-	@Published var eventNotificationsEnabled = false
+	@Published var reminderNotificationsEnabled: Bool
+	@Published var eventNotificationsEnabled: Bool
+	
+	typealias Dependencies = HasAPI & HasNotificationManager
+	private let dependencies: Dependencies
+	
+	init(dependencies: Dependencies) {
+		self.dependencies = dependencies
+		reminderNotificationsEnabled = dependencies.notificationManager.reminderNotificationsEnabled()
+		eventNotificationsEnabled = dependencies.notificationManager.eventNotificationsEnabled()
+	}
 	
 	func logout() {
 		accessToken = ""
@@ -17,5 +26,21 @@ final class ProfileViewModel: ObservableObject {
 	
 	func getAuthenticatedUser() -> String? {
 		return try? decode(jwt: accessToken).claim(name: "username").string
+	}
+	
+	func onReminderNotificationsToggleChange() {
+		if (reminderNotificationsEnabled) {
+			dependencies.notificationManager.enableReminderNotifications()
+		} else {
+			dependencies.notificationManager.disableReminderNotifications()
+		}
+	}
+	
+	func onEventNotificationsToggleChange() {
+		if (eventNotificationsEnabled) {
+			dependencies.notificationManager.enableEventNotifications()
+		} else {
+			dependencies.notificationManager.disableEventNotifications()
+		}
 	}
 }

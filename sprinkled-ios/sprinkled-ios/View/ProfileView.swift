@@ -12,7 +12,13 @@ struct ProfileView: View {
 				}
 				Section(header: Text("Notifications")) {
 					Toggle("Reminder notifications", isOn: $viewModel.reminderNotificationsEnabled)
+						.onChange(of: viewModel.reminderNotificationsEnabled) { _ in
+						   viewModel.onReminderNotificationsToggleChange()
+					   }
 					Toggle("Event notifications", isOn: $viewModel.eventNotificationsEnabled)
+						.onChange(of: viewModel.eventNotificationsEnabled) { _ in
+						   viewModel.onEventNotificationsToggleChange()
+					   }
 				}
 				Section(header: Text("Other")) {
 					Picker("Unit system", selection: $viewModel.unitSystemSelection) {
@@ -30,6 +36,7 @@ struct ProfileView: View {
 				}
 				
 			}
+			.tint(.sprinkledGreen)
 			.navigationTitle(viewModel.getAuthenticatedUser()?.capitalizedFirstLetter() ?? "Profile")
 		}
 	}
@@ -37,6 +44,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProfileView(viewModel: ProfileViewModel())
+		ProfileView(viewModel: ProfileViewModel(dependencies: dependencies))
 	}
 }
