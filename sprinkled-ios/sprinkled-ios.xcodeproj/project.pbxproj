@@ -84,15 +84,13 @@
 		8F24E74728EECB86008D5AEE /* sprinkled-ios */ = {
 			isa = PBXGroup;
 			children = (
+				8FA3C84628F2DF8300F1D070 /* Services */,
 				8FA563A328F0137E00C54AF2 /* Model */,
 				8F24E75A28EEDC99008D5AEE /* ViewModel */,
 				8F24E75928EEDC8D008D5AEE /* View */,
 				8F24E75628EECCFE008D5AEE /* Info.plist */,
-				8FA563A428F014BE00C54AF2 /* API.swift */,
-				8FA563AE28F031A800C54AF2 /* AppDependency.swift */,
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
 				8F24E76928EEF664008D5AEE /* Extensions.swift */,
-				8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */,
 				8F24E74828EECB86008D5AEE /* SprinkledApp.swift */,
 				8F24E74C28EECB8A008D5AEE /* Assets.xcassets */,
 				8F24E74E28EECB8A008D5AEE /* Preview Content */,
@@ -111,12 +109,12 @@
 		8F24E75928EEDC8D008D5AEE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8F24E74A28EECB86008D5AEE /* RootView.swift */,
-				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
+				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
 				8F24E75D28EEDCD9008D5AEE /* ProfileView.swift */,
+				8F24E74A28EECB86008D5AEE /* RootView.swift */,
+				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
 				8F24E76128EEDD13008D5AEE /* TaskView.swift */,
-				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -124,11 +122,21 @@
 		8F24E75A28EEDC99008D5AEE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
-				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */,
+				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
+				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8FA3C84628F2DF8300F1D070 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8FA563A428F014BE00C54AF2 /* API.swift */,
+				8FA563AE28F031A800C54AF2 /* AppDependency.swift */,
+				8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		8FA563A328F0137E00C54AF2 /* Model */ = {

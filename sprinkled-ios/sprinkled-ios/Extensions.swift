@@ -4,7 +4,7 @@ import Combine
 extension Color {
 	static let sprinkledGreen = Color("SprinkledGreen")
 	static let sprinkledPaleGreen = Color("SprinkledPaleGreen")
-	static let sprinkledPaleWhite = Color(white: 1, opacity: 179 / 255.0)
+	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
 }
 
 // remove navigation bar back button text
@@ -15,6 +15,7 @@ extension UINavigationController {
 	}
 }
 
+// JSONDecoder with right date format
 extension JSONDecoder {
 	static let app: JSONDecoder = {
 		let decoder = JSONDecoder()
@@ -25,6 +26,7 @@ extension JSONDecoder {
 	}()
 }
 
+// for animating when keyboard shows/hides
 extension View {
   var keyboardPublisher: AnyPublisher<Bool, Never> {
 	Publishers
