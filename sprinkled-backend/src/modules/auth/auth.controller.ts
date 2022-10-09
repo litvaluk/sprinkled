@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
+import { UserId } from '../../decorator';
 import { CreateUserDto } from '../user/dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto';
-import { JwtRefreshTokenGuard } from './guard';
+import { JwtAccessTokenGuard, JwtRefreshTokenGuard } from './guard';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -28,8 +29,9 @@ export class AuthController {
     };
   }
 
-  @Get('refresh')
+  @Post('refresh')
   @UseGuards(JwtRefreshTokenGuard)
+  @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request): Promise<{ accessToken: string; refreshToken: string }> {
     const userId = req.user['sub'];
     const refreshToken = req.user['refreshToken'];
@@ -38,5 +40,12 @@ export class AuthController {
       accessToken: newTokens.accessToken,
       refreshToken: newTokens.refreshToken,
     };
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAccessTokenGuard)
+  async logout(@UserId() userId: number): Promise<void> {
+    await this.authService.logout(userId);
   }
 }

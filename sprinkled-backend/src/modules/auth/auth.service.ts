@@ -85,6 +85,10 @@ export class AuthService {
     return tokens;
   }
 
+  async logout(userId: number): Promise<void> {
+    await this.userService.invalidateTokens(userId);
+  }
+
   private async _generateTokens(userId: number, username: string): Promise<Tokens> {
     const payload = {
       sub: userId,

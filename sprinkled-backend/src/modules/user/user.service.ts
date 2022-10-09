@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { PrismaService } from '../prisma';
 import { CreateUserDto } from './dto';
+import { UserSafe } from './types';
 
 @Injectable()
 export class UserService {
@@ -25,12 +26,43 @@ export class UserService {
     return await this.prisma.user.findMany();
   }
 
+  async findAllSafe(): Promise<UserSafe[]> {
+    return await this.prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
+  }
+
   async findOne(id: number): Promise<User> {
-    return await this.prisma.user.findUnique({
+    let user = await this.prisma.user.findUnique({
       where: {
         id: id,
       },
     });
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
+  }
+
+  async findOneSafe(id: number): Promise<UserSafe> {
+    let user = await this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
   async updateTokens(userId: number, accessToken: string, refreshToken: string) {
@@ -44,6 +76,18 @@ export class UserService {
       data: {
         accessToken: hashedAccessToken,
         refreshToken: hashedRefreshToken,
+      },
+    });
+  }
+
+  async invalidateTokens(userId: number) {
+    await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        accessToken: '',
+        refreshToken: '',
       },
     });
   }

@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from '@prisma/client';
 import { JwtAccessTokenGuard } from '../auth/guard';
+import { UserSafe } from './types';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -11,14 +11,14 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async getUsers(): Promise<User[]> {
-    return this.userService.findAll();
+  async getUsers(): Promise<UserSafe[]> {
+    return this.userService.findAllSafe();
   }
 
   @Get(':id')
   async getUser(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
-  ): Promise<User> {
-    return this.userService.findOne(id);
+  ): Promise<UserSafe> {
+    return this.userService.findOneSafe(id);
   }
 }
