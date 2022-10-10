@@ -22,9 +22,7 @@ export class ActionController {
   }
 
   @Get(':id')
-  async getAction(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
-  ): Promise<Action> {
+  async getAction(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Action> {
     return await this.actionService.findOne(id);
   }
 

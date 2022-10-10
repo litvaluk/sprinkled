@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Plant } from '@prisma/client';
 import { JwtAccessTokenGuard } from '../auth/guard';
@@ -22,9 +22,7 @@ export class PlantController {
   }
 
   @Get(':id')
-  async getPlant(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
-  ): Promise<Plant> {
+  async getPlant(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Plant> {
     return await this.plantService.findOne(id);
   }
 
@@ -37,6 +35,7 @@ export class PlantController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async deletePlant(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     await this.plantService.remove(id);
   }

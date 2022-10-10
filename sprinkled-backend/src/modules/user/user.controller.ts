@@ -1,5 +1,6 @@
-import { Controller, Get, HttpStatus, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { UserSafe } from './types';
 import { UserService } from './user.service';
@@ -16,9 +17,13 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUser(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
-  ): Promise<UserSafe> {
+  async getUser(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<UserSafe> {
     return this.userService.findOneSafe(id);
+  }
+
+  @Delete('delete')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deleteUser(@UserId() userId: number) {
+    return this.userService.delete(userId);
   }
 }

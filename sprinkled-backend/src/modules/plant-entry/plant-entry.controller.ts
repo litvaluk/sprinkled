@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PlantEntry } from '@prisma/client';
 import { UserId } from '../../decorator';
@@ -14,10 +14,7 @@ export class PlantEntryController {
   constructor(private readonly plantEntryService: PlantEntryService) {}
 
   @Post()
-  async createPlantEntry(
-    @Body() createPlantEntryDto: CreatePlantEntryDto,
-    @UserId() userId: number,
-  ): Promise<PlantEntry> {
+  async createPlantEntry(@Body() createPlantEntryDto: CreatePlantEntryDto, @UserId() userId: number): Promise<PlantEntry> {
     return await this.plantEntryService.create(createPlantEntryDto, userId);
   }
 
@@ -27,9 +24,7 @@ export class PlantEntryController {
   }
 
   @Get(':id')
-  async getPlantEntry(
-    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
-  ): Promise<PlantEntry> {
+  async getPlantEntry(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<PlantEntry> {
     return await this.plantEntryService.findOne(id);
   }
 
@@ -42,6 +37,7 @@ export class PlantEntryController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async deletePlantEntry(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     await this.plantEntryService.remove(id);
   }

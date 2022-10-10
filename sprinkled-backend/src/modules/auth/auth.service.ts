@@ -1,10 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, InternalServerErrorException, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import * as argon2 from 'argon2';
@@ -20,9 +14,7 @@ export class AuthService {
 
   constructor(private prisma: PrismaService, private userService: UserService, private jwt: JwtService) {}
 
-  async register(
-    createUserDto: CreateUserDto,
-  ): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
+  async register(createUserDto: CreateUserDto): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
     try {
       // create new user without access and refresh token
       const createdUser = await this.userService.create(createUserDto);

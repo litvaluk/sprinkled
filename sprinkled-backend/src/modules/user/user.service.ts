@@ -65,6 +65,14 @@ export class UserService {
     return user;
   }
 
+  async delete(userId: number) {
+    await this.prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   async updateTokens(userId: number, accessToken: string, refreshToken: string) {
     const hashedAccessToken = await argon2.hash(accessToken);
     const hashedRefreshToken = await argon2.hash(refreshToken);

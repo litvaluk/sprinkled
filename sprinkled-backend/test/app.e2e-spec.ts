@@ -45,12 +45,13 @@ describe('Sprinkled', () => {
           .withJson(dto)
           .expectStatus(201)
           .expectJsonMatch({
-            id: 2,
+            id: 3,
             username: 'newUser',
             accessToken: regex(JWT_TOKEN_REGEX),
             refreshToken: regex(JWT_TOKEN_REGEX),
           });
       });
+
       it('should not register a new user with an existing username', () => {
         const dto: CreateUserDto = { username: 'newUser', email: 'newUser@gmail.com', password: 'password' };
         return pactum
@@ -60,6 +61,7 @@ describe('Sprinkled', () => {
           .expectStatus(403)
           .expectJsonLike({ message: 'Username already taken' });
       });
+
       it('should not register a new user with short password', () => {
         const dto: CreateUserDto = { username: 'newUser2', email: 'newUser2@gmail.com', password: 'pwd' };
         return pactum
@@ -70,6 +72,7 @@ describe('Sprinkled', () => {
           .expectJsonLike({ message: ['password must be longer than or equal to 8 characters'] });
       });
     });
+
     describe('Login', () => {
       it('should login a user', () => {
         const dto: LoginDto = { username: 'newUser', password: 'password' };
@@ -85,6 +88,7 @@ describe('Sprinkled', () => {
           .stores('accessTokenAuth', 'accessToken')
           .stores('refreshTokenAuth', 'refreshToken');
       });
+
       it('should not login a user with wrong password', () => {
         const dto: LoginDto = { username: 'newUser', password: 'wrong_password' };
         return pactum
@@ -94,6 +98,7 @@ describe('Sprinkled', () => {
           .expectStatus(403)
           .expectJsonLike({ message: 'Invalid username or password' });
       });
+
       it('should not login a nonexistent user', () => {
         const dto: LoginDto = { username: 'non_existing_user', password: 'password' };
         return pactum
@@ -104,6 +109,7 @@ describe('Sprinkled', () => {
           .expectJsonLike({ message: 'Invalid username or password' });
       });
     });
+
     describe('Refresh token', () => {
       it('should refresh a token', () => {
         return pactum
@@ -118,13 +124,11 @@ describe('Sprinkled', () => {
           .stores('accessTokenAuth', 'accessToken')
           .stores('refreshTokenAuth', 'refreshToken');
       });
+
       it('should not refresh a token without authorization header', () => {
-        return pactum
-          .spec()
-          .post('http://localhost:3001/auth/refresh')
-          .expectStatus(401)
-          .expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().post('http://localhost:3001/auth/refresh').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
+
       it('should not refresh a token with invalid refresh token', () => {
         return pactum
           .spec()
@@ -134,6 +138,7 @@ describe('Sprinkled', () => {
           .expectJsonLike({ message: 'Unauthorized' });
       });
     });
+
     describe('Logout', () => {
       it('should logout a user', () => {
         return pactum
@@ -142,13 +147,11 @@ describe('Sprinkled', () => {
           .withHeaders({ Authorization: 'Bearer $S{accessTokenAuth}' })
           .expectStatus(200);
       });
+
       it('should not logout a user without authorization header', () => {
-        return pactum
-          .spec()
-          .post('http://localhost:3001/auth/logout')
-          .expectStatus(401)
-          .expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().post('http://localhost:3001/auth/logout').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
+
       it('should not logout a user with invalid access token', () => {
         return pactum
           .spec()
@@ -189,18 +192,21 @@ describe('Sprinkled', () => {
             },
             {
               id: 2,
+              username: 'userToBeDeleted',
+              email: 'userToBeDeleted@gmail.com',
+            },
+            {
+              id: 3,
               username: 'newUser',
               email: 'newUser@gmail.com',
             },
           ]);
       });
+
       it('should not get all users without authorization header', () => {
-        return pactum
-          .spec()
-          .get('http://localhost:3001/user')
-          .expectStatus(401)
-          .expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().get('http://localhost:3001/user').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
+
       it('should not get all users with invalid access token', () => {
         return pactum
           .spec()
@@ -224,25 +230,55 @@ describe('Sprinkled', () => {
             email: 'user@gmail.com',
           });
       });
+
       it('should not get a nonexistent user', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user/3')
+          .get('http://localhost:3001/user/4')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenUser}' })
           .expectStatus(404)
           .expectJsonLike({ message: 'Not Found' });
       });
+
       it('should not get a specific user without authorization header', () => {
-        return pactum
-          .spec()
-          .get('http://localhost:3001/user/1')
-          .expectStatus(401)
-          .expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().get('http://localhost:3001/user/1').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
+
       it('should not get a specific user with invalid access token', () => {
         return pactum
           .spec()
           .get('http://localhost:3001/user/1')
+          .withHeaders({ Authorization: 'Bearer invalid_access_token' })
+          .expectStatus(401)
+          .expectJsonLike({ message: 'Unauthorized' });
+      });
+    });
+
+    describe('Delete user', () => {
+      beforeAll(async () => {
+        await pactum
+          .spec()
+          .post('http://localhost:3001/auth/login')
+          .withJson({ username: 'userToBeDeleted', password: 'password' })
+          .stores('accessTokenUserToBeDeleted', 'accessToken');
+      });
+
+      it('should delete a user', () => {
+        return pactum
+          .spec()
+          .delete('http://localhost:3001/user/delete')
+          .withHeaders({ Authorization: 'Bearer $S{accessTokenUserToBeDeleted}' })
+          .expectStatus(204);
+      });
+
+      it('should not delete a user without authorization header', () => {
+        return pactum.spec().delete('http://localhost:3001/user/delete').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
+      });
+
+      it('should not delete a user with invalid access token', () => {
+        return pactum
+          .spec()
+          .delete('http://localhost:3001/user/delete')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
@@ -261,6 +297,15 @@ async function createUsers() {
     data: {
       username: 'user',
       email: 'user@gmail.com',
+      password: '$argon2id$v=19$m=4096,t=3,p=1$6q1vWLX+uRCCUC4/saRVJg$iJVMC0DIKUPloYTOq1V2/+gFMb4dTkxb2Doiv8DGHzs', // password
+      accessToken: '',
+      refreshToken: '',
+    },
+  });
+  await prisma.user.create({
+    data: {
+      username: 'userToBeDeleted',
+      email: 'userToBeDeleted@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$6q1vWLX+uRCCUC4/saRVJg$iJVMC0DIKUPloYTOq1V2/+gFMb4dTkxb2Doiv8DGHzs', // password
       accessToken: '',
       refreshToken: '',
