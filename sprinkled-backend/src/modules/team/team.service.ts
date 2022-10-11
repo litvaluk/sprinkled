@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Team } from '@prisma/client';
 import { PrismaService } from '../prisma';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 
@@ -7,7 +6,7 @@ import { CreateTeamDto, UpdateTeamDto } from './dto';
 export class TeamService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createTeamDto: CreateTeamDto, creatorId: number): Promise<Team> {
+  async create(createTeamDto: CreateTeamDto, creatorId: number) {
     return await this.prisma.team.create({
       data: {
         ...createTeamDto,
@@ -21,11 +20,51 @@ export class TeamService {
     });
   }
 
-  async findAll(): Promise<Team[]> {
+  async findAll() {
     return await this.prisma.team.findMany();
   }
 
-  async findOne(id: number): Promise<Team> {
+  async findAllForUser(userId: number) {
+    return await this.prisma.team.findMany({
+      where: {
+        users: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
+  async findAllForUserSummary(userId: number) {
+    return await this.prisma.team.findMany({
+      where: {
+        users: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        place: {
+          select: {
+            id: true,
+            name: true,
+            plantEntries: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+  async findOne(id: number) {
     return await this.prisma.team.findUnique({
       where: {
         id: id,
@@ -33,7 +72,7 @@ export class TeamService {
     });
   }
 
-  async update(id: number, updateTeamDto: UpdateTeamDto): Promise<Team> {
+  async update(id: number, updateTeamDto: UpdateTeamDto) {
     return await this.prisma.team.update({
       where: {
         id: id,

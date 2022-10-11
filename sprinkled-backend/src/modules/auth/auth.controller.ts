@@ -13,15 +13,13 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('register')
-  async register(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
+  async register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async login(@Body() loginDto: LoginDto): Promise<{ accessToken: string; refreshToken: string }> {
+  async login(@Body() loginDto: LoginDto) {
     const tokens = await this.authService.login(loginDto);
     return {
       accessToken: tokens.accessToken,
@@ -32,7 +30,7 @@ export class AuthController {
   @Post('refresh')
   @UseGuards(JwtRefreshTokenGuard)
   @HttpCode(HttpStatus.OK)
-  async refresh(@Req() req: Request): Promise<{ accessToken: string; refreshToken: string }> {
+  async refresh(@Req() req: Request) {
     const userId = req.user['sub'];
     const refreshToken = req.user['refreshToken'];
     const newTokens = await this.authService.refresh(userId, refreshToken);
@@ -45,7 +43,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAccessTokenGuard)
-  async logout(@UserId() userId: number): Promise<void> {
+  async logout(@UserId() userId: number) {
     await this.authService.logout(userId);
   }
 }

@@ -3,14 +3,13 @@ import { User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { PrismaService } from '../prisma';
 import { CreateUserDto } from './dto';
-import { UserSafe } from './types';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   // creates user with no tokens
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto) {
     return await this.prisma.user.create({
       data: {
         username: createUserDto.username,
@@ -26,7 +25,7 @@ export class UserService {
     return await this.prisma.user.findMany();
   }
 
-  async findAllSafe(): Promise<UserSafe[]> {
+  async findAllSafe() {
     return await this.prisma.user.findMany({
       select: {
         id: true,
@@ -36,7 +35,7 @@ export class UserService {
     });
   }
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number) {
     let user = await this.prisma.user.findUnique({
       where: {
         id: id,
@@ -48,7 +47,7 @@ export class UserService {
     return user;
   }
 
-  async findOneSafe(id: number): Promise<UserSafe> {
+  async findOneSafe(id: number) {
     let user = await this.prisma.user.findUnique({
       where: {
         id: id,

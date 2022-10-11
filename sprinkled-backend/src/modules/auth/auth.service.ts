@@ -6,7 +6,6 @@ import { PrismaService } from '../prisma';
 import { UserService } from '../user';
 import { CreateUserDto } from '../user/dto';
 import { LoginDto } from './dto';
-import { Tokens } from './types';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +13,7 @@ export class AuthService {
 
   constructor(private prisma: PrismaService, private userService: UserService, private jwt: JwtService) {}
 
-  async register(createUserDto: CreateUserDto): Promise<{ id: number; username: string; accessToken: string; refreshToken: string }> {
+  async register(createUserDto: CreateUserDto) {
     try {
       // create new user without access and refresh token
       const createdUser = await this.userService.create(createUserDto);
@@ -40,7 +39,7 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto): Promise<Tokens> {
+  async login(loginDto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: {
         username: loginDto.username,
@@ -61,7 +60,7 @@ export class AuthService {
     return tokens;
   }
 
-  async refresh(userId: number, refreshToken: string): Promise<Tokens> {
+  async refresh(userId: number, refreshToken: string) {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
@@ -77,11 +76,11 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(userId: number): Promise<void> {
+  async logout(userId: number) {
     await this.userService.invalidateTokens(userId);
   }
 
-  private async _generateTokens(userId: number, username: string): Promise<Tokens> {
+  private async _generateTokens(userId: number, username: string) {
     const payload = {
       sub: userId,
       username,

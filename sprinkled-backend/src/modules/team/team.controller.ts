@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Team } from '@prisma/client';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
@@ -13,17 +12,22 @@ export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
   @Post()
-  async createTeam(@Body() createTeamDto: CreateTeamDto, @UserId() userId: number): Promise<Team> {
+  async createTeam(@Body() createTeamDto: CreateTeamDto, @UserId() userId: number) {
     return await this.teamService.create(createTeamDto, userId);
   }
 
   @Get()
-  async getTeams(): Promise<Team[]> {
-    return await this.teamService.findAll();
+  async getTeamsForUser(@UserId() userId: number) {
+    return await this.teamService.findAllForUser(userId);
+  }
+
+  @Get('summary')
+  async getTeamsSummaryForUser(@UserId() userId: number) {
+    return await this.teamService.findAllForUserSummary(userId);
   }
 
   @Get(':id')
-  async getTeam(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Team> {
+  async getTeam(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     return await this.teamService.findOne(id);
   }
 
@@ -31,7 +35,7 @@ export class TeamController {
   async updateTeam(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Body() updateTeamDto: UpdateTeamDto,
-  ): Promise<Team> {
+  ) {
     return await this.teamService.update(id, updateTeamDto);
   }
 
