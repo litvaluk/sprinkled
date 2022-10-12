@@ -181,7 +181,7 @@ describe('Sprinkled', () => {
       it('should get all users', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user')
+          .get('http://localhost:3001/users')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenUser}' })
           .expectStatus(200)
           .expectJsonLike([
@@ -204,13 +204,13 @@ describe('Sprinkled', () => {
       });
 
       it('should not get all users without authorization header', () => {
-        return pactum.spec().get('http://localhost:3001/user').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().get('http://localhost:3001/users').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
 
       it('should not get all users with invalid access token', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user')
+          .get('http://localhost:3001/users')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
@@ -221,7 +221,7 @@ describe('Sprinkled', () => {
       it('should get a specific user', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user/1')
+          .get('http://localhost:3001/users/1')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenUser}' })
           .expectStatus(200)
           .expectJsonLike({
@@ -234,20 +234,20 @@ describe('Sprinkled', () => {
       it('should not get a nonexistent user', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user/4')
+          .get('http://localhost:3001/users/4')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenUser}' })
           .expectStatus(404)
           .expectJsonLike({ message: 'Not Found' });
       });
 
       it('should not get a specific user without authorization header', () => {
-        return pactum.spec().get('http://localhost:3001/user/1').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().get('http://localhost:3001/users/1').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
 
       it('should not get a specific user with invalid access token', () => {
         return pactum
           .spec()
-          .get('http://localhost:3001/user/1')
+          .get('http://localhost:3001/users/1')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
@@ -266,19 +266,19 @@ describe('Sprinkled', () => {
       it('should delete a user', () => {
         return pactum
           .spec()
-          .delete('http://localhost:3001/user/delete')
+          .delete('http://localhost:3001/users/delete')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenUserToBeDeleted}' })
           .expectStatus(204);
       });
 
       it('should not delete a user without authorization header', () => {
-        return pactum.spec().delete('http://localhost:3001/user/delete').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
+        return pactum.spec().delete('http://localhost:3001/users/delete').expectStatus(401).expectJsonLike({ message: 'Unauthorized' });
       });
 
       it('should not delete a user with invalid access token', () => {
         return pactum
           .spec()
-          .delete('http://localhost:3001/user/delete')
+          .delete('http://localhost:3001/users/delete')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
