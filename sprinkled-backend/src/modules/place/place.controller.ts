@@ -6,9 +6,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePlaceDto, CreateTeamPlaceDto, UpdatePlaceDto } from './dto';
 import { PlaceService } from './place.service';
 
-@Controller('place')
+@Controller('places')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('place')
+@ApiTags('places')
 export class PlaceController {
   constructor(private readonly placeService: PlaceService) {}
 

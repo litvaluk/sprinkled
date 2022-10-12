@@ -5,9 +5,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 import { TeamService } from './team.service';
 
-@Controller('team')
+@Controller('teams')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('team')
+@ApiTags('teams')
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 

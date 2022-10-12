@@ -4,9 +4,9 @@ import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('user')
+@ApiTags('users')
 export class UserController {
   constructor(private userService: UserService) {}
 

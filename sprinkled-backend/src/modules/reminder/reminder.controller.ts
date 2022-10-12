@@ -5,9 +5,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateReminderDto, UpdateReminderDto } from './dto';
 import { ReminderService } from './reminder.service';
 
-@Controller('reminder')
+@Controller('reminders')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('reminder')
+@ApiTags('reminders')
 export class ReminderController {
   constructor(private readonly reminderService: ReminderService) {}
 

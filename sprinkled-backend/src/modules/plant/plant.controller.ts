@@ -5,9 +5,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePlantDto, UpdatePlantDto } from './dto';
 import { PlantService } from './plant.service';
 
-@Controller('plant')
+@Controller('plants')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('plant')
+@ApiTags('plants')
 export class PlantController {
   constructor(private readonly plantService: PlantService) {}
 

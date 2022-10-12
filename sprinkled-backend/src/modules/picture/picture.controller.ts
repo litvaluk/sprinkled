@@ -6,9 +6,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePictureDto, UpdatePictureDto } from './dto';
 import { PictureService } from './picture.service';
 
-@Controller('picture')
+@Controller('pictures')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('picture')
+@ApiTags('pictures')
 export class PictureController {
   constructor(private readonly pictureService: PictureService) {}
 

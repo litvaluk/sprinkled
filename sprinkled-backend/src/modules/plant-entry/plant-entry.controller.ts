@@ -7,9 +7,9 @@ import { CreatePlantEntryDto } from './dto/create-plant-entry.dto';
 import { UpdatePlantEntryDto } from './dto/update-plant-entry.dto';
 import { PlantEntryService } from './plant-entry.service';
 
-@Controller('plant-entry')
+@Controller('plant-entries')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('plant-entry')
+@ApiTags('plant-entries')
 export class PlantEntryController {
   constructor(private readonly plantEntryService: PlantEntryService) {}
 

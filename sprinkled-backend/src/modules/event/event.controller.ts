@@ -6,9 +6,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreateEventDto, UpdateEventDto } from './dto';
 import { EventService } from './event.service';
 
-@Controller('event')
+@Controller('events')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('event')
+@ApiTags('events')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 

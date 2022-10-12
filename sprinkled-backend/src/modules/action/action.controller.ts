@@ -5,9 +5,9 @@ import { JwtAccessTokenGuard } from '../auth/guard';
 import { ActionService } from './action.service';
 import { CreateActionDto, UpdateActionDto } from './dto';
 
-@Controller('action')
+@Controller('actions')
 @UseGuards(JwtAccessTokenGuard)
-@ApiTags('action')
+@ApiTags('actions')
 export class ActionController {
   constructor(private readonly actionService: ActionService) {}
 
