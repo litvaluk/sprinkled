@@ -90,4 +90,51 @@ export class TeamService {
       },
     });
   }
+
+  async getTeamMembers(id: number) {
+    let fetched = await this.prisma.team.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        users: {
+          select: {
+            id: true,
+            username: true,
+          },
+        },
+      },
+    });
+    return fetched.users;
+  }
+
+  async addTeamMember(id: number, userId: number) {
+    return await this.prisma.team.update({
+      where: {
+        id: id,
+      },
+      data: {
+        users: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeTeamMember(id: number, userId: number) {
+    return await this.prisma.team.update({
+      where: {
+        id: id,
+      },
+      data: {
+        users: {
+          disconnect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
 }

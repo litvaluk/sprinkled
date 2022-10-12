@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { ApiTags } from '@nestjs/swagger';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
-import { CreateTeamDto, UpdateTeamDto } from './dto';
+import { AddTeamMemberDto, CreateTeamDto, UpdateTeamDto } from './dto';
 import { TeamService } from './team.service';
 
 @Controller('teams')
@@ -43,5 +43,28 @@ export class TeamController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteTeam(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     await this.teamService.remove(id);
+  }
+
+  @Get(':id/members')
+  async getTeamMembers(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
+    return await this.teamService.getTeamMembers(id);
+  }
+
+  @Post(':id/members')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async addTeamMember(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
+    @Body() addTeamMemberDto: AddTeamMemberDto,
+  ) {
+    await this.teamService.addTeamMember(id, addTeamMemberDto.userId);
+  }
+
+  @Delete(':id/members/:userId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removeTeamMember(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
+    @Param('userId', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) userId: number,
+  ) {
+    await this.teamService.removeTeamMember(id, userId);
   }
 }
