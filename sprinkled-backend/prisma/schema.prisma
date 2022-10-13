@@ -83,14 +83,15 @@ model Plant {
   commonName   String
   pictureUrl   String
   description  String
-  height       Float
-  spread       Float
+  difficulty   String
   minTemp      Int
   maxTemp      Int
-  leafColor    String
-  bloomColor   String
+  water        String
   light        String
-  zone         Int
+  minHeight    Float
+  maxHeight    Float
+  minSpread    Float
+  maxSpread    Float
   plantEntries PlantEntry[]
 
   @@map("plants")

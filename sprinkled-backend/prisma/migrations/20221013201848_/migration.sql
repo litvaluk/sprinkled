@@ -59,14 +59,15 @@ CREATE TABLE "plants" (
     "commonName" TEXT NOT NULL,
     "pictureUrl" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "height" DOUBLE PRECISION NOT NULL,
-    "spread" DOUBLE PRECISION NOT NULL,
+    "difficulty" TEXT NOT NULL,
     "minTemp" INTEGER NOT NULL,
     "maxTemp" INTEGER NOT NULL,
-    "leafColor" TEXT NOT NULL,
-    "bloomColor" TEXT NOT NULL,
+    "water" TEXT NOT NULL,
     "light" TEXT NOT NULL,
-    "zone" INTEGER NOT NULL,
+    "minHeight" DOUBLE PRECISION NOT NULL,
+    "maxHeight" DOUBLE PRECISION NOT NULL,
+    "minSpread" DOUBLE PRECISION NOT NULL,
+    "maxSpread" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "plants_pkey" PRIMARY KEY ("id")
 );

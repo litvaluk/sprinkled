@@ -34,7 +34,9 @@ struct SearchView: View {
 							.frame(width: gr.size.width, height: gr.size.height - 100)
 					} else {
 						ForEach(viewModel.filteredPlants) { plant in
-							NavigationLink {} label: {
+							NavigationLink {
+								PlantDetailView(viewModel: PlantDetailViewModel(plant: plant, dependencies: dependencies))
+							} label: {
 								HStack {
 									KFImage(URL(string: plant.pictureUrl)!)
 										.resizable()

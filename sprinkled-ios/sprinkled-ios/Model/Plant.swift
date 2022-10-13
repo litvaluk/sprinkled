@@ -6,12 +6,13 @@ struct Plant: Codable, Identifiable {
 	let commonName: String
 	let description: String
 	let pictureUrl: String
-	let height: Double
-	let spread: Double
+	let difficulty: String
+	let water: String
+	let minHeight: Double
+	let maxHeight: Double
+	let minSpread: Double
+	let maxSpread: Double
 	let minTemp: Int
 	let maxTemp: Int
-	let leafColor: String
-	let bloomColor: String
 	let light: String
-	let zone: Int
 }

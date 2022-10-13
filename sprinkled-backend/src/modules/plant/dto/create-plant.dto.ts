@@ -13,13 +13,27 @@ export class CreatePlantDto {
   @IsString()
   pictureUrl: string;
 
-  @IsNumber()
-  @IsPositive()
-  height: number;
+  @IsString()
+  difficulty: string;
+
+  @IsString()
+  water: string;
 
   @IsNumber()
   @IsPositive()
-  spread: number;
+  minHeight: number;
+
+  @IsNumber()
+  @IsPositive()
+  maxHeight: number;
+
+  @IsNumber()
+  @IsPositive()
+  minSpread: number;
+
+  @IsNumber()
+  @IsPositive()
+  maxSpread: number;
 
   @IsInt()
   minTemp: number;
@@ -28,14 +42,5 @@ export class CreatePlantDto {
   maxTemp: number;
 
   @IsString()
-  leafColor: string;
-
-  @IsString()
-  bloomColor: string;
-
-  @IsString()
   light: string;
-
-  @IsInt()
-  zone: number;
 }

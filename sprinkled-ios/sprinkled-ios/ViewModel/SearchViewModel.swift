@@ -21,7 +21,7 @@ final class SearchViewModel: ObservableObject {
 			filteredPlants = plants
 			return
 		}
-		filteredPlants = plants.filter({$0.commonName.contains(searchText) || $0.latinName.contains(searchText)})
+		filteredPlants = plants.filter({$0.commonName.localizedCaseInsensitiveContains(searchText) || $0.latinName.localizedCaseInsensitiveContains(searchText)})
 			.sorted {$0.commonName < $1.commonName}
 	}
 	
@@ -38,4 +38,3 @@ final class SearchViewModel: ObservableObject {
 		loading = false
 	}
 }
-
