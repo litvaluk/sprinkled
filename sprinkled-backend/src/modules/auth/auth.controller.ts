@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { UserId } from '../../decorator';
 import { CreateUserDto } from '../user/dto';
@@ -29,6 +29,7 @@ export class AuthController {
 
   @Post('refresh')
   @UseGuards(JwtRefreshTokenGuard)
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async refresh(@Req() req: Request) {
     const userId = req.user['sub'];
@@ -41,8 +42,9 @@ export class AuthController {
   }
 
   @Post('logout')
-  @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAccessTokenGuard)
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
   async logout(@UserId() userId: number) {
     await this.authService.logout(userId);
   }

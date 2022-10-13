@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { AddTeamMemberDto, CreateTeamDto, UpdateTeamDto } from './dto';
@@ -7,6 +7,7 @@ import { TeamService } from './team.service';
 
 @Controller('teams')
 @UseGuards(JwtAccessTokenGuard)
+@ApiBearerAuth()
 @ApiTags('teams')
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}

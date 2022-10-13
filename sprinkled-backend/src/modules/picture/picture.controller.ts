@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Picture } from '@prisma/client';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
@@ -8,6 +8,7 @@ import { PictureService } from './picture.service';
 
 @Controller('pictures')
 @UseGuards(JwtAccessTokenGuard)
+@ApiBearerAuth()
 @ApiTags('pictures')
 export class PictureController {
   constructor(private readonly pictureService: PictureService) {}

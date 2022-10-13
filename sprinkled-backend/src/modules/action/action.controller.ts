@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Action } from '@prisma/client';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { ActionService } from './action.service';
@@ -7,6 +7,7 @@ import { CreateActionDto, UpdateActionDto } from './dto';
 
 @Controller('actions')
 @UseGuards(JwtAccessTokenGuard)
+@ApiBearerAuth()
 @ApiTags('actions')
 export class ActionController {
   constructor(private readonly actionService: ActionService) {}

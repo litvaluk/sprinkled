@@ -11,7 +11,12 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
 
-  const config = new DocumentBuilder().setTitle('Sprinkled').setDescription('The Sprinkled API description').setVersion('1.0').build();
+  const config = new DocumentBuilder()
+    .setTitle('Sprinkled')
+    .setDescription('The Sprinkled API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 

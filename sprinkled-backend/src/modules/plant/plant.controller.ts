@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Plant } from '@prisma/client';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePlantDto, UpdatePlantDto } from './dto';
@@ -7,6 +7,7 @@ import { PlantService } from './plant.service';
 
 @Controller('plants')
 @UseGuards(JwtAccessTokenGuard)
+@ApiBearerAuth()
 @ApiTags('plants')
 export class PlantController {
   constructor(private readonly plantService: PlantService) {}
