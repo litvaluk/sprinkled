@@ -83,8 +83,8 @@ model Plant {
   commonName   String
   pictureUrl   String
   description  String
-  height       Decimal
-  spread       Decimal
+  height       Float
+  spread       Float
   minTemp      Int
   maxTemp      Int
   leafColor    String
