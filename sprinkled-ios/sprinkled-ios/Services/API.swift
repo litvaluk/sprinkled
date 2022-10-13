@@ -7,6 +7,7 @@ protocol HasAPI {
 protocol APIType {
 	func signIn(_ username: String, _ password: String) async throws -> Void
 	func signUp(_ username: String, _ email: String, _ password: String) async throws -> Void
+	func fetchPlants() async throws -> [Plant]
 }
 
 class API : APIType {
@@ -33,6 +34,10 @@ class API : APIType {
 		let response: AuthResponse = try await makeRequest(path: "auth/register", method: "POST", body: bodyData)
 		UserDefaults.standard.set(response.accessToken, forKey: "accessToken")
 		UserDefaults.standard.set(response.refreshToken, forKey: "refreshToken")
+	}
+	
+	func fetchPlants() async throws -> [Plant] {
+		return try await makeAuthenticatedRequest(path: "plants")
 	}
 	
 	private func makeRequest<Response: Decodable>(

@@ -5,6 +5,7 @@ extension Color {
 	static let sprinkledGreen = Color("SprinkledGreen")
 	static let sprinkledPaleGreen = Color("SprinkledPaleGreen")
 	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
+	static let sprinkledGray = Color("SprinkledGray")
 }
 
 // remove navigation bar back button text

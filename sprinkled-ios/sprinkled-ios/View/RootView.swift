@@ -20,7 +20,7 @@ struct RootView: View {
 						Image("MyPlantsViewIcon")
 					}
 				}.tag(1)
-				SearchView().tabItem {
+				SearchView(viewModel: SearchViewModel(dependencies: dependencies)).tabItem {
 					if (viewModel.tabBarSelection == 2) {
 						Image("SearchViewIconSelected")
 					} else {
