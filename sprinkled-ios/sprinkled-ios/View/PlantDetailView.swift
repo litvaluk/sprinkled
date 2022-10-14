@@ -2,34 +2,47 @@ import SwiftUI
 import Kingfisher
 
 struct PlantDetailView: View {
+	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@StateObject var viewModel: PlantDetailViewModel
 	
 	var body: some View {
-		ScrollView {
-			VStack {
-				PlantHeaderView(commonName: viewModel.plant.commonName, latinName: viewModel.plant.latinName, pictureUrl: viewModel.plant.pictureUrl)
-				HStack {
-					InfoBoxView(icon: Image("Difficulty"), title: "Difficulty", value: "Easy")
-					InfoBoxView(icon: Image("Water"), title: "Water", value: "Moderate")
+		ZStack(alignment: .topLeading) {
+			ScrollView {
+				VStack {
+					PlantHeaderView(commonName: viewModel.plant.commonName, latinName: viewModel.plant.latinName, pictureUrl: viewModel.plant.pictureUrl)
+					HStack {
+						InfoBoxView(icon: Image("Difficulty"), title: "Difficulty", value: "Easy")
+						InfoBoxView(icon: Image("Water"), title: "Water", value: "Moderate")
+					}
+					.padding([.top], 2)
+					.padding([.leading, .trailing], 10)
+					HStack {
+						InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(viewModel.plant.minTemp) + " °C - " + String(viewModel.plant.maxTemp) + " °C")
+						InfoBoxView(icon: Image("Fullsun"), title: "Light", value: viewModel.plant.light)
+					}
+					.padding([.leading, .trailing], 10)
+					HStack {
+						InfoBoxView(icon: Image("Height"), title: "Height", value: viewModel.plant.minHeight.toString() + " - " + viewModel.plant.maxHeight.toString() + " m")
+						InfoBoxView(icon: Image("Spread"), title: "Spread", value: viewModel.plant.minSpread.toString() + " - " + viewModel.plant.maxSpread.toString() + " m")
+					}
+					.padding([.leading, .trailing], 10)
+					DescriptionBoxView(text: viewModel.plant.description)
 				}
-				.padding([.top], 2)
-				.padding([.leading, .trailing], 10)
-				HStack {
-					InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(viewModel.plant.minTemp) + " °C - " + String(viewModel.plant.maxTemp) + " °C")
-					InfoBoxView(icon: Image("Fullsun"), title: "Light", value: viewModel.plant.light)
-				}
-				.padding([.leading, .trailing], 10)
-				HStack {
-					InfoBoxView(icon: Image("Height"), title: "Height", value: viewModel.plant.minHeight.toString() + " - " + viewModel.plant.maxHeight.toString() + " m")
-					InfoBoxView(icon: Image("Spread"), title: "Spread", value: viewModel.plant.minSpread.toString() + " - " + viewModel.plant.maxSpread.toString() + " m")
-				}
-				.padding([.leading, .trailing], 10)
-				DescriptionBoxView(text: viewModel.plant.description)
+			}
+			.toolbar(.hidden)
+			.ignoresSafeArea(.all, edges: [.top])
+			Button {
+				self.presentationMode.wrappedValue.dismiss()
+			} label: {
+				Image(systemName: "chevron.left")
+					.resizable()
+					.scaledToFit()
+					.frame(width: 16, height: 19)
+					.fontWeight(.medium)
+					.padding([.top], 12)
+					.padding([.leading], 7)
 			}
 		}
-		.toolbar(.hidden)
-		.ignoresSafeArea(.all, edges: [.top])
-		
 	}
 }
 
