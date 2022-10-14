@@ -8,6 +8,7 @@ protocol APIType {
 	func signIn(_ username: String, _ password: String) async throws -> Void
 	func signUp(_ username: String, _ email: String, _ password: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
+	func refreshToken() async -> Void
 }
 
 class API : APIType {
@@ -40,6 +41,28 @@ class API : APIType {
 		return try await makeAuthenticatedRequest(path: "plants")
 	}
 	
+	func refreshToken() async {
+		print("🔑", "Refreshing access token")
+		let url = URL(string: "\(baseUrl)/auth/refresh")!
+		var request = URLRequest(url: url)
+		request.httpMethod = "POST"
+		let headers = request.allHTTPHeaderFields ?? [:]
+		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(refreshToken)"], uniquingKeysWith: { $1 })
+
+		let (data, response) = try! await performDataRequest(for: request)
+		
+		if ((response as? HTTPURLResponse)?.statusCode == 401) {
+			UserDefaults.standard.set("", forKey: "accessToken")
+			UserDefaults.standard.set("", forKey: "refreshToken")
+			return
+		}
+		
+		let authResponse = try! JSONDecoder.app.decode(AuthResponse.self, from: data)
+		UserDefaults.standard.set(authResponse.accessToken, forKey: "accessToken")
+		UserDefaults.standard.set(authResponse.refreshToken, forKey: "refreshToken")
+	}
+	
 	private func makeRequest<Response: Decodable>(
 		path: String,
 		query: [URLQueryItem] = [],
@@ -61,7 +84,7 @@ class API : APIType {
 		var (data, response) = try await performDataRequest(for: request)
 
 		if (response as? HTTPURLResponse)?.statusCode == 401 {
-			await updateToken()
+			await refreshToken()
 
 			let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
 			if (accessToken.isEmpty) {
@@ -114,28 +137,6 @@ class API : APIType {
 		let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
 		return request
-	}
-
-	private func updateToken() async {
-		print("🔑", "Refreshing access token")
-		let url = URL(string: "\(baseUrl)/auth/refresh")!
-		var request = URLRequest(url: url)
-		request.httpMethod = "POST"
-		let headers = request.allHTTPHeaderFields ?? [:]
-		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
-		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(refreshToken)"], uniquingKeysWith: { $1 })
-
-		let (data, response) = try! await performDataRequest(for: request)
-		
-		if ((response as? HTTPURLResponse)?.statusCode == 401) {
-			UserDefaults.standard.set("", forKey: "accessToken")
-			UserDefaults.standard.set("", forKey: "refreshToken")
-			return
-		}
-		
-		let authResponse = try! JSONDecoder.app.decode(AuthResponse.self, from: data)
-		UserDefaults.standard.set(authResponse.accessToken, forKey: "accessToken")
-		UserDefaults.standard.set(authResponse.refreshToken, forKey: "refreshToken")
 	}
 }
 

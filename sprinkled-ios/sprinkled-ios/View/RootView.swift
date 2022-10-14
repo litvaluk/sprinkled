@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct RootView: View {
+	@Environment(\.scenePhase) var scenePhase
+	
 	@StateObject var viewModel: RootViewModel
 	
     var body: some View {
@@ -36,6 +38,13 @@ struct RootView: View {
 				}
 				.tag(3)
 			}
+			.onChange(of: scenePhase) { newPhase in
+				if (newPhase == .active) {
+					Task {
+						await viewModel.refreshTokenIfNeeded()
+					}
+				}
+			}
 		} else {
 			AuthView(viewModel: AuthViewModel(dependencies: dependencies))
 		}
@@ -44,6 +53,6 @@ struct RootView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(viewModel: RootViewModel())
+        RootView(viewModel: RootViewModel(dependencies: dependencies))
     }
 }

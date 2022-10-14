@@ -8,7 +8,7 @@ struct SprinkledApp: App {
 	
     var body: some Scene {
         WindowGroup {
-            RootView(viewModel: RootViewModel())
+            RootView(viewModel: RootViewModel(dependencies: dependencies))
         }
     }
 }
