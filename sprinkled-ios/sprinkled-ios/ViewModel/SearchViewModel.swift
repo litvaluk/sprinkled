@@ -33,8 +33,15 @@ final class SearchViewModel: ObservableObject {
 	@MainActor
 	func fetchPlants() async {
 		loading = true
-		plants = try! await dependencies.api.fetchPlants()
-		filteredPlants = plants
+		do {
+			plants = try await dependencies.api.fetchPlants()
+		} catch is ExpiredRefreshToken {
+			print("⌛️ Refresh token expired.")
+		} catch {
+			print("❌ Error while fetching plants.")
+			plants = []
+		}
+		updateFilteredPlants()
 		loading = false
 	}
 }

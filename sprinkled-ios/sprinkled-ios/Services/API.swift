@@ -64,9 +64,12 @@ class API : APIType {
 			await updateToken()
 
 			let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+			if (accessToken.isEmpty) {
+				throw ExpiredRefreshToken()
+			}
+			
 			let headers = request.allHTTPHeaderFields ?? [:]
 			request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
-
 			(data, response) = try! await performDataRequest(for: request)
 		}
 		
@@ -114,18 +117,25 @@ class API : APIType {
 	}
 
 	private func updateToken() async {
+		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
 		var request = URLRequest(url: url)
-		request.httpMethod = "GET"
+		request.httpMethod = "POST"
 		let headers = request.allHTTPHeaderFields ?? [:]
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(refreshToken)"], uniquingKeysWith: { $1 })
 
-		let (data, _) = try! await URLSession.shared.data(for: request)
-		let response = try! JSONDecoder.app.decode(AuthResponse.self, from: data)
-
-		UserDefaults.standard.set(response.accessToken, forKey: "accessToken")
-		UserDefaults.standard.set(response.refreshToken, forKey: "refreshToken")
+		let (data, response) = try! await performDataRequest(for: request)
+		
+		if ((response as? HTTPURLResponse)?.statusCode == 401) {
+			UserDefaults.standard.set("", forKey: "accessToken")
+			UserDefaults.standard.set("", forKey: "refreshToken")
+			return
+		}
+		
+		let authResponse = try! JSONDecoder.app.decode(AuthResponse.self, from: data)
+		UserDefaults.standard.set(authResponse.accessToken, forKey: "accessToken")
+		UserDefaults.standard.set(authResponse.refreshToken, forKey: "refreshToken")
 	}
 }
 
@@ -133,11 +143,11 @@ class API : APIType {
 
 private func performDataRequest(for request: URLRequest) async throws -> (Data, URLResponse) {
 	print("⬆️", request.url!.absoluteString)
-	if let body = request.httpBody {
-		print("BODY:", String(data: body, encoding: .utf8)!)
-	}
+//	if let body = request.httpBody {
+//		print("BODY:", String(data: body, encoding: .utf8)!)
+//	}
 	let (data, response) = try await URLSession.shared.data(for: request)
 	print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
-	print(String(data: data, encoding: .utf8)!)
+//	print(String(data: data, encoding: .utf8)!)
 	return (data, response)
 }

@@ -16,7 +16,7 @@ extension UINavigationController {
 	}
 }
 
-// JSONDecoder with right date format
+// JSONDecoder with correct date format
 extension JSONDecoder {
 	static let app: JSONDecoder = {
 		let decoder = JSONDecoder()
@@ -61,6 +61,7 @@ extension Double {
 	}
 }
 
+// enable pop back gesture (for views inside navigation stack with hidden toolbar)
 extension UINavigationController: UIGestureRecognizerDelegate {
 	override open func viewDidLoad() {
 		super.viewDidLoad()
