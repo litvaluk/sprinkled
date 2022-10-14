@@ -40,8 +40,8 @@ struct SearchView: View {
 								HStack {
 									KFImage(URL(string: plant.pictureUrl)!)
 										.resizable()
-										.frame(width: 60, height: 60)
 										.scaledToFill()
+										.frame(width: 60, height: 60)
 										.cornerRadius(10)
 										.padding([.leading, .trailing], 12)
 									VStack(alignment: .leading) {
@@ -64,6 +64,7 @@ struct SearchView: View {
 						}
 					}
 				}
+				.frame(width: gr.size.width, height: gr.size.height)
 				.navigationTitle("Search plants")
 				.onAppear {
 					Task {
