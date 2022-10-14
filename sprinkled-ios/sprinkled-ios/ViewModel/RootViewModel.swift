@@ -17,7 +17,7 @@ final class RootViewModel: ObservableObject {
 	
 	@MainActor
 	func refreshTokenIfNeeded() async {
-		var decodedAccessToken = try! decode(jwt: accessToken)
+		let decodedAccessToken = try! decode(jwt: accessToken)
 		if (decodedAccessToken.expired) {
 			await dependencies.api.refreshToken()
 		}

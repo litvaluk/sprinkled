@@ -25,6 +25,7 @@
 		8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8F6B23DF28F8268F0079F0FC /* Kingfisher */; };
 		8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E128F88E280079F0FC /* PlantDetailView.swift */; };
 		8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */; };
+		8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA38EA528F9A83400C78C2E /* AppDelegate.swift */; };
 		8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8FA3C83E28F1992E00F1D070 /* JWTDecode */; };
 		8FA3C84128F1B10E00F1D070 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */; };
 		8FA563A228EF0A1000C54AF2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */; };
@@ -55,6 +56,8 @@
 		8F6B23DC28F81A640079F0FC /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8F6B23E128F88E280079F0FC /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
+		8FA38EA428F9A1C200C78C2E /* sprinkled-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "sprinkled-ios.entitlements"; sourceTree = "<group>"; };
+		8FA38EA528F9A83400C78C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		8FA563A428F014BE00C54AF2 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -96,11 +99,13 @@
 		8F24E74728EECB86008D5AEE /* sprinkled-ios */ = {
 			isa = PBXGroup;
 			children = (
+				8FA38EA428F9A1C200C78C2E /* sprinkled-ios.entitlements */,
 				8FA3C84628F2DF8300F1D070 /* Services */,
 				8FA563A328F0137E00C54AF2 /* Model */,
 				8F24E75A28EEDC99008D5AEE /* ViewModel */,
 				8F24E75928EEDC8D008D5AEE /* View */,
 				8F24E75628EECCFE008D5AEE /* Info.plist */,
+				8FA38EA528F9A83400C78C2E /* AppDelegate.swift */,
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
 				8F24E76928EEF664008D5AEE /* Extensions.swift */,
 				8F24E74828EECB86008D5AEE /* SprinkledApp.swift */,
@@ -265,6 +270,7 @@
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
+				8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +396,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "sprinkled-ios/sprinkled-ios.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
@@ -411,6 +419,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cz.lukaslitvan.sprinkled-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -425,6 +434,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "sprinkled-ios/sprinkled-ios.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
@@ -446,6 +457,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "cz.lukaslitvan.sprinkled-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

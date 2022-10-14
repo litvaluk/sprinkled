@@ -1,4 +1,4 @@
-name: Backend Tests
+name: Backend test and deploy
 
 on:
   workflow_dispatch:
@@ -35,3 +35,17 @@ jobs:
 
       - name: Run E2E Tests
         run: npm run test:e2e -- --passWithNoTests
+  deploy:
+    needs: [unit, e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Deploy to Heroku
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          branch: "main"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "sprinkled-app"
+          heroku_email: "lukas.litvan@gmail.com"

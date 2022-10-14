@@ -1,7 +1,10 @@
 import SwiftUI
+import UIKit
 
 @main
 struct SprinkledApp: App {
+	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+	
 	init() {
 		UITabBar.appearance().unselectedItemTintColor = .label
 	}
