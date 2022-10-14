@@ -45,6 +45,8 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
+          branch: "main"
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "sprinkled-app"
           heroku_email: "lukas.litvan@gmail.com"
+          appdir: "sprinkled-backend"
