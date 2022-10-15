@@ -2,11 +2,7 @@ import Foundation
 import UserNotifications
 import UIKit
 
-protocol HasNotificationManager {
-	var notificationManager: NotificationManagerType { get }
-}
-
-protocol NotificationManagerType {
+protocol NotificationManagerProtocol {
 	func enableReminderNotifications() -> Void
 	func disableReminderNotifications() -> Void
 	func reminderNotificationsEnabled() -> Bool
@@ -15,7 +11,7 @@ protocol NotificationManagerType {
 	func eventNotificationsEnabled() -> Bool
 }
 
-final class NotificationManager: NotificationManagerType {
+final class NotificationManager: NotificationManagerProtocol {
 	let reminderNotificationsKey = "ReminderNotificationsEnabled"
 	let eventNotificationsKey = "EventNotificationsEnabled"
 	

@@ -3,6 +3,8 @@ import SwiftUI
 import JWTDecode
 
 final class ProfileViewModel: ObservableObject {
+	private var notificationManager: NotificationManagerProtocol
+	
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 	
@@ -10,13 +12,11 @@ final class ProfileViewModel: ObservableObject {
 	@Published var reminderNotificationsEnabled: Bool
 	@Published var eventNotificationsEnabled: Bool
 	
-	typealias Dependencies = HasAPI & HasNotificationManager
-	private let dependencies: Dependencies
-	
-	init(dependencies: Dependencies) {
-		self.dependencies = dependencies
-		reminderNotificationsEnabled = dependencies.notificationManager.reminderNotificationsEnabled()
-		eventNotificationsEnabled = dependencies.notificationManager.eventNotificationsEnabled()
+	init() {
+		@Inject var notificationManager: NotificationManagerProtocol
+		self.notificationManager = notificationManager
+		reminderNotificationsEnabled = notificationManager.reminderNotificationsEnabled()
+		eventNotificationsEnabled = notificationManager.eventNotificationsEnabled()
 	}
 	
 	func logout() {
@@ -30,17 +30,17 @@ final class ProfileViewModel: ObservableObject {
 	
 	func onReminderNotificationsToggleChange() {
 		if (reminderNotificationsEnabled) {
-			dependencies.notificationManager.enableReminderNotifications()
+			notificationManager.enableReminderNotifications()
 		} else {
-			dependencies.notificationManager.disableReminderNotifications()
+			notificationManager.disableReminderNotifications()
 		}
 	}
 	
 	func onEventNotificationsToggleChange() {
 		if (eventNotificationsEnabled) {
-			dependencies.notificationManager.enableEventNotifications()
+			notificationManager.enableEventNotifications()
 		} else {
-			dependencies.notificationManager.disableEventNotifications()
+			notificationManager.disableEventNotifications()
 		}
 	}
 }

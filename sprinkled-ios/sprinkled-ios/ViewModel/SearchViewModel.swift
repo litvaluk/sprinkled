@@ -2,18 +2,13 @@ import Foundation
 import SwiftUI
 
 final class SearchViewModel: ObservableObject {
+	@Inject private var api: APIProtocol
+	
 	@Published var plants: [Plant] = []
 	@Published var filteredPlants: [Plant] = []
 	@Published var searchText = ""
 	@Published var loading = false
 	@Published var path: [Plant] = []
-	
-	typealias Dependencies = HasAPI & HasNotificationManager
-	private let dependencies: Dependencies
-	
-	init(dependencies: Dependencies) {
-		self.dependencies = dependencies
-	}
 	
 	@MainActor
 	func updateFilteredPlants() {
@@ -34,7 +29,7 @@ final class SearchViewModel: ObservableObject {
 	func fetchPlants() async {
 		loading = true
 		do {
-			plants = try await dependencies.api.fetchPlants()
+			plants = try await api.fetchPlants()
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 		} catch {

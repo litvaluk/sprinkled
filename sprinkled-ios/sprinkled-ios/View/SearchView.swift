@@ -7,8 +7,8 @@ struct SearchView: View {
 	
 	var body: some View {
 		NavigationStack(path: $viewModel.path) {
-			GeometryReader { gr in
-				ScrollViewReader { proxy in
+			ScrollViewReader { proxy in
+				GeometryReader { gr in
 					ScrollView {
 						HStack {
 							TextField("Search", text: $viewModel.searchText)
@@ -64,7 +64,7 @@ struct SearchView: View {
 								.padding([.leading, .trailing], 16)
 							}
 							.navigationDestination(for: Plant.self) { plant in
-								PlantDetailView(viewModel: PlantDetailViewModel(plant: plant, dependencies: dependencies))
+								PlantDetailView(viewModel: PlantDetailViewModel(plant: plant))
 									.onChange(of: tabBarState.tappedSameCount) { tappedSameCount in
 										if (tappedSameCount > 0 && !viewModel.path.isEmpty) {
 											viewModel.path = []
@@ -88,6 +88,7 @@ struct SearchView: View {
 						}
 					}
 				}
+				.ignoresSafeArea(.keyboard, edges: .bottom)
 			}
 		}
 	}
@@ -95,6 +96,6 @@ struct SearchView: View {
 
 struct SearchView_Previews: PreviewProvider {
 	static var previews: some View {
-		SearchView(viewModel: SearchViewModel(dependencies: dependencies))
+		SearchView(viewModel: SearchViewModel())
 	}
 }

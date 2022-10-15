@@ -6,6 +6,9 @@ import JWTDecode
 struct SprinkledApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
+	@Provider var api = API() as APIProtocol
+	@Provider var notificationManager = NotificationManager() as NotificationManagerProtocol
+	
 	init() {
 		UITabBar.appearance().unselectedItemTintColor = .label
 		

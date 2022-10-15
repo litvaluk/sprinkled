@@ -7,7 +7,7 @@ struct AuthView: View {
 		VStack (spacing: 8) {
 			if (!viewModel.isKeyboardPresented || viewModel.isSignInViewDisplayed) {
 				Text("Sprinkled")
-				.font(.system(size: 48))
+					.font(.system(size: 48))
 					.fontWeight(.medium)
 					.padding()
 			}
@@ -83,7 +83,7 @@ struct AuthView: View {
 
 struct AuthView_Previews: PreviewProvider {
 	static var previews: some View {
-		AuthView(viewModel: AuthViewModel(dependencies: dependencies))
+		AuthView(viewModel: AuthViewModel())
 	}
 }
 

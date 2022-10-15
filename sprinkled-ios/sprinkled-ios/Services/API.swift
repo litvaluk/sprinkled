@@ -1,18 +1,14 @@
 import Foundation
 import JWTDecode
 
-protocol HasAPI {
-	var api: APIType { get }
-}
-
-protocol APIType {
+protocol APIProtocol {
 	func signIn(_ username: String, _ password: String) async throws -> Void
 	func signUp(_ username: String, _ email: String, _ password: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
 	func refreshToken() async -> Void
 }
 
-class API : APIType {
+final class API : APIProtocol {
 	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "https://sprinkled-app.herokuapp.com"
 	
 	func signIn(_ username: String, _ password: String) async throws {
@@ -138,29 +134,45 @@ class API : APIType {
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
 		return request
 	}
-}
-
-
-
-private func performDataRequest(for request: URLRequest) async throws -> (Data, URLResponse) {
-	print("⬆️", request.url!.absoluteString)
-//	if let body = request.httpBody {
-//		print("BODY:", String(data: body, encoding: .utf8)!)
-//	}
-	let (data, response) = try await URLSession.shared.data(for: request)
-	print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
-//	print(String(data: data, encoding: .utf8)!)
-	return (data, response)
-}
-
-private func isTokenValid(_ token: String?) -> Bool {
-	guard let token else {
-		return false
+	
+	private func performDataRequest(for request: URLRequest) async throws -> (Data, URLResponse) {
+		print("⬆️", request.url!.absoluteString)
+//		if let body = request.httpBody {
+//			print("BODY:", String(data: body, encoding: .utf8)!)
+//		}
+		let (data, response) = try await URLSession.shared.data(for: request)
+		print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
+//		print(String(data: data, encoding: .utf8)!)
+		return (data, response)
 	}
-	do {
-		let decoded = try decode(jwt: token)
-		return !decoded.expired
-	} catch {
-		return false
+
+	private func isTokenValid(_ token: String?) -> Bool {
+		guard let token else {
+			return false
+		}
+		do {
+			let decoded = try decode(jwt: token)
+			return !decoded.expired
+		} catch {
+			return false
+		}
+	}
+}
+
+final class TestAPI : APIProtocol {
+	func signIn(_ username: String, _ password: String) async throws {
+		return
+	}
+	
+	func signUp(_ username: String, _ email: String, _ password: String) async throws {
+		return
+	}
+	
+	func fetchPlants() async throws -> [Plant] {
+		return TestData.plants
+	}
+	
+	func refreshToken() async {
+		return
 	}
 }

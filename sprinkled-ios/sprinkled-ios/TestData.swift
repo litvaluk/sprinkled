@@ -155,21 +155,3 @@ struct TestData {
 		)
 	]
 }
-
-class TestAPI : APIType {
-	func signIn(_ username: String, _ password: String) async throws {
-		return
-	}
-	
-	func signUp(_ username: String, _ email: String, _ password: String) async throws {
-		return
-	}
-	
-	func fetchPlants() async throws -> [Plant] {
-		return TestData.plants
-	}
-	
-	func refreshToken() async {
-		return
-	}
-}

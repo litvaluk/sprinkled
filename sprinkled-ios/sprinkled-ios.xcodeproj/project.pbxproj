@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9C828FAD73D00B4308C /* TabBarState.swift */; };
+		8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9CA28FB564000B4308C /* DependencyInjector.swift */; };
 		8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74828EECB86008D5AEE /* SprinkledApp.swift */; };
 		8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74A28EECB86008D5AEE /* RootView.swift */; };
 		8F24E74D28EECB8A008D5AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F24E74C28EECB8A008D5AEE /* Assets.xcassets */; };
@@ -32,13 +33,13 @@
 		8FA563A228EF0A1000C54AF2 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */; };
 		8FA563A528F014BE00C54AF2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A428F014BE00C54AF2 /* API.swift */; };
 		8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A828F0240800C54AF2 /* AuthResponse.swift */; };
-		8FA563AF28F031A800C54AF2 /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563AE28F031A800C54AF2 /* AppDependency.swift */; };
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8F17B9C828FAD73D00B4308C /* TabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarState.swift; sourceTree = "<group>"; };
+		8F17B9CA28FB564000B4308C /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		8F24E74528EECB86008D5AEE /* sprinkled-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sprinkled-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F24E74828EECB86008D5AEE /* SprinkledApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprinkledApp.swift; sourceTree = "<group>"; };
 		8F24E74A28EECB86008D5AEE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		8FA563A428F014BE00C54AF2 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8FA563A828F0240800C54AF2 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
-		8FA563AE28F031A800C54AF2 /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
 		8FA563B028F04AAA00C54AF2 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,7 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				8FA563A428F014BE00C54AF2 /* API.swift */,
-				8FA563AE28F031A800C54AF2 /* AppDependency.swift */,
+				8F17B9CA28FB564000B4308C /* DependencyInjector.swift */,
 				8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */,
 			);
 			path = Services;
@@ -257,11 +257,11 @@
 				8F24E76428EEE5A9008D5AEE /* RootViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
+				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
-				8FA563AF28F031A800C54AF2 /* AppDependency.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */,
 				8F24E75C28EEDCBD008D5AEE /* MyPlantsView.swift in Sources */,

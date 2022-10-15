@@ -25,7 +25,7 @@ struct RootView: View {
 							Image("MyPlantsViewIcon")
 						}
 					}.tag(1)
-				SearchView(viewModel: SearchViewModel(dependencies: dependencies))
+				SearchView(viewModel: SearchViewModel())
 					.tabItem {
 						if (tabBarState.selection == 2) {
 							Image("SearchViewIconSelected")
@@ -33,7 +33,7 @@ struct RootView: View {
 							Image("SearchViewIcon")
 						}
 					}.tag(2)
-				ProfileView(viewModel: ProfileViewModel(dependencies: dependencies))
+				ProfileView(viewModel: ProfileViewModel())
 					.tabItem {
 						if (tabBarState.selection == 3) {
 							Image("ProfileViewIconSelected")
@@ -45,7 +45,7 @@ struct RootView: View {
 			}
 			.environmentObject(tabBarState)
 		} else {
-			AuthView(viewModel: AuthViewModel(dependencies: dependencies))
+			AuthView(viewModel: AuthViewModel())
 		}
 	}
 }

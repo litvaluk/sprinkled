@@ -170,6 +170,6 @@ struct InfoBoxView: View {
 
 struct PlantDetailView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlantDetailView(viewModel: PlantDetailViewModel(plant: TestData.plants[0], dependencies: dependencies))
+		PlantDetailView(viewModel: PlantDetailViewModel(plant: TestData.plants[0]))
 	}
 }

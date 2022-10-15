@@ -2,6 +2,8 @@ import Foundation
 import SwiftUI
 
 final class AuthViewModel: ObservableObject {
+	@Inject private var api: APIProtocol
+	
 	@Published var isSignInViewDisplayed = true
 	@Published var isProcessing = false
 	@Published var errorMessage = ""
@@ -16,20 +18,13 @@ final class AuthViewModel: ObservableObject {
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 	
-	typealias Dependencies = HasAPI
-	private let dependencies: Dependencies
-	
-	init(dependencies: Dependencies) {
-		self.dependencies = dependencies
-	}
-	
 	@MainActor
 	func signInUser() async {
 		errorMessage = ""
 		isProcessing = true
 		
 		do {
-			try await self.dependencies.api.signIn(signInUsername, signInPassword)
+			try await self.api.signIn(signInUsername, signInPassword)
 		} catch {
 			errorMessage = "Something went wrong."
 		}
@@ -49,7 +44,7 @@ final class AuthViewModel: ObservableObject {
 		}
 		
 		do {
-			try await self.dependencies.api.signUp(signUpUsername, signUpEmail, signUpPassword)
+			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword)
 		} catch {
 			errorMessage = "Something went wrong."
 		}
