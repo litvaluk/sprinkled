@@ -6,6 +6,7 @@ import * as pactum from 'pactum';
 import { regex } from 'pactum-matchers';
 import { AppModule } from '../src/modules';
 import { LoginDto } from '../src/modules/auth/dto';
+import { NotificationService } from '../src/modules/notification/notification.service';
 import { CreateUserDto } from '../src/modules/user/dto';
 
 const JWT_TOKEN_REGEX = /^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)$/;
@@ -20,7 +21,10 @@ describe('Sprinkled', () => {
 
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(NotificationService)
+      .useValue({})
+      .compile();
 
     app = moduleRef.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
