@@ -11,6 +11,15 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
+CREATE TABLE "push_tokens" (
+    "id" SERIAL NOT NULL,
+    "token" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
+
+    CONSTRAINT "push_tokens_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "teams" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -116,6 +125,9 @@ CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "push_tokens_token_key" ON "push_tokens"("token");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "teams_name_key" ON "teams"("name");
 
 -- CreateIndex
@@ -123,6 +135,9 @@ CREATE UNIQUE INDEX "_TeamToUser_AB_unique" ON "_TeamToUser"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_TeamToUser_B_index" ON "_TeamToUser"("B");
+
+-- AddForeignKey
+ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "teams" ADD CONSTRAINT "teams_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

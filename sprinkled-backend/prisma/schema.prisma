@@ -21,8 +21,18 @@ model User {
   plantEntries PlantEntry[]
   events       Event[]
   reminders    Reminder[]
+  PushToken    PushToken[]
 
   @@map("users")
+}
+
+model PushToken {
+  id     Int    @id @default(autoincrement())
+  token  String @unique
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("push_tokens")
 }
 
 model Team {
