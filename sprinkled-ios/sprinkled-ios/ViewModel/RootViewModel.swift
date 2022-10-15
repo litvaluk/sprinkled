@@ -3,9 +3,8 @@ import SwiftUI
 import JWTDecode
 
 final class RootViewModel: ObservableObject {
-	@Published var tabBarSelection = 0
-	
+	@StateObject var tabBarState = TabBarState()
+
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 }
-

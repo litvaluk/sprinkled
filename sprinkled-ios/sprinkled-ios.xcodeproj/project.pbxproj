@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9C828FAD73D00B4308C /* TabBarState.swift */; };
 		8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74828EECB86008D5AEE /* SprinkledApp.swift */; };
 		8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74A28EECB86008D5AEE /* RootView.swift */; };
 		8F24E74D28EECB8A008D5AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F24E74C28EECB8A008D5AEE /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8F17B9C828FAD73D00B4308C /* TabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarState.swift; sourceTree = "<group>"; };
 		8F24E74528EECB86008D5AEE /* sprinkled-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sprinkled-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F24E74828EECB86008D5AEE /* SprinkledApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SprinkledApp.swift; sourceTree = "<group>"; };
 		8F24E74A28EECB86008D5AEE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
 				8F24E76928EEF664008D5AEE /* Extensions.swift */,
 				8F24E74828EECB86008D5AEE /* SprinkledApp.swift */,
+				8F17B9C828FAD73D00B4308C /* TabBarState.swift */,
 				8F6B23DC28F81A640079F0FC /* TestData.swift */,
 				8F24E74C28EECB8A008D5AEE /* Assets.xcassets */,
 				8F24E74E28EECB8A008D5AEE /* Preview Content */,
@@ -257,6 +260,7 @@
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
+				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
 				8FA563AF28F031A800C54AF2 /* AppDependency.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */,

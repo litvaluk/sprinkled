@@ -1,4 +1,3 @@
-
 import Foundation
 import SwiftUI
 
@@ -7,6 +6,7 @@ final class SearchViewModel: ObservableObject {
 	@Published var filteredPlants: [Plant] = []
 	@Published var searchText = ""
 	@Published var loading = false
+	@Published var path: [Plant] = []
 	
 	typealias Dependencies = HasAPI & HasNotificationManager
 	private let dependencies: Dependencies

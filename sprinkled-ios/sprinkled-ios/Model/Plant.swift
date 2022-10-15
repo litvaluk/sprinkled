@@ -1,6 +1,6 @@
 import Foundation
 
-struct Plant: Codable, Identifiable {
+struct Plant: Codable, Identifiable, Hashable {
 	let id: Int
 	let latinName: String
 	let commonName: String
