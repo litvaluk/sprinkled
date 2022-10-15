@@ -38,13 +38,6 @@ struct RootView: View {
 				}
 				.tag(3)
 			}
-			.onChange(of: scenePhase) { newPhase in
-				if (newPhase == .active) {
-					Task {
-						await viewModel.refreshTokenIfNeeded()
-					}
-				}
-			}
 		} else {
 			AuthView(viewModel: AuthViewModel(dependencies: dependencies))
 		}
@@ -53,6 +46,6 @@ struct RootView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        RootView(viewModel: RootViewModel(dependencies: dependencies))
+        RootView(viewModel: RootViewModel())
     }
 }

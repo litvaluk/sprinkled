@@ -7,20 +7,5 @@ final class RootViewModel: ObservableObject {
 	
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
-	
-	typealias Dependencies = HasAPI
-	private let dependencies: Dependencies
-
-	init(dependencies: Dependencies) {
-		self.dependencies = dependencies
-	}
-	
-	@MainActor
-	func refreshTokenIfNeeded() async {
-		let decodedAccessToken = try! decode(jwt: accessToken)
-		if (decodedAccessToken.expired) {
-			await dependencies.api.refreshToken()
-		}
-	}
 }
 

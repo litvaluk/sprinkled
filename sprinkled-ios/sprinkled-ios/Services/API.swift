@@ -1,4 +1,5 @@
 import Foundation
+import JWTDecode
 
 protocol HasAPI {
 	var api: APIType { get }
@@ -12,7 +13,7 @@ protocol APIType {
 }
 
 class API : APIType {
-	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://localhost:3000"
+	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "https://sprinkled-app.herokuapp.com"
 	
 	func signIn(_ username: String, _ password: String) async throws {
 		let body = [
@@ -80,21 +81,20 @@ class API : APIType {
 		method: String? = nil,
 		body: Data? = nil
 	) async throws -> Response {
-		var request = try prepareAuthenticatedRequest(path: path, query: query, method: method, body: body)
-		var (data, response) = try await performDataRequest(for: request)
-
-		if (response as? HTTPURLResponse)?.statusCode == 401 {
+		if (!isTokenValid(UserDefaults.standard.string(forKey: "accessToken"))) {
 			await refreshToken()
-
-			let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-			if (accessToken.isEmpty) {
-				throw ExpiredRefreshToken()
-			}
-			
-			let headers = request.allHTTPHeaderFields ?? [:]
-			request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
-			(data, response) = try! await performDataRequest(for: request)
 		}
+		
+		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+		if (refreshToken.isEmpty) {
+			throw ExpiredRefreshToken()
+		}
+
+		var request = try prepareAuthenticatedRequest(path: path, query: query, method: method, body: body)
+		let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+		let headers = request.allHTTPHeaderFields ?? [:]
+		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
+		let (data, _) = try! await performDataRequest(for: request)
 		
 		return try JSONDecoder.app.decode(Response.self, from: data)
 	}
@@ -151,4 +151,16 @@ private func performDataRequest(for request: URLRequest) async throws -> (Data, 
 	print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
 //	print(String(data: data, encoding: .utf8)!)
 	return (data, response)
+}
+
+private func isTokenValid(_ token: String?) -> Bool {
+	guard let token else {
+		return false
+	}
+	do {
+		let decoded = try decode(jwt: token)
+		return !decoded.expired
+	} catch {
+		return false
+	}
 }
