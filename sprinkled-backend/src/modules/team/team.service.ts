@@ -48,7 +48,7 @@ export class TeamService {
       select: {
         id: true,
         name: true,
-        place: {
+        places: {
           select: {
             id: true,
             name: true,

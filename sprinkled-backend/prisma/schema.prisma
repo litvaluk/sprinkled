@@ -39,7 +39,7 @@ model Team {
   id        Int     @id @default(autoincrement())
   name      String  @unique
   users     User[]
-  place     Place[]
+  places    Place[]
   creator   User    @relation(fields: [creatorId], references: [id], name: "creator")
   creatorId Int
 
