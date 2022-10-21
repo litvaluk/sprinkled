@@ -41,6 +41,9 @@ struct MyPlantsView: View {
 					}
 				}
 			}
+			.navigationDestination(for: TeamSummaryPlace.self) { place in
+				PlaceView(place: place)
+			}
 		}
 		.task {
 			await viewModel.fetchTeamSummaries()
@@ -95,9 +98,6 @@ struct SingleCardView: View {
 				}
 			}
 			Text(teamSummaryPlace.name)
-		}
-		.navigationDestination(for: TeamSummaryPlace.self) { place in
-			PlaceView(place: place)
 		}
 	}
 }

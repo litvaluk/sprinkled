@@ -166,15 +166,15 @@
 			isa = PBXGroup;
 			children = (
 				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
+				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
+				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
+				8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */,
 				8F6B23E128F88E280079F0FC /* PlantDetailView.swift */,
 				8F24E75D28EEDCD9008D5AEE /* ProfileView.swift */,
 				8F24E74A28EECB86008D5AEE /* RootView.swift */,
 				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
 				8F24E76128EEDD13008D5AEE /* TaskView.swift */,
-				8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */,
-				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
-				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,11 +183,11 @@
 			isa = PBXGroup;
 			children = (
 				8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */,
+				8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */,
 				8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */,
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
-				8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
