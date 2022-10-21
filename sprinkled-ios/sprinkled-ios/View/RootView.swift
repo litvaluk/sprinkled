@@ -17,7 +17,7 @@ struct RootView: View {
 							Image("TaskViewIcon")
 						}
 					}.tag(0)
-				MyPlantsView()
+				MyPlantsView(viewModel: MyPlantsViewModel())
 					.tabItem {
 						if (tabBarState.selection == 1) {
 							Image("MyPlantsViewIconSelected")

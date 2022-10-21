@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import JWTDecode
 
 final class RootViewModel: ObservableObject {
 	@StateObject var tabBarState = TabBarState()

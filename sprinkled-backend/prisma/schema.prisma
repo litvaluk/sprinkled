@@ -64,25 +64,26 @@ model Picture {
   createdAt    DateTime   @default(now())
   user         User       @relation(fields: [userId], references: [id])
   userId       Int
-  PlantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
+  plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
   plantEntryId Int
 
   @@map("pictures")
 }
 
 model PlantEntry {
-  id        Int        @id @default(autoincrement())
-  name      String
-  createdAt DateTime   @default(now())
-  creator   User       @relation(fields: [creatorId], references: [id])
-  creatorId Int
-  place     Place      @relation(fields: [placeId], references: [id])
-  placeId   Int
-  plant     Plant      @relation(fields: [plantId], references: [id])
-  plantId   Int
-  pictures  Picture[]
-  events    Event[]
-  reminders Reminder[]
+  id               Int        @id @default(autoincrement())
+  name             String
+  createdAt        DateTime   @default(now())
+  creator          User       @relation(fields: [creatorId], references: [id])
+  creatorId        Int
+  place            Place      @relation(fields: [placeId], references: [id])
+  placeId          Int
+  plant            Plant      @relation(fields: [plantId], references: [id])
+  plantId          Int
+  pictures         Picture[]
+  events           Event[]
+  reminders        Reminder[]
+  headerPictureUrl String?
 
   @@map("plant_entries")
 }

@@ -57,6 +57,7 @@ CREATE TABLE "plant_entries" (
     "creatorId" INTEGER NOT NULL,
     "placeId" INTEGER NOT NULL,
     "plantId" INTEGER NOT NULL,
+    "headerPictureUrl" TEXT,
 
     CONSTRAINT "plant_entries_pkey" PRIMARY KEY ("id")
 );

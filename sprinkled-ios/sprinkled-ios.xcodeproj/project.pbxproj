@@ -29,6 +29,11 @@
 		8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8F6B23DF28F8268F0079F0FC /* Kingfisher */; };
 		8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E128F88E280079F0FC /* PlantDetailView.swift */; };
 		8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */; };
+		8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */; };
+		8F8F5A5A2902BBF4009D6DC9 /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */; };
+		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
+		8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */; };
+		8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */; };
 		8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA38EA528F9A83400C78C2E /* AppDelegate.swift */; };
 		8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8FA3C83E28F1992E00F1D070 /* JWTDecode */; };
 		8FA3C84128F1B10E00F1D070 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */; };
@@ -74,6 +79,11 @@
 		8F6B23DC28F81A640079F0FC /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8F6B23E128F88E280079F0FC /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
+		8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlantsViewModel.swift; sourceTree = "<group>"; };
+		8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesView.swift; sourceTree = "<group>"; };
+		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
+		8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSummary.swift; sourceTree = "<group>"; };
+		8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamView.swift; sourceTree = "<group>"; };
 		8FA38EA428F9A1C200C78C2E /* sprinkled-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "sprinkled-ios.entitlements"; sourceTree = "<group>"; };
 		8FA38EA528F9A83400C78C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -162,6 +172,9 @@
 				8F24E74A28EECB86008D5AEE /* RootView.swift */,
 				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
 				8F24E76128EEDD13008D5AEE /* TaskView.swift */,
+				8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */,
+				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
+				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -174,6 +187,7 @@
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
+				8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -202,6 +216,7 @@
 				8FA563A828F0240800C54AF2 /* AuthResponse.swift */,
 				8FA563B028F04AAA00C54AF2 /* Reminder.swift */,
 				8F6B23D628F7FBBF0079F0FC /* Plant.swift */,
+				8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -319,10 +334,13 @@
 				8F6B23DD28F81A640079F0FC /* TestData.swift in Sources */,
 				8FA3C84128F1B10E00F1D070 /* NotificationManager.swift in Sources */,
 				8F24E76428EEE5A9008D5AEE /* RootViewModel.swift in Sources */,
+				8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
 				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
+				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,
+				8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */,
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
@@ -332,12 +350,14 @@
 				8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */,
 				8FA563A228EF0A1000C54AF2 /* ProfileViewModel.swift in Sources */,
 				8F24E76628EEF0B3008D5AEE /* AuthView.swift in Sources */,
+				8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */,
 				8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */,
 				8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */,
 				8FA563A528F014BE00C54AF2 /* API.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
+				8F8F5A5A2902BBF4009D6DC9 /* PlacesView.swift in Sources */,
 				8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

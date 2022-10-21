@@ -154,4 +154,36 @@ struct TestData {
 			light: "Full sun"
 		)
 	]
+	
+	static let teamSummaries = [
+		TeamSummary(id: 0, name: "Personal", places: [
+			TeamSummaryPlace(id: 1, name: "Place 1", plantEntries: [
+				TeamSummaryPlantEntry(id: 1, name: "Plant 1", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 2, name: "Plant 2", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 3, name: "Plant 3", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+			]),
+			TeamSummaryPlace(id: 2, name: "Place 2", plantEntries: [
+				TeamSummaryPlantEntry(id: 4, name: "Plant 4", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 5, name: "Plant 5", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+			])
+		]),
+		TeamSummary(id: 1, name: "Team 1", places: [
+			TeamSummaryPlace(id: 3, name: "Place 3", plantEntries: [
+				TeamSummaryPlantEntry(id: 6, name: "Plant 6", headerPictureUrl: nil),
+				TeamSummaryPlantEntry(id: 7, name: "Plant 7", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 8, name: "Plant 8", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 9, name: "Plant 9", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+			]),
+		]),
+		TeamSummary(id: 2, name: "Team 2", places: [
+			TeamSummaryPlace(id: 4, name: "Place 4", plantEntries: [
+				TeamSummaryPlantEntry(id: 10, name: "Plant 10", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+			]),
+			TeamSummaryPlace(id: 5, name: "Place 5", plantEntries: [
+				TeamSummaryPlantEntry(id: 11, name: "Plant 11", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+				TeamSummaryPlantEntry(id: 12, name: "Plant 12", headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg"),
+			]),
+			TeamSummaryPlace(id: 6, name: "Place 6", plantEntries: [])
+		])
+	]
 }

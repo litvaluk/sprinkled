@@ -5,6 +5,7 @@ protocol APIProtocol {
 	func signIn(_ username: String, _ password: String) async throws -> Void
 	func signUp(_ username: String, _ email: String, _ password: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
+	func fetchTeamSummaries() async throws -> [TeamSummary]
 	func refreshToken() async -> Void
 }
 
@@ -36,6 +37,10 @@ final class API : APIProtocol {
 	
 	func fetchPlants() async throws -> [Plant] {
 		return try await makeAuthenticatedRequest(path: "plants")
+	}
+	
+	func fetchTeamSummaries() async throws -> [TeamSummary] {
+		return try await makeAuthenticatedRequest(path: "teams/summary")
 	}
 	
 	func refreshToken() async {
@@ -174,5 +179,9 @@ final class TestAPI : APIProtocol {
 	
 	func refreshToken() async {
 		return
+	}
+	
+	func fetchTeamSummaries() async throws -> [TeamSummary] {
+		return TestData.teamSummaries
 	}
 }
