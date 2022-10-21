@@ -85,6 +85,7 @@ export class TeamService {
     teams.unshift({
       name: 'Personal',
       ...personalTeam,
+      id: 0,
     });
     return teams;
   }
