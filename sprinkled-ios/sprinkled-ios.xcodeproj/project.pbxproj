@@ -21,6 +21,8 @@
 		8F24E76628EEF0B3008D5AEE /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76528EEF0B3008D5AEE /* AuthView.swift */; };
 		8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */; };
 		8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76928EEF664008D5AEE /* Extensions.swift */; };
+		8F2FBE18290176CD00614EB4 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */; };
+		8F66E1BD28FD9D950071C879 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */; };
 		8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */; };
 		8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23D628F7FBBF0079F0FC /* Plant.swift */; };
 		8F6B23DD28F81A640079F0FC /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23DC28F81A640079F0FC /* TestData.swift */; };
@@ -36,6 +38,16 @@
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F2FBE19290176CD00614EB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F24E73D28EECB86008D5AEE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F24E74428EECB86008D5AEE;
+			remoteInfo = "sprinkled-ios";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		8F17B9C828FAD73D00B4308C /* TabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarState.swift; sourceTree = "<group>"; };
@@ -54,6 +66,9 @@
 		8F24E76528EEF0B3008D5AEE /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		8F24E76928EEF664008D5AEE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8F2FBE15290176CD00614EB4 /* sprinkled-ios-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sprinkled-ios-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
+		8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8F6B23D628F7FBBF0079F0FC /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		8F6B23DC28F81A640079F0FC /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
@@ -79,6 +94,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8F2FBE12290176CD00614EB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -86,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				8F24E74728EECB86008D5AEE /* sprinkled-ios */,
+				8F2FBE16290176CD00614EB4 /* sprinkled-ios-tests */,
 				8F24E74628EECB86008D5AEE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				8F24E74528EECB86008D5AEE /* sprinkled-ios.app */,
+				8F2FBE15290176CD00614EB4 /* sprinkled-ios-tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,6 +130,7 @@
 				8FA563A328F0137E00C54AF2 /* Model */,
 				8F24E75A28EEDC99008D5AEE /* ViewModel */,
 				8F24E75928EEDC8D008D5AEE /* View */,
+				8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */,
 				8F24E75628EECCFE008D5AEE /* Info.plist */,
 				8FA38EA528F9A83400C78C2E /* AppDelegate.swift */,
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
@@ -153,6 +178,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		8F2FBE16290176CD00614EB4 /* sprinkled-ios-tests */ = {
+			isa = PBXGroup;
+			children = (
+				8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */,
+			);
+			path = "sprinkled-ios-tests";
+			sourceTree = "<group>";
+		};
 		8FA3C84628F2DF8300F1D070 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +230,24 @@
 			productReference = 8F24E74528EECB86008D5AEE /* sprinkled-ios.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8F2FBE14290176CD00614EB4 /* sprinkled-ios-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F2FBE1B290176CD00614EB4 /* Build configuration list for PBXNativeTarget "sprinkled-ios-tests" */;
+			buildPhases = (
+				8F2FBE11290176CD00614EB4 /* Sources */,
+				8F2FBE12290176CD00614EB4 /* Frameworks */,
+				8F2FBE13290176CD00614EB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8F2FBE1A290176CD00614EB4 /* PBXTargetDependency */,
+			);
+			name = "sprinkled-ios-tests";
+			productName = "sprinkled-ios-tests";
+			productReference = 8F2FBE15290176CD00614EB4 /* sprinkled-ios-tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -209,6 +260,10 @@
 				TargetAttributes = {
 					8F24E74428EECB86008D5AEE = {
 						CreatedOnToolsVersion = 14.0.1;
+					};
+					8F2FBE14290176CD00614EB4 = {
+						CreatedOnToolsVersion = 14.0.1;
+						TestTargetID = 8F24E74428EECB86008D5AEE;
 					};
 				};
 			};
@@ -230,6 +285,7 @@
 			projectRoot = "";
 			targets = (
 				8F24E74428EECB86008D5AEE /* sprinkled-ios */,
+				8F2FBE14290176CD00614EB4 /* sprinkled-ios-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -241,6 +297,14 @@
 			files = (
 				8F24E75028EECB8A008D5AEE /* Preview Assets.xcassets in Resources */,
 				8F24E74D28EECB8A008D5AEE /* Assets.xcassets in Resources */,
+				8F66E1BD28FD9D950071C879 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F2FBE13290176CD00614EB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +342,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8F2FBE11290176CD00614EB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F2FBE18290176CD00614EB4 /* SearchViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F2FBE1A290176CD00614EB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F24E74428EECB86008D5AEE /* sprinkled-ios */;
+			targetProxy = 8F2FBE19290176CD00614EB4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F24E75128EECB8A008D5AEE /* Debug */ = {
@@ -471,6 +551,48 @@
 			};
 			name = Release;
 		};
+		8F2FBE1C290176CD00614EB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LZFDNCMC92;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cz.lukaslitvan.sprinkled-ios-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sprinkled-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sprinkled-ios";
+			};
+			name = Debug;
+		};
+		8F2FBE1D290176CD00614EB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LZFDNCMC92;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "cz.lukaslitvan.sprinkled-ios-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sprinkled-ios.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sprinkled-ios";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -488,6 +610,15 @@
 			buildConfigurations = (
 				8F24E75428EECB8A008D5AEE /* Debug */,
 				8F24E75528EECB8A008D5AEE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F2FBE1B290176CD00614EB4 /* Build configuration list for PBXNativeTarget "sprinkled-ios-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F2FBE1C290176CD00614EB4 /* Debug */,
+				8F2FBE1D290176CD00614EB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
