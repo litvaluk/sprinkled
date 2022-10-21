@@ -37,7 +37,7 @@ export class TeamService {
   }
 
   async findAllForUserSummary(userId: number) {
-    return await this.prisma.team.findMany({
+    let teams = await this.prisma.team.findMany({
       where: {
         users: {
           some: {
@@ -62,6 +62,31 @@ export class TeamService {
         },
       },
     });
+    let personalTeam = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        places: {
+          select: {
+            id: true,
+            name: true,
+            plantEntries: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    teams.unshift({
+      name: 'Personal',
+      ...personalTeam,
+    });
+    return teams;
   }
 
   async findOne(id: number) {
