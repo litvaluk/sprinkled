@@ -31,6 +31,8 @@ struct PlantDetailView: View {
 			}
 			.toolbar(.hidden)
 			.ignoresSafeArea(.all, edges: [.top])
+		}
+		.overlay(alignment: .topLeading) {
 			Button {
 				self.presentationMode.wrappedValue.dismiss()
 			} label: {
@@ -76,33 +78,32 @@ struct PlantHeaderView: View {
 						.offset(y: -gr.frame(in: .global).minY)
 				}
 			}
-			.frame(height: 240)
-			HStack {
-				VStack(alignment: .leading) {
-					Text(commonName)
-						.foregroundColor(.black)
-						.font(.title)
-					Text(latinName)
-						.foregroundColor(.black)
-						.font(.title3)
-				}
-				Spacer()
-				Button {} label: {
-					ZStack {
-						RoundedRectangle(cornerRadius: 15)
-							.frame(width: 90, height: 60)
-							.foregroundColor(.sprinkledGreen)
-						Text("Add to my plants")
-							.font(.subheadline)
-							.foregroundColor(.white)
-							.multilineTextAlignment(.center)
-							.frame(width: 90, height: 60)
-					}
+			.frame(height: 200)
+		}
+		HStack {
+			VStack(alignment: .leading) {
+				Text(commonName)
+					.foregroundColor(.black)
+					.font(.title)
+				Text(latinName)
+					.foregroundColor(.black)
+					.font(.title3)
+			}
+			Spacer()
+			Button {} label: {
+				ZStack {
+					RoundedRectangle(cornerRadius: 15)
+						.frame(width: 90, height: 60)
+						.foregroundColor(.sprinkledGreen)
+					Text("Add to my plants")
+						.font(.subheadline)
+						.foregroundColor(.white)
+						.multilineTextAlignment(.center)
+						.frame(width: 90, height: 60)
 				}
 			}
-			.padding([.leading, .trailing], 20)
-			.padding([.bottom], 10)
 		}
+		.padding([.leading, .trailing], 20)
 	}
 }
 
