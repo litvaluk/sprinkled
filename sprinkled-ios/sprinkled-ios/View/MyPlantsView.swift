@@ -1,9 +1,9 @@
 import SwiftUI
 import Kingfisher
 
-enum MyPlantsMenuAction {
+enum MyPlantsMenuAction: Hashable, Equatable {
 	case CreatNewTeam
-	case CreateNewPlace
+	case CreateNewPlace(Int)
 	case AddPlantEntry
 }
 
@@ -33,7 +33,7 @@ struct MyPlantsView: View {
 						NavigationLink(value: MyPlantsMenuAction.CreatNewTeam) {
 							Text("Create new team")
 						}
-						NavigationLink(value: MyPlantsMenuAction.CreateNewPlace) {
+						NavigationLink(value: MyPlantsMenuAction.CreateNewPlace(0)) {
 							Text("Create new place")
 						}
 						NavigationLink(value: MyPlantsMenuAction.AddPlantEntry) {
@@ -55,8 +55,8 @@ struct MyPlantsView: View {
 				switch (action) {
 				case MyPlantsMenuAction.CreatNewTeam:
 					CreateTeamView(viewModel: CreateTeamViewModel())
-				case MyPlantsMenuAction.CreateNewPlace:
-					CreatePlaceView()
+				case MyPlantsMenuAction.CreateNewPlace(let teamId):
+					CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId))
 				case MyPlantsMenuAction.AddPlantEntry:
 					SearchView(viewModel: SearchViewModel())
 				}
@@ -103,7 +103,7 @@ struct TeamCardsView: View {
 					ForEach(teamSummary.places) { place in
 						SingleCardView(teamSummaryPlace: place)
 					}
-					AddCardView()
+					AddCardView(teamId: teamSummary.id)
 				}
 				.frame(maxWidth: .infinity)
 			}
@@ -132,9 +132,11 @@ struct SingleCardView: View {
 }
 
 struct AddCardView: View {
+	let teamId: Int
+	
 	var body: some View {
 		VStack {
-			NavigationLink(value: MyPlantsMenuAction.CreateNewPlace) {
+			NavigationLink(value: MyPlantsMenuAction.CreateNewPlace(teamId)) {
 				ZStack {
 					RoundedRectangle(cornerRadius: 15)
 						.foregroundColor(.sprinkledGray)

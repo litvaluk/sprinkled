@@ -13,25 +13,25 @@ struct AuthView: View {
 			}
 			if (viewModel.isSignInViewDisplayed) {
 				TextField("Username", text: $viewModel.signInUsername)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 					.autocorrectionDisabled()
 					.textInputAutocapitalization(.never)
 				SecureField("Password", text: $viewModel.signInPassword)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 			} else {
 				TextField("Username", text: $viewModel.signUpUsername)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 					.autocorrectionDisabled()
 					.textInputAutocapitalization(.never)
 				TextField("Email", text: $viewModel.signUpEmail)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 					.autocorrectionDisabled()
 					.textInputAutocapitalization(.never)
 					.keyboardType(.emailAddress)
 				SecureField("Password", text: $viewModel.signUpPassword)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 				SecureField("Confirm password", text: $viewModel.signUpPasswordConfirmation)
-					.textFieldStyle(AuthTextFieldStyle())
+					.textFieldStyle(SprinkledTextFieldStyle())
 			}
 			
 			if !viewModel.errorMessage.isEmpty {
@@ -84,19 +84,5 @@ struct AuthView: View {
 struct AuthView_Previews: PreviewProvider {
 	static var previews: some View {
 		AuthView(viewModel: AuthViewModel())
-	}
-}
-
-struct AuthTextFieldStyle: TextFieldStyle {
-	@FocusState private var textFieldFocused: Bool
-	func _body(configuration: TextField<Self._Label>) -> some View {
-		configuration
-			.padding(15)
-			.background(.thinMaterial)
-			.cornerRadius(10)
-			.focused($textFieldFocused)
-			.onTapGesture {
-				textFieldFocused = true
-			}
 	}
 }

@@ -7,7 +7,7 @@ struct CreateTeamView: View {
     var body: some View {
 		VStack {
 			TextField("Name", text: $viewModel.teamName)
-				.textFieldStyle(AuthTextFieldStyle())
+				.textFieldStyle(SprinkledTextFieldStyle())
 				.autocorrectionDisabled()
 				.textInputAutocapitalization(.never)
 			if !viewModel.errorMessage.isEmpty {
@@ -43,18 +43,4 @@ struct CreateTeamView_Previews: PreviewProvider {
     static var previews: some View {
         CreateTeamView(viewModel: CreateTeamViewModel())
     }
-}
-
-struct CreateTeamTextFieldStyle: TextFieldStyle {
-	@FocusState private var textFieldFocused: Bool
-	func _body(configuration: TextField<Self._Label>) -> some View {
-		configuration
-			.padding(15)
-			.background(.thinMaterial)
-			.cornerRadius(10)
-			.focused($textFieldFocused)
-			.onTapGesture {
-				textFieldFocused = true
-			}
-	}
 }

@@ -7,6 +7,8 @@ protocol APIProtocol {
 	func fetchPlants() async throws -> [Plant]
 	func fetchTeamSummaries() async throws -> [TeamSummary]
 	func createNewTeam(name: String) async throws -> Team
+	func createNewPlace(name: String) async throws -> Place
+	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place
 	func refreshToken() async -> Void
 }
 
@@ -50,6 +52,23 @@ final class API : APIProtocol {
 		]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		return try await makeAuthenticatedRequest(path: "teams", method: "POST", body: bodyData)
+	}
+	
+	func createNewPlace(name: String) async throws -> Place {
+		let body = [
+			"name": name,
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "places/user", method: "POST", body: bodyData)
+	}
+	
+	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place {
+		let body: [String: Any] = [
+			"name": name,
+			"teamId": teamId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "places/team", method: "POST", body: bodyData)
 	}
 	
 	func refreshToken() async {
@@ -196,5 +215,13 @@ final class TestAPI : APIProtocol {
 	
 	func createNewTeam(name: String) async throws -> Team {
 		return Team(id: 1, name: name, creatorId: 1)
+	}
+	
+	func createNewPlace(name: String) async throws -> Place {
+		return Place(id: 1, name: name, teamId: nil, userId: 1)
+	}
+	
+	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place {
+		return Place(id: 1, name: name, teamId: 1, userId: nil)
 	}
 }

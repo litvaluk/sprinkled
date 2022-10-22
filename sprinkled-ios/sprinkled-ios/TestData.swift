@@ -192,4 +192,11 @@ struct TestData {
 		Team(id: 2, name: "Team 2", creatorId: 2),
 		Team(id: 3, name: "Team 3", creatorId: 3),
 	]
+	
+	static let places = [
+		Place(id: 1, name: "Place 1", teamId: nil, userId: 1),
+		Place(id: 2, name: "Place 2", teamId: nil, userId: 1),
+		Place(id: 3, name: "Place 3", teamId: 1, userId: nil),
+		Place(id: 4, name: "Place 4", teamId: 2, userId: nil)
+	]
 }
