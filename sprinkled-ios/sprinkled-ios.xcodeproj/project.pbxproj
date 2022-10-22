@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F095E8F2903DEE300DBCECA /* CreateTeamViewModel.swift */; };
+		8F095E922903E24A00DBCECA /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F095E912903E24A00DBCECA /* Team.swift */; };
 		8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9C828FAD73D00B4308C /* TabBarState.swift */; };
 		8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9CA28FB564000B4308C /* DependencyInjector.swift */; };
 		8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74828EECB86008D5AEE /* SprinkledApp.swift */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8F095E8F2903DEE300DBCECA /* CreateTeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamViewModel.swift; sourceTree = "<group>"; };
+		8F095E912903E24A00DBCECA /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		8F17B9C828FAD73D00B4308C /* TabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarState.swift; sourceTree = "<group>"; };
 		8F17B9CA28FB564000B4308C /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		8F24E74528EECB86008D5AEE /* sprinkled-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sprinkled-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +192,7 @@
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
+				8F095E8F2903DEE300DBCECA /* CreateTeamViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,6 +221,7 @@
 				8FA563A828F0240800C54AF2 /* AuthResponse.swift */,
 				8FA563B028F04AAA00C54AF2 /* Reminder.swift */,
 				8F6B23D628F7FBBF0079F0FC /* Plant.swift */,
+				8F095E912903E24A00DBCECA /* Team.swift */,
 				8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */,
 			);
 			path = Model;
@@ -336,6 +342,7 @@
 				8F24E76428EEE5A9008D5AEE /* RootViewModel.swift in Sources */,
 				8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
+				8F095E922903E24A00DBCECA /* Team.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
 				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
 				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
@@ -355,6 +362,7 @@
 				8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */,
 				8FA563A528F014BE00C54AF2 /* API.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
+				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
 				8F8F5A5A2902BBF4009D6DC9 /* PlacesView.swift in Sources */,

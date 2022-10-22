@@ -6,6 +6,7 @@ protocol APIProtocol {
 	func signUp(_ username: String, _ email: String, _ password: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
 	func fetchTeamSummaries() async throws -> [TeamSummary]
+	func createNewTeam(name: String) async throws -> Team
 	func refreshToken() async -> Void
 }
 
@@ -41,6 +42,14 @@ final class API : APIProtocol {
 	
 	func fetchTeamSummaries() async throws -> [TeamSummary] {
 		return try await makeAuthenticatedRequest(path: "teams/summary")
+	}
+	
+	func createNewTeam(name: String) async throws -> Team {
+		let body = [
+			"name": name,
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "teams", method: "POST", body: bodyData)
 	}
 	
 	func refreshToken() async {
@@ -183,5 +192,9 @@ final class TestAPI : APIProtocol {
 	
 	func fetchTeamSummaries() async throws -> [TeamSummary] {
 		return TestData.teamSummaries
+	}
+	
+	func createNewTeam(name: String) async throws -> Team {
+		return Team(id: 1, name: name, creatorId: 1)
 	}
 }

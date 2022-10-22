@@ -1,13 +1,20 @@
 import SwiftUI
 import Kingfisher
 
+enum MyPlantsMenuAction {
+	case CreatNewTeam
+	case CreateNewPlace
+	case AddPlantEntry
+}
+
 struct MyPlantsView: View {
 	@StateObject var viewModel: MyPlantsViewModel
+	@EnvironmentObject var tabBarState: TabBarState
 	
 	var body: some View {
 		NavigationStack(path: $viewModel.navigationPath) {
 			ScrollView {
-				if (viewModel.loading) {
+				if (viewModel.loading && viewModel.teamSummaries.isEmpty) {
 					ProgressView()
 						.padding(.top, 250)
 				} else {
@@ -23,26 +30,48 @@ struct MyPlantsView: View {
 			.toolbar {
 				ToolbarItem {
 					Menu {
-						NavigationLink(destination: CreateTeamView()) {
+						NavigationLink(value: MyPlantsMenuAction.CreatNewTeam) {
 							Text("Create new team")
 						}
-						NavigationLink(destination: CreatePlaceView()) {
+						NavigationLink(value: MyPlantsMenuAction.CreateNewPlace) {
 							Text("Create new place")
 						}
-						NavigationLink(destination: SearchView(viewModel: SearchViewModel())) {
+						NavigationLink(value: MyPlantsMenuAction.AddPlantEntry) {
 							Text("Add plant entry")
 						}
 					} label: {
-						Image(systemName: "ellipsis")
+						Image(systemName: "plus.circle.fill")
 							.resizable()
 							.scaledToFit()
-							.frame(width: 25)
+							.frame(width: 25, height: 25)
 							.foregroundColor(.black)
 					}
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
 				PlaceView(place: place)
+			}
+			.navigationDestination(for: MyPlantsMenuAction.self) { action in
+				switch (action) {
+				case MyPlantsMenuAction.CreatNewTeam:
+					CreateTeamView(viewModel: CreateTeamViewModel())
+				case MyPlantsMenuAction.CreateNewPlace:
+					CreatePlaceView()
+				case MyPlantsMenuAction.AddPlantEntry:
+					SearchView(viewModel: SearchViewModel())
+				}
+			}
+			.onChange(of: viewModel.navigationPath) { newNavigationPath in
+				if (newNavigationPath.isEmpty) {
+					Task {
+						await viewModel.fetchTeamSummaries()
+					}
+				}
+			}
+			.onChange(of: tabBarState.tappedSameCount) { tappedSameCount in
+				if (tappedSameCount > 0 && !viewModel.navigationPath.isEmpty) {
+					viewModel.navigationPath = .init()
+				}
 			}
 		}
 		.task {
@@ -105,7 +134,7 @@ struct SingleCardView: View {
 struct AddCardView: View {
 	var body: some View {
 		VStack {
-			NavigationLink(destination: CreatePlaceView()) {
+			NavigationLink(value: MyPlantsMenuAction.CreateNewPlace) {
 				ZStack {
 					RoundedRectangle(cornerRadius: 15)
 						.foregroundColor(.sprinkledGray)

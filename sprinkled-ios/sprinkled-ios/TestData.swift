@@ -186,4 +186,10 @@ struct TestData {
 			TeamSummaryPlace(id: 6, name: "Place 6", plantEntries: [])
 		])
 	]
+	
+	static let teams = [
+		Team(id: 1, name: "Team 1", creatorId: 1),
+		Team(id: 2, name: "Team 2", creatorId: 2),
+		Team(id: 3, name: "Team 3", creatorId: 3),
+	]
 }
