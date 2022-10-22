@@ -35,7 +35,7 @@
 		8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E128F88E280079F0FC /* PlantDetailView.swift */; };
 		8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */; };
 		8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */; };
-		8F8F5A5A2902BBF4009D6DC9 /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */; };
+		8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */; };
 		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
 		8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */; };
 		8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */; };
@@ -90,7 +90,7 @@
 		8F6B23E128F88E280079F0FC /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlantsViewModel.swift; sourceTree = "<group>"; };
-		8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesView.swift; sourceTree = "<group>"; };
+		8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSummary.swift; sourceTree = "<group>"; };
 		8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamView.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
 				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
-				8F8F5A592902BBF4009D6DC9 /* PlacesView.swift */,
+				8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */,
 				8F6B23E128F88E280079F0FC /* PlantDetailView.swift */,
 				8F24E75D28EEDCD9008D5AEE /* ProfileView.swift */,
 				8F24E74A28EECB86008D5AEE /* RootView.swift */,
@@ -377,7 +377,7 @@
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
-				8F8F5A5A2902BBF4009D6DC9 /* PlacesView.swift in Sources */,
+				8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */,
 				8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

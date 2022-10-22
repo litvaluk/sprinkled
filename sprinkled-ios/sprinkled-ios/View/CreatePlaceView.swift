@@ -20,7 +20,7 @@ struct CreatePlaceView: View {
 			} label: {
 				HStack {
 					Text("Team")
-						.foregroundColor(.black)
+						.foregroundColor(.primary)
 					Spacer()
 					Text(viewModel.teamSummaries.first(where: { $0.id == viewModel.teamSelection })!.name)
 						.foregroundColor(.gray)

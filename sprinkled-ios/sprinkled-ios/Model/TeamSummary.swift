@@ -10,7 +10,7 @@ struct TeamSummaryPlace: Codable, Identifiable, Hashable {
 	let plantEntries: [TeamSummaryPlantEntry]
 }
 
-struct TeamSummaryPlantEntry: Codable, Hashable {
+struct TeamSummaryPlantEntry: Codable, Identifiable, Hashable {
 	let id: Int
 	let name: String
 	let headerPictureUrl: String?

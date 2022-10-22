@@ -44,12 +44,12 @@ struct MyPlantsView: View {
 							.resizable()
 							.scaledToFit()
 							.frame(width: 25, height: 25)
-							.foregroundColor(.black)
+							.foregroundColor(.primary)
 					}
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
-				PlaceView(place: place)
+				PlaceView(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal")
 			}
 			.navigationDestination(for: MyPlantsMenuAction.self) { action in
 				switch (action) {
@@ -95,7 +95,7 @@ struct TeamCardsView: View {
 						.resizable()
 						.scaledToFit()
 						.frame(width: 20)
-						.foregroundColor(.black)
+						.foregroundColor(.primary)
 				}
 			}
 			ScrollView(.horizontal, showsIndicators: false) {
