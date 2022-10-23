@@ -2,20 +2,20 @@ import SwiftUI
 import Kingfisher
 
 struct PlaceView: View {
-	let place: TeamSummaryPlace
-	let teamName: String
+	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+	@StateObject var viewModel: PlaceViewModel
 	
     var body: some View {
 		VStack(alignment: .leading) {
 			ScrollView {
 				HStack {
-					Text(teamName)
+					Text(viewModel.teamName)
 						.fontWeight(.medium)
 						.font(.title2)
 					Spacer()
 				}
 				LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-					ForEach(place.plantEntries) { plantEntry in
+					ForEach(viewModel.place.plantEntries) { plantEntry in
 						Button {} label: {
 							ZStack {
 								if let unwrappedHeaderPictureUrl = plantEntry.headerPictureUrl {
@@ -62,14 +62,22 @@ struct PlaceView: View {
 		}
 		.padding(.horizontal)
 		.padding(.bottom)
-		.navigationTitle(place.name)
+		.navigationTitle(viewModel.place.name)
 		.toolbar {
 			ToolbarItem {
 				Menu {
-					Button {} label: {
+					Button {
+						withAnimation(.easeIn(duration: 0.07)) {
+							viewModel.showRenamePlaceModal = true
+						}
+					} label: {
 						Text("Rename place")
 					}
-					Button {} label: {
+					Button {
+						withAnimation(.easeIn(duration: 0.07)) {
+							viewModel.showDeletePlaceModal = true
+						}
+					} label: {
 						Text("Delete place")
 					}
 				} label: {
@@ -81,11 +89,75 @@ struct PlaceView: View {
 				}
 			}
 		}
+		.modal(title: "Are you sure?", showModal: $viewModel.showDeletePlaceModal) {
+			Text("This action will delete all plants associated with this place.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await viewModel.deletePlace()) {
+						self.presentationMode.wrappedValue.dismiss()
+					}
+				}
+			} label: {
+				Text("Delete")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					viewModel.showDeletePlaceModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
+		.modal(title: "Choose a new name", showModal: $viewModel.showRenamePlaceModal) {
+			TextField("Name", text: $viewModel.renamePlaceModalValue)
+				.textFieldStyle(SprinkledTextFieldStyle())
+				.autocorrectionDisabled()
+				.textInputAutocapitalization(.never)
+		} buttons: {
+			Button {
+				Task {
+					if (await viewModel.renamePlace()) {
+						withAnimation(.easeOut(duration: 0.07)) {
+							viewModel.showRenamePlaceModal = false
+							viewModel.place = TeamSummaryPlace(id: viewModel.place.id, name: viewModel.renamePlaceModalValue, plantEntries: viewModel.place.plantEntries)
+							viewModel.renamePlaceModalValue = ""
+
+						}
+					}
+				}
+			} label: {
+				Text("Rename")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					viewModel.showRenamePlaceModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
     }
 }
 
 struct PlaceView_Previews: PreviewProvider {
     static var previews: some View {
-		PlaceView(place: TestData.teamSummaries[0].places[0], teamName: "Personal")
+		PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal"))
     }
 }

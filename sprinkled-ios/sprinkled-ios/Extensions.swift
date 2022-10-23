@@ -6,6 +6,7 @@ extension Color {
 	static let sprinkledPaleGreen = Color("SprinkledPaleGreen")
 	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
 	static let sprinkledGray = Color("SprinkledGray")
+	static let sprinkledRed = Color("SprinkledRed")
 }
 
 // remove navigation bar back button text
@@ -29,27 +30,27 @@ extension JSONDecoder {
 
 // for animating when keyboard shows/hides
 extension View {
-  var keyboardPublisher: AnyPublisher<Bool, Never> {
-	Publishers
-	  .Merge(
-		NotificationCenter
-		  .default
-		  .publisher(for: UIResponder.keyboardWillShowNotification)
-		  .map { _ in true },
-		NotificationCenter
-		  .default
-		  .publisher(for: UIResponder.keyboardWillHideNotification)
-		  .map { _ in false })
-//	  .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
-	  .eraseToAnyPublisher()
-  }
+	var keyboardPublisher: AnyPublisher<Bool, Never> {
+		Publishers
+			.Merge(
+				NotificationCenter
+					.default
+					.publisher(for: UIResponder.keyboardWillShowNotification)
+					.map { _ in true },
+				NotificationCenter
+					.default
+					.publisher(for: UIResponder.keyboardWillHideNotification)
+					.map { _ in false })
+		//	  .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
+			.eraseToAnyPublisher()
+	}
 }
 
 extension String {
 	func capitalizedFirstLetter() -> String {
 		return prefix(1).capitalized + dropFirst()
 	}
-
+	
 	mutating func capitalizeFirstLetter() {
 		self = self.capitalizedFirstLetter()
 	}
@@ -67,8 +68,38 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 		super.viewDidLoad()
 		interactivePopGestureRecognizer?.delegate = self
 	}
-
+	
 	public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
 		return viewControllers.count > 1
+	}
+}
+
+extension View {
+	@ViewBuilder
+	func modal<Content: View, Buttons: View>(title: String, showModal: Binding<Bool>, @ViewBuilder content: () -> Content, @ViewBuilder buttons: () -> Buttons) -> some View {
+		ZStack {
+			self
+				.disabled(showModal.wrappedValue)
+			if (showModal.wrappedValue) {
+				VStack {
+					Text(title)
+						.font(.title3)
+					Spacer()
+					content()
+						.padding(.vertical, 25)
+					Spacer()
+					HStack {
+						buttons()
+					}
+				}
+				.frame(minWidth: 200, maxWidth: 250)
+				.fixedSize(horizontal: false, vertical: true)
+				.padding(20)
+				.background(Color.sprinkledGray)
+				.zIndex(.infinity)
+				.cornerRadius(20)
+				.shadow(radius: 60)
+			}
+		}
 	}
 }

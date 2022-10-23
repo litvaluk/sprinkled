@@ -49,7 +49,7 @@ struct MyPlantsView: View {
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
-				PlaceView(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal")
+				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal"))
 			}
 			.navigationDestination(for: MyPlantsMenuAction.self) { action in
 				switch (action) {
@@ -215,5 +215,6 @@ struct GridItemView: View {
 struct MyPlantsView_Previews: PreviewProvider {
 	static var previews: some View {
 		MyPlantsView(viewModel: MyPlantsViewModel())
+			.environmentObject(TabBarState())
 	}
 }

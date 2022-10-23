@@ -34,7 +34,7 @@ export class PlaceController {
   }
 
   @Put(':id')
-  async updateTeam(
+  async updatePlace(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Body() updatePlaceDto: UpdatePlaceDto,
   ): Promise<Place> {
@@ -43,7 +43,7 @@ export class PlaceController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteTeam(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
-    return await this.placeService.remove(id);
+  async deletePlace(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
+    await this.placeService.remove(id);
   }
 }

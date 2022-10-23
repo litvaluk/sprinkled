@@ -9,6 +9,8 @@ protocol APIProtocol {
 	func createNewTeam(name: String) async throws -> Team
 	func createNewPlace(name: String) async throws -> Place
 	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place
+	func renamePlace(placeId: Int, newName: String) async throws -> Void
+	func deletePlace(placeId: Int) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -71,6 +73,18 @@ final class API : APIProtocol {
 		return try await makeAuthenticatedRequest(path: "places/team", method: "POST", body: bodyData)
 	}
 	
+	func renamePlace(placeId: Int, newName: String) async throws -> Void {
+		let body = [
+			"name": newName
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "places/\(placeId)", method: "PUT", body: bodyData)
+	}
+	
+	func deletePlace(placeId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "places/\(placeId)", method: "DELETE")
+	}
+	
 	func refreshToken() async {
 		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
@@ -126,6 +140,28 @@ final class API : APIProtocol {
 		let (data, _) = try! await performDataRequest(for: request)
 		
 		return try JSONDecoder.app.decode(Response.self, from: data)
+	}
+	
+	private func makeAuthenticatedRequest(
+		path: String,
+		query: [URLQueryItem] = [],
+		method: String? = nil,
+		body: Data? = nil
+	) async throws {
+		if (!isTokenValid(UserDefaults.standard.string(forKey: "accessToken"))) {
+			await refreshToken()
+		}
+		
+		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
+		if (refreshToken.isEmpty) {
+			throw ExpiredRefreshToken()
+		}
+
+		var request = try prepareAuthenticatedRequest(path: path, query: query, method: method, body: body)
+		let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+		let headers = request.allHTTPHeaderFields ?? [:]
+		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
+		_ = try! await performDataRequest(for: request)
 	}
 
 	private func prepareRequest(
@@ -223,5 +259,13 @@ final class TestAPI : APIProtocol {
 	
 	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place {
 		return Place(id: 1, name: name, teamId: 1, userId: nil)
+	}
+	
+	func renamePlace(placeId: Int, newName: String) async throws -> Void {
+		return
+	}
+	
+	func deletePlace(placeId: Int) async throws -> Void {
+		return
 	}
 }

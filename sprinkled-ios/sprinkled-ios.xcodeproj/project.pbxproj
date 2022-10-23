@@ -47,6 +47,7 @@
 		8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A828F0240800C54AF2 /* AuthResponse.swift */; };
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
+		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		8FA563A828F0240800C54AF2 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		8FA563B028F04AAA00C54AF2 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 				8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */,
 				8F095E8F2903DEE300DBCECA /* CreateTeamViewModel.swift */,
 				8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */,
+				8FFD753229053DEB005237A9 /* PlaceViewModel.swift */,
 				8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */,
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
@@ -372,6 +375,7 @@
 				8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */,
 				8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */,
 				8FA563A528F014BE00C54AF2 /* API.swift in Sources */,
+				8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
