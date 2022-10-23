@@ -199,4 +199,11 @@ struct TestData {
 		Place(id: 3, name: "Place 3", teamId: 1, userId: nil),
 		Place(id: 4, name: "Place 4", teamId: 2, userId: nil)
 	]
+	
+	static let teamMembers = [
+		TeamMember(id: 1, username: "User1"),
+		TeamMember(id: 2, username: "User2"),
+		TeamMember(id: 3, username: "User3"),
+		TeamMember(id: 4, username: "User4"),
+	]
 }

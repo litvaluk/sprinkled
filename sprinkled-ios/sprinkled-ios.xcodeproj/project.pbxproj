@@ -48,6 +48,9 @@
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
 		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
+		8FFD7535290583FA005237A9 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7534290583FA005237A9 /* TeamView.swift */; };
+		8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753629058446005237A9 /* TeamViewModel.swift */; };
+		8FFD753929058C7A005237A9 /* TeamMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753829058C7A005237A9 /* TeamMember.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +107,9 @@
 		8FA563B028F04AAA00C54AF2 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
+		8FFD7534290583FA005237A9 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
+		8FFD753629058446005237A9 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
+		8FFD753829058C7A005237A9 /* TeamMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMember.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +194,7 @@
 				8F24E74A28EECB86008D5AEE /* RootView.swift */,
 				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
 				8F24E76128EEDD13008D5AEE /* TaskView.swift */,
+				8FFD7534290583FA005237A9 /* TeamView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +211,7 @@
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
+				8FFD753629058446005237A9 /* TeamViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -235,6 +243,7 @@
 				8F6B23D628F7FBBF0079F0FC /* Plant.swift */,
 				8F095E912903E24A00DBCECA /* Team.swift */,
 				8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */,
+				8FFD753829058C7A005237A9 /* TeamMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
+				8FFD753929058C7A005237A9 /* TeamMember.swift in Sources */,
 				8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */,
 				8F24E75C28EEDCBD008D5AEE /* MyPlantsView.swift in Sources */,
 				8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */,
@@ -377,12 +387,14 @@
 				8FA563A528F014BE00C54AF2 /* API.swift in Sources */,
 				8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
+				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
 				8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */,
 				8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */,
+				8FFD7535290583FA005237A9 /* TeamView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

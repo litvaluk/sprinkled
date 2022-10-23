@@ -51,6 +51,9 @@ struct MyPlantsView: View {
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
 				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal"))
 			}
+			.navigationDestination(for: TeamSummary.self) { team in
+				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name))
+			}
 			.navigationDestination(for: MyPlantsMenuAction.self) { action in
 				switch (action) {
 				case MyPlantsMenuAction.CreatNewTeam:
@@ -90,12 +93,14 @@ struct TeamCardsView: View {
 					.font(.title2)
 					.fontWeight(.medium)
 				Spacer()
-				Button {} label: {
-					Image(systemName: "ellipsis")
-						.resizable()
-						.scaledToFit()
-						.frame(width: 20)
-						.foregroundColor(.primary)
+				if (teamSummary.id != 0) {
+					NavigationLink(value: teamSummary) {
+						Image(systemName: "ellipsis")
+							.resizable()
+							.scaledToFit()
+							.frame(width: 20)
+							.foregroundColor(.primary)
+					}
 				}
 			}
 			ScrollView(.horizontal, showsIndicators: false) {

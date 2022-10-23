@@ -11,6 +11,9 @@ protocol APIProtocol {
 	func createNewTeamPlace(name: String, teamId: Int) async throws -> Place
 	func renamePlace(placeId: Int, newName: String) async throws -> Void
 	func deletePlace(placeId: Int) async throws -> Void
+	func fetchTeamMembers(teamId: Int) async throws -> [TeamMember]
+	func renameTeam(teamId: Int, newName: String) async throws -> Void
+	func deleteTeam(teamId: Int) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -83,6 +86,22 @@ final class API : APIProtocol {
 	
 	func deletePlace(placeId: Int) async throws -> Void {
 		try await makeAuthenticatedRequest(path: "places/\(placeId)", method: "DELETE")
+	}
+	
+	func fetchTeamMembers(teamId: Int) async throws -> [TeamMember] {
+		return try await makeAuthenticatedRequest(path: "teams/\(teamId)/members")
+	}
+	
+	func renameTeam(teamId: Int, newName: String) async throws {
+		let body = [
+			"name": newName
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)", method: "PUT", body: bodyData)
+	}
+	
+	func deleteTeam(teamId: Int) async throws {
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)", method: "DELETE")
 	}
 	
 	func refreshToken() async {
@@ -205,7 +224,7 @@ final class API : APIProtocol {
 	}
 	
 	private func performDataRequest(for request: URLRequest) async throws -> (Data, URLResponse) {
-		print("⬆️", request.url!.absoluteString)
+		print("⬆️", request.url!.absoluteString, "[", request.httpMethod ?? "GET", "]")
 //		if let body = request.httpBody {
 //			print("BODY:", String(data: body, encoding: .utf8)!)
 //		}
@@ -266,6 +285,18 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func deletePlace(placeId: Int) async throws -> Void {
+		return
+	}
+	
+	func fetchTeamMembers(teamId: Int) async throws -> [TeamMember] {
+		return TestData.teamMembers
+	}
+	
+	func renameTeam(teamId: Int, newName: String) async throws {
+		return
+	}
+	
+	func deleteTeam(teamId: Int) async throws {
 		return
 	}
 }
