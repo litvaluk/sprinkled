@@ -103,3 +103,17 @@ extension View {
 		}
 	}
 }
+
+extension String {
+	static func placeholder(_ length: Int) -> String {
+		String(Array(repeating: "X", count: length))
+	}
+}
+
+extension View {
+	@ViewBuilder
+	func redactedShimmering(if condition: @autoclosure () -> Bool) -> some View {
+		redacted(reason: condition() ? .placeholder : [])
+			.shimmering(active: condition())
+	}
+}

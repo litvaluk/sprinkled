@@ -1,3 +1,5 @@
+import Foundation
+
 struct TestData {
 	static let plants = [
 		Plant(
@@ -205,5 +207,9 @@ struct TestData {
 		TeamMember(id: 2, username: "User2"),
 		TeamMember(id: 3, username: "User3"),
 		TeamMember(id: 4, username: "User4"),
+	]
+	
+	static let plantEntries = [
+		PlantEntry(id: 1, name: "Plant entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg")
 	]
 }

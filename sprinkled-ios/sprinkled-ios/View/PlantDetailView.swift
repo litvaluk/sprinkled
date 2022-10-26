@@ -83,10 +83,10 @@ struct PlantHeaderView: View {
 		HStack {
 			VStack(alignment: .leading) {
 				Text(commonName)
-					.foregroundColor(.black)
+					.foregroundColor(.primary)
 					.font(.title)
 				Text(latinName)
-					.foregroundColor(.black)
+					.foregroundColor(.primary)
 					.font(.title3)
 			}
 			Spacer()
