@@ -209,7 +209,34 @@ struct TestData {
 		TeamMember(id: 4, username: "User4"),
 	]
 	
+	static let users = [
+		User(id: 1, username: "User1", email: "user1@gmail.com"),
+		User(id: 2, username: "User2", email: "user2@gmail.com")
+	]
+	
+	static let actions = [
+		Action(id: 1, type: "water"),
+		Action(id: 2, type: "prune"),
+		Action(id: 3, type: "mist")
+	]
+
+	static let events = [
+		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0]),
+		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1]),
+		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2])
+	]
+
+	static let reminders = [
+		Reminder(id: 1, date: Date(), period: 5, actionId: 1, plantEntryId: 1, creatorId: 1, action: actions[0]),
+		Reminder(id: 2, date: Date(), period: 2, actionId: 2, plantEntryId: 1, creatorId: 2, action: actions[1])
+	]
+
+	static let pictures = [
+		Picture(id: 1, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1),
+		Picture(id: 2, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1),
+	]
+	
 	static let plantEntries = [
-		PlantEntry(id: 1, name: "Plant entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg")
+		PlantEntry(id: 1, name: "Plant entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", events: events, reminders: reminders, pictures: pictures)
 	]
 }

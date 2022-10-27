@@ -5,7 +5,7 @@ struct PlaceView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@StateObject var viewModel: PlaceViewModel
 	
-    var body: some View {
+	var body: some View {
 		VStack(alignment: .leading) {
 			ScrollView {
 				HStack {
@@ -16,19 +16,22 @@ struct PlaceView: View {
 				}
 				LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
 					ForEach(viewModel.place.plantEntries) { plantEntry in
-						Button {} label: {
+						NavigationLink(value: plantEntry) {
 							ZStack {
-								if let unwrappedHeaderPictureUrl = plantEntry.headerPictureUrl {
-									KFImage(URL(string: unwrappedHeaderPictureUrl)!)
-										.resizable()
-										.aspectRatio(1, contentMode: .fill)
-										.clipped()
-								} else {
-									Image("GridPlaceholderImage")
-										.resizable()
-										.aspectRatio(1, contentMode: .fill)
-										.clipped()
-								}
+								Color.clear
+									.aspectRatio(1, contentMode: .fill)
+									.clipped()
+									.overlay {
+										if let unwrappedHeaderPictureUrl = plantEntry.headerPictureUrl {
+											KFImage(URL(string: unwrappedHeaderPictureUrl)!)
+												.resizable()
+												.scaledToFill()
+										} else {
+											Image("GridPlaceholderImage")
+												.resizable()
+												.scaledToFill()
+										}
+									}
 								VStack {
 									Spacer()
 									HStack(alignment: .bottom) {
@@ -132,7 +135,7 @@ struct PlaceView: View {
 							viewModel.showRenamePlaceModal = false
 							viewModel.place = TeamSummaryPlace(id: viewModel.place.id, name: viewModel.renamePlaceModalValue, plantEntries: viewModel.place.plantEntries)
 							viewModel.renamePlaceModalValue = ""
-
+							
 						}
 					}
 				}
@@ -153,11 +156,14 @@ struct PlaceView: View {
 			.buttonStyle(.borderedProminent)
 			.cornerRadius(10)
 		}
-    }
+		.navigationDestination(for: TeamSummaryPlantEntry.self) { plantEntry in
+			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: plantEntry.id))
+		}
+	}
 }
 
 struct PlaceView_Previews: PreviewProvider {
-    static var previews: some View {
+	static var previews: some View {
 		PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal"))
-    }
+	}
 }

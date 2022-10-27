@@ -110,10 +110,21 @@ extension String {
 	}
 }
 
+extension Date {
+	static var placeholder: Date {
+		Date(timeIntervalSince1970: 0)
+	}
+}
+
 extension View {
 	@ViewBuilder
 	func redactedShimmering(if condition: @autoclosure () -> Bool) -> some View {
 		redacted(reason: condition() ? .placeholder : [])
 			.shimmering(active: condition())
+	}
+	
+	@ViewBuilder
+	func redactedShimmering() -> some View {
+		redactedShimmering(if: true)
 	}
 }

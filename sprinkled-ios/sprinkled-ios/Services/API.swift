@@ -14,6 +14,7 @@ protocol APIProtocol {
 	func fetchTeamMembers(teamId: Int) async throws -> [TeamMember]
 	func renameTeam(teamId: Int, newName: String) async throws -> Void
 	func deleteTeam(teamId: Int) async throws -> Void
+	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry
 	func refreshToken() async -> Void
 }
 
@@ -102,6 +103,10 @@ final class API : APIProtocol {
 	
 	func deleteTeam(teamId: Int) async throws {
 		try await makeAuthenticatedRequest(path: "teams/\(teamId)", method: "DELETE")
+	}
+	
+	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry {
+		return try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)")
 	}
 	
 	func refreshToken() async {
@@ -298,5 +303,9 @@ final class TestAPI : APIProtocol {
 	
 	func deleteTeam(teamId: Int) async throws {
 		return
+	}
+	
+	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry {
+		return TestData.plantEntries[0]
 	}
 }

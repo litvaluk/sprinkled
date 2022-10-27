@@ -25,6 +25,26 @@ export class PlantEntryService {
       where: {
         id: id,
       },
+      include: {
+        events: {
+          include: {
+            action: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                email: true,
+              },
+            },
+          },
+        },
+        reminders: {
+          include: {
+            action: true,
+          },
+        },
+        pictures: true,
+      },
     });
   }
 

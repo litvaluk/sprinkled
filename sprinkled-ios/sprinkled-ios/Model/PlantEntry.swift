@@ -8,4 +8,7 @@ struct PlantEntry: Codable, Identifiable, Hashable, Equatable {
 	let placeId: Int
 	let plantId: Int
 	let headerPictureUrl: String?
+	let events: [Event]
+	let reminders: [Reminder]
+	let pictures: [Picture]
 }

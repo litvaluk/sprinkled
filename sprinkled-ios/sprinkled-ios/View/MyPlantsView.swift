@@ -197,22 +197,24 @@ struct GridItemView: View {
 	var body: some View {
 		if let headerPictureUrl = plantEntry.headerPictureUrl {
 			Color.clear
-				.aspectRatio(1, contentMode: .fit)
-				.overlay(
+				.aspectRatio(1, contentMode: .fill)
+				.clipped()
+				.overlay {
 					KFImage(URL(string: headerPictureUrl)!)
 						.resizable()
 						.scaledToFill()
-				)
-				.clipShape(RoundedRectangle(cornerRadius: 10))
+				}
+				.cornerRadius(10)
 		} else {
 			Color.clear
-				.aspectRatio(1, contentMode: .fit)
-				.overlay(
+				.aspectRatio(1, contentMode: .fill)
+				.clipped()
+				.overlay {
 					Image("GridPlaceholderImage")
 						.resizable()
 						.scaledToFill()
-				)
-				.clipShape(RoundedRectangle(cornerRadius: 10))
+				}
+				.cornerRadius(10)
 		}
 	}
 }

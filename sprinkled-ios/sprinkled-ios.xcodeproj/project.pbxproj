@@ -55,6 +55,10 @@
 		8FFD753D29095661005237A9 /* PlantEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753C29095660005237A9 /* PlantEntryView.swift */; };
 		8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753E29095851005237A9 /* PlantEntry.swift */; };
 		8FFD75422909621E005237A9 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 8FFD75412909621E005237A9 /* Shimmer */; };
+		8FFD7544290ABF27005237A9 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7543290ABF27005237A9 /* Picture.swift */; };
+		8FFD7546290AC005005237A9 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7545290AC005005237A9 /* Event.swift */; };
+		8FFD7548290AD3DB005237A9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7547290AD3DB005237A9 /* Action.swift */; };
+		8FFD754A290AD474005237A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7549290AD473005237A9 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +121,10 @@
 		8FFD753A2909564A005237A9 /* PlantEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEntryViewModel.swift; sourceTree = "<group>"; };
 		8FFD753C29095660005237A9 /* PlantEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEntryView.swift; sourceTree = "<group>"; };
 		8FFD753E29095851005237A9 /* PlantEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEntry.swift; sourceTree = "<group>"; };
+		8FFD7543290ABF27005237A9 /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
+		8FFD7545290AC005005237A9 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		8FFD7547290AD3DB005237A9 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		8FFD7549290AD473005237A9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,14 +255,18 @@
 		8FA563A328F0137E00C54AF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8FFD7547290AD3DB005237A9 /* Action.swift */,
 				8FA563A828F0240800C54AF2 /* AuthResponse.swift */,
-				8FA563B028F04AAA00C54AF2 /* Reminder.swift */,
+				8FFD7545290AC005005237A9 /* Event.swift */,
+				8FFD7543290ABF27005237A9 /* Picture.swift */,
 				8F095E9729040E4800DBCECA /* Place.swift */,
 				8F6B23D628F7FBBF0079F0FC /* Plant.swift */,
 				8FFD753E29095851005237A9 /* PlantEntry.swift */,
+				8FA563B028F04AAA00C54AF2 /* Reminder.swift */,
 				8F095E912903E24A00DBCECA /* Team.swift */,
-				8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */,
 				8FFD753829058C7A005237A9 /* TeamMember.swift */,
+				8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */,
+				8FFD7549290AD473005237A9 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,6 +383,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F095E962904066800DBCECA /* Styles.swift in Sources */,
+				8FFD7548290AD3DB005237A9 /* Action.swift in Sources */,
+				8FFD7546290AC005005237A9 /* Event.swift in Sources */,
 				8F24E76028EEDCEA008D5AEE /* SearchView.swift in Sources */,
 				8FFD753B2909564A005237A9 /* PlantEntryViewModel.swift in Sources */,
 				8F6B23DD28F81A640079F0FC /* TestData.swift in Sources */,
@@ -388,8 +402,10 @@
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
+				8FFD7544290ABF27005237A9 /* Picture.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */,
+				8FFD754A290AD474005237A9 /* User.swift in Sources */,
 				8FFD753929058C7A005237A9 /* TeamMember.swift in Sources */,
 				8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */,
 				8F24E75C28EEDCBD008D5AEE /* MyPlantsView.swift in Sources */,

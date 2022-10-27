@@ -56,6 +56,7 @@ export class TeamService {
               select: {
                 id: true,
                 name: true,
+                headerPictureUrl: true,
               },
             },
           },
@@ -76,6 +77,7 @@ export class TeamService {
               select: {
                 id: true,
                 name: true,
+                headerPictureUrl: true,
               },
             },
           },

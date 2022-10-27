@@ -10,7 +10,7 @@ struct PlantEntryView: View {
 		ZStack(alignment: .topLeading) {
 			ScrollView {
 				VStack {
-					PlantEntryHeaderView(plantEntryName: vm.plantEntry?.name, pictureUrl: vm.plantEntry?.headerPictureUrl)
+					PlantEntryHeaderView(vm: vm)
 					PlantEntryContent(vm: vm)
 						.padding(.horizontal)
 				}
@@ -31,22 +31,19 @@ struct PlantEntryView: View {
 					.padding([.leading], 7)
 			}
 		}
+		.task {
+			await vm.fetchPlantEntry()
+		}
 	}
 }
 
 struct PlantEntryHeaderView: View {
-	let plantEntryName: String?
-	let pictureUrl: String?
-	
-	init(plantEntryName: String?, pictureUrl: String?) {
-		self.plantEntryName = plantEntryName
-		self.pictureUrl = pictureUrl
-	}
+	@StateObject var vm: PlantEntryViewModel
 	
 	var body: some View {
 		ZStack(alignment: .bottomLeading) {
 			GeometryReader { gr in
-				if let pictureUrl {
+				if let pictureUrl = vm.plantEntry?.headerPictureUrl {
 					if (gr.frame(in: .global).minY <= 0) {
 						KFImage(URL(string: pictureUrl)!)
 							.resizable()
@@ -74,14 +71,14 @@ struct PlantEntryHeaderView: View {
 		}
 		HStack {
 			VStack(alignment: .leading) {
-				Text(plantEntryName ?? .placeholder(10))
+				Text(vm.plantEntry?.name ?? .placeholder(10))
 					.foregroundColor(.primary)
 					.font(.title)
-					.redactedShimmering(if: plantEntryName == nil)
-				Text(plantEntryName ?? .placeholder(10))
+					.redactedShimmering(if: vm.plantEntry == nil)
+				Text(vm.plantEntry?.name ?? .placeholder(10))
 					.foregroundColor(.primary)
 					.font(.title3)
-					.redactedShimmering(if: plantEntryName == nil)
+					.redactedShimmering(if: vm.plantEntry == nil)
 			}
 			Spacer()
 			Button {} label: {
@@ -133,16 +130,43 @@ struct PlantEntryContent: View {
 		}
 		switch(vm.selectedSection) {
 		case .history:
-			PlantEntryListItem(title: "Action", subtitle: "User", date: Date())
-				.redactedShimmering(if: vm.plantEntry == nil)
+			VStack (spacing: 8) {
+				if let plantEntry = vm.plantEntry {
+					ForEach(plantEntry.events) { event in
+						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user.username)", date: event.date)
+					}
+				} else {
+					ForEach(0..<3) { _ in
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder)
+							.redactedShimmering()
+					}
+				}
+			}
 		case .reminders:
-			PlantEntryListItem(title: "Action", subtitle: "Every 4 days", date: Date())
-				.redactedShimmering(if: vm.plantEntry == nil)
+			VStack (spacing: 8) {
+				if let plantEntry = vm.plantEntry {
+					ForEach(plantEntry.reminders) { reminder in
+						let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
+						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, date: reminder.date)
+					}
+				} else {
+					ForEach(0..<3) { _ in
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder)
+							.redactedShimmering()
+					}
+				}
+			}
 		case .gallery:
 			LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-				ForEach(0..<13) { i in
-					GalleryItem(user: "User", date: Date())
-						.redactedShimmering(if: vm.plantEntry == nil)
+				if let plantEntry = vm.plantEntry {
+					ForEach(plantEntry.pictures) { picture in
+						GalleryItem(user: "\(picture.userId)", date: picture.createdAt, pictureUrl: picture.url)
+					}
+				} else {
+					ForEach(0..<5) { i in
+						GalleryItem(user: .placeholder(6), date: .placeholder)
+							.redactedShimmering()
+					}
 				}
 			}
 		}
@@ -165,57 +189,61 @@ struct PlantEntryListItem: View {
 	}
 	
 	var body: some View {
-		VStack (spacing: 8) {
-			ForEach(0..<3) { i in
-				ZStack {
-					Color.sprinkledGray
-						.cornerRadius(10)
-					HStack {
-						RoundedRectangle(cornerRadius: 7)
-							.foregroundColor(.gray)
-							.frame(width: 50, height: 50)
-							.padding(5)
-						VStack(alignment: .leading) {
-							Text(title)
-								.fontWeight(.medium)
-							Text(subtitle)
-						}
-						Spacer()
-						VStack(alignment: .trailing) {
-							Spacer()
-							Text(dayDateFormatter.string(from: date))
-								.font(.subheadline)
-							Text(timeDateFormatter.string(from: date))
-								.font(.subheadline)
-							Spacer()
-						}
-						.padding(.trailing, 5)
-					}
+		ZStack {
+			Color.sprinkledGray
+			HStack {
+				RoundedRectangle(cornerRadius: 7)
+					.foregroundColor(.gray)
+					.frame(width: 50, height: 50)
+					.padding(5)
+				VStack(alignment: .leading) {
+					Text(title)
+						.fontWeight(.medium)
+					Text(subtitle)
 				}
+				Spacer()
+				VStack(alignment: .trailing) {
+					Spacer()
+					Text(dayDateFormatter.string(from: date))
+						.font(.subheadline)
+					Text(timeDateFormatter.string(from: date))
+						.font(.subheadline)
+					Spacer()
+				}
+				.padding(.trailing, 5)
 			}
 		}
+		.cornerRadius(10)
 	}
 }
 
 struct GalleryItem: View {
 	let user: String
 	let date: Date
+	let pictureUrl: String?
 	let dayDateFormatter = DateFormatter()
 	let timeDateFormatter = DateFormatter()
 	
-	init(user: String, date: Date) {
+	init(user: String, date: Date, pictureUrl: String? = nil) {
 		self.user = user
 		self.date = date
+		self.pictureUrl = pictureUrl
 		dayDateFormatter.dateFormat = "MMM d, y"
 		timeDateFormatter.dateFormat = "HH:mm"
 	}
 	
 	var body: some View {
 		ZStack {
-			Color.sprinkledGray
-				.cornerRadius(10)
+			Color.clear
 				.aspectRatio(1, contentMode: .fill)
 				.clipped()
+				.overlay {
+					if let pictureUrl {
+						KFImage(URL(string: pictureUrl)!)
+							.resizable()
+							.scaledToFill()
+					}
+				}
 			VStack {
 				Spacer()
 				HStack {
@@ -229,10 +257,10 @@ struct GalleryItem: View {
 					}
 					Spacer()
 				}
-				
 			}
 			.padding(6)
 		}
+		.cornerRadius(10)
 	}
 }
 

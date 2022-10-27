@@ -196,6 +196,7 @@ async function createPlantEntries() {
       plantId: 1,
       creatorId: 2,
       placeId: 1,
+      headerPictureUrl: 'https://cdn.shopify.com/s/files/1/0461/9809/6024/products/Zanz-17.jpg?v=1636259067&width=1946',
     },
   });
 
@@ -205,6 +206,7 @@ async function createPlantEntries() {
       plantId: 1,
       creatorId: 3,
       placeId: 2,
+      headerPictureUrl: 'https://cdn.shopify.com/s/files/1/0461/9809/6024/products/Zanz-17.jpg?v=1636259067&width=1946',
     },
   });
 
@@ -214,6 +216,7 @@ async function createPlantEntries() {
       plantId: 2,
       creatorId: 2,
       placeId: 1,
+      headerPictureUrl: 'https://cdn.shopify.com/s/files/1/0461/9809/6024/products/Zanz-17.jpg?v=1636259067&width=1946',
     },
   });
 }

@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { PlantEntry } from '@prisma/client';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
 import { CreatePlantEntryDto } from './dto/create-plant-entry.dto';
@@ -15,17 +14,17 @@ export class PlantEntryController {
   constructor(private readonly plantEntryService: PlantEntryService) {}
 
   @Post()
-  async createPlantEntry(@Body() createPlantEntryDto: CreatePlantEntryDto, @UserId() userId: number): Promise<PlantEntry> {
+  async createPlantEntry(@Body() createPlantEntryDto: CreatePlantEntryDto, @UserId() userId: number) {
     return await this.plantEntryService.create(createPlantEntryDto, userId);
   }
 
   @Get()
-  async getPlantEntries(): Promise<PlantEntry[]> {
+  async getPlantEntries() {
     return await this.plantEntryService.findAll();
   }
 
   @Get(':id')
-  async getPlantEntry(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<PlantEntry> {
+  async getPlantEntry(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     return await this.plantEntryService.findOne(id);
   }
 
@@ -33,7 +32,7 @@ export class PlantEntryController {
   async updatePlantEntry(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Body() updatePlantEntryDto: UpdatePlantEntryDto,
-  ): Promise<PlantEntry> {
+  ) {
     return await this.plantEntryService.update(id, updatePlantEntryDto);
   }
 
