@@ -5,45 +5,51 @@ struct RootView: View {
 	
 	@StateObject var viewModel: RootViewModel
 	@StateObject var tabBarState = TabBarState()
+	@StateObject var pictureViewState = PictureViewState()
 	
 	var body: some View {
 		if (!viewModel.accessToken.isEmpty) {
-			TabView(selection: tabBarState.handler) {
-				TaskView()
-					.tabItem {
-						if (tabBarState.selection == 0) {
-							Image("TaskViewIconSelected")
-						} else {
-							Image("TaskViewIcon")
+			ZStack {
+				TabView(selection: tabBarState.handler) {
+					TaskView()
+						.tabItem {
+							if (tabBarState.selection == 0) {
+								Image("TaskViewIconSelected")
+							} else {
+								Image("TaskViewIcon")
+							}
+						}.tag(0)
+					MyPlantsView(viewModel: MyPlantsViewModel())
+						.tabItem {
+							if (tabBarState.selection == 1) {
+								Image("MyPlantsViewIconSelected")
+							} else {
+								Image("MyPlantsViewIcon")
+							}
+						}.tag(1)
+					SearchView(viewModel: SearchViewModel())
+						.tabItem {
+							if (tabBarState.selection == 2) {
+								Image("SearchViewIconSelected")
+							} else {
+								Image("SearchViewIcon")
+							}
+						}.tag(2)
+					ProfileView(viewModel: ProfileViewModel())
+						.tabItem {
+							if (tabBarState.selection == 3) {
+								Image("ProfileViewIconSelected")
+							} else {
+								Image("ProfileViewIcon")
+							}
 						}
-					}.tag(0)
-				MyPlantsView(viewModel: MyPlantsViewModel())
-					.tabItem {
-						if (tabBarState.selection == 1) {
-							Image("MyPlantsViewIconSelected")
-						} else {
-							Image("MyPlantsViewIcon")
-						}
-					}.tag(1)
-				SearchView(viewModel: SearchViewModel())
-					.tabItem {
-						if (tabBarState.selection == 2) {
-							Image("SearchViewIconSelected")
-						} else {
-							Image("SearchViewIcon")
-						}
-					}.tag(2)
-				ProfileView(viewModel: ProfileViewModel())
-					.tabItem {
-						if (tabBarState.selection == 3) {
-							Image("ProfileViewIconSelected")
-						} else {
-							Image("ProfileViewIcon")
-						}
-					}
-					.tag(3)
+						.tag(3)
+				}
+				.environmentObject(tabBarState)
+				PictureView()
+					.zIndex(1)
 			}
-			.environmentObject(tabBarState)
+			.environmentObject(pictureViewState)
 		} else {
 			AuthView(viewModel: AuthViewModel())
 		}

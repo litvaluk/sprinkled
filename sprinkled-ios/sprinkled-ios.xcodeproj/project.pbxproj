@@ -39,6 +39,8 @@
 		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
 		8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */; };
 		8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */; };
+		8FA07B23290BDC570019C142 /* PictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B22290BDC570019C142 /* PictureView.swift */; };
+		8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B24290BE4C80019C142 /* PictureViewState.swift */; };
 		8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA38EA528F9A83400C78C2E /* AppDelegate.swift */; };
 		8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8FA3C83E28F1992E00F1D070 /* JWTDecode */; };
 		8FA3C84128F1B10E00F1D070 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */; };
@@ -106,6 +108,8 @@
 		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSummary.swift; sourceTree = "<group>"; };
 		8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamView.swift; sourceTree = "<group>"; };
+		8FA07B22290BDC570019C142 /* PictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureView.swift; sourceTree = "<group>"; };
+		8FA07B24290BE4C80019C142 /* PictureViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureViewState.swift; sourceTree = "<group>"; };
 		8FA38EA428F9A1C200C78C2E /* sprinkled-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "sprinkled-ios.entitlements"; sourceTree = "<group>"; };
 		8FA38EA528F9A83400C78C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 				8FA38EA528F9A83400C78C2E /* AppDelegate.swift */,
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
 				8F24E76928EEF664008D5AEE /* Extensions.swift */,
+				8FA07B24290BE4C80019C142 /* PictureViewState.swift */,
 				8F24E74828EECB86008D5AEE /* SprinkledApp.swift */,
 				8F095E952904066800DBCECA /* Styles.swift */,
 				8F17B9C828FAD73D00B4308C /* TabBarState.swift */,
@@ -203,6 +208,7 @@
 				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
 				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
+				8FA07B22290BDC570019C142 /* PictureView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
 				8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */,
 				8F6B23E128F88E280079F0FC /* PlantDetailView.swift */,
@@ -394,6 +400,7 @@
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
 				8F095E922903E24A00DBCECA /* Team.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
+				8FA07B23290BDC570019C142 /* PictureView.swift in Sources */,
 				8F095E9829040E4800DBCECA /* Place.swift in Sources */,
 				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
 				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
@@ -419,6 +426,7 @@
 				8FA563A528F014BE00C54AF2 /* API.swift in Sources */,
 				8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
+				8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */,
 				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,

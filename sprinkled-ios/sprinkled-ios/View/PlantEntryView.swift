@@ -101,6 +101,7 @@ struct PlantEntryHeaderView: View {
 struct PlantEntryContent: View {
 	@Namespace var namespace
 	@StateObject var vm: PlantEntryViewModel
+	@EnvironmentObject var pictureViewState: PictureViewState
 	
 	var body: some View {
 		HStack() {
@@ -160,7 +161,11 @@ struct PlantEntryContent: View {
 			LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.pictures) { picture in
-						GalleryItem(user: "\(picture.userId)", date: picture.createdAt, pictureUrl: picture.url)
+						Button {
+							pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures)
+						} label: {
+							GalleryItem(user: "\(picture.userId)", date: picture.createdAt, pictureUrl: picture.url)
+						}
 					}
 				} else {
 					ForEach(0..<5) { i in
@@ -250,10 +255,13 @@ struct GalleryItem: View {
 					VStack(alignment: .leading) {
 						Text(user)
 							.font(.caption2)
+							.foregroundColor(.black)
 						Text(dayDateFormatter.string(from: date))
 							.font(.caption2)
+							.foregroundColor(.black)
 						Text(timeDateFormatter.string(from: date))
 							.font(.caption2)
+							.foregroundColor(.black)
 					}
 					Spacer()
 				}
@@ -267,5 +275,6 @@ struct GalleryItem: View {
 struct PlantEntryView_Previews: PreviewProvider {
 	static var previews: some View {
 		PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1))
+			.environmentObject(PictureViewState())
 	}
 }
