@@ -6,4 +6,5 @@ struct Picture: Codable, Identifiable, Hashable, Equatable {
 	let createdAt: Date
 	let userId: Int
 	let plantEntryId: Int
+	let user: User
 }

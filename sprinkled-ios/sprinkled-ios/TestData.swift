@@ -232,8 +232,8 @@ struct TestData {
 	]
 
 	static let pictures = [
-		Picture(id: 1, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1),
-		Picture(id: 2, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1),
+		Picture(id: 1, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1, user: TestData.users[0]),
+		Picture(id: 2, url: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", createdAt: Date(), userId: 1, plantEntryId: 1, user: TestData.users[0]),
 	]
 	
 	static let plantEntries = [

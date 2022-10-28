@@ -43,7 +43,17 @@ export class PlantEntryService {
             action: true,
           },
         },
-        pictures: true,
+        pictures: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                email: true,
+              },
+            },
+          },
+        },
       },
     });
   }
