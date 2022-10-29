@@ -1,11 +1,11 @@
-import { IsDateString, IsInt, IsPositive } from 'class-validator';
+import { IsDateString, IsInt, IsPositive, Min } from 'class-validator';
 
 export class CreateReminderDto {
   @IsDateString()
   date: Date;
 
   @IsInt()
-  @IsPositive()
+  @Min(0)
   period: number;
 
   @IsInt()

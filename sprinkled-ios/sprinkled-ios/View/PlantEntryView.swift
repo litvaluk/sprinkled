@@ -2,6 +2,12 @@ import SwiftUI
 import Kingfisher
 import Shimmer
 
+enum PlantEntryMenuAction: Hashable, Equatable {
+	case addEvent
+	case addReminder
+	case addPhoto
+}
+
 struct PlantEntryView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@StateObject var vm: PlantEntryViewModel
@@ -81,7 +87,20 @@ struct PlantEntryHeaderView: View {
 					.redactedShimmering(if: vm.plantEntry == nil)
 			}
 			Spacer()
-			Button {} label: {
+			Menu {
+				NavigationLink(value: PlantEntryMenuAction.addEvent) {
+					Text("Add event")
+				}
+				.disabled(vm.plantEntry == nil)
+				NavigationLink(value: PlantEntryMenuAction.addReminder) {
+					Text("Add reminder")
+				}
+				.disabled(vm.plantEntry == nil)
+				NavigationLink(value: PlantEntryMenuAction.addPhoto) {
+					Text("Add photo")
+				}
+				.disabled(vm.plantEntry == nil)
+			} label: {
 				ZStack {
 					RoundedRectangle(cornerRadius: 15)
 						.frame(width: 60, height: 60)
@@ -92,6 +111,16 @@ struct PlantEntryHeaderView: View {
 						.fontWeight(.medium)
 						.frame(width: 30, height: 30)
 				}
+			}
+		}
+		.navigationDestination(for: PlantEntryMenuAction.self) { action in
+			switch (action) {
+			case PlantEntryMenuAction.addEvent:
+				AddEventView(vm: AddEventViewModel(plantEntryId: vm.plantEntryId, plantEntryName: vm.plantEntry!.name))
+			case PlantEntryMenuAction.addReminder:
+				AddReminderView(vm: AddReminderViewModel(plantEntryId: vm.plantEntryId, plantEntryName: vm.plantEntry!.name))
+			case PlantEntryMenuAction.addPhoto:
+				Text("Take photo [\(vm.plantEntryId)]")
 			}
 		}
 		.padding(.horizontal)

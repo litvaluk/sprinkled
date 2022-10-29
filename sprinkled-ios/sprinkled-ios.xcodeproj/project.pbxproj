@@ -41,6 +41,10 @@
 		8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */; };
 		8FA07B23290BDC570019C142 /* PictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B22290BDC570019C142 /* PictureView.swift */; };
 		8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B24290BE4C80019C142 /* PictureViewState.swift */; };
+		8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B26290D0A340019C142 /* AddEventViewModel.swift */; };
+		8FA07B29290D0B8C0019C142 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B28290D0B8C0019C142 /* AddEventView.swift */; };
+		8FA07B2B290D469D0019C142 /* AddReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B2A290D469C0019C142 /* AddReminderViewModel.swift */; };
+		8FA07B2D290D48CB0019C142 /* AddReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B2C290D48CB0019C142 /* AddReminderView.swift */; };
 		8FA38EA628F9A83400C78C2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA38EA528F9A83400C78C2E /* AppDelegate.swift */; };
 		8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 8FA3C83E28F1992E00F1D070 /* JWTDecode */; };
 		8FA3C84128F1B10E00F1D070 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */; };
@@ -110,6 +114,10 @@
 		8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamView.swift; sourceTree = "<group>"; };
 		8FA07B22290BDC570019C142 /* PictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureView.swift; sourceTree = "<group>"; };
 		8FA07B24290BE4C80019C142 /* PictureViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureViewState.swift; sourceTree = "<group>"; };
+		8FA07B26290D0A340019C142 /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
+		8FA07B28290D0B8C0019C142 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		8FA07B2A290D469C0019C142 /* AddReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderViewModel.swift; sourceTree = "<group>"; };
+		8FA07B2C290D48CB0019C142 /* AddReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReminderView.swift; sourceTree = "<group>"; };
 		8FA38EA428F9A1C200C78C2E /* sprinkled-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "sprinkled-ios.entitlements"; sourceTree = "<group>"; };
 		8FA38EA528F9A83400C78C2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8FA3C84028F1B10E00F1D070 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -205,11 +213,13 @@
 		8F24E75928EEDC8D008D5AEE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8FA07B28290D0B8C0019C142 /* AddEventView.swift */,
+				8FA07B2C290D48CB0019C142 /* AddReminderView.swift */,
 				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
 				8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */,
-				8FA07B22290BDC570019C142 /* PictureView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
+				8FA07B22290BDC570019C142 /* PictureView.swift */,
 				8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */,
 				8F6B23E128F88E280079F0FC /* PlantDetailView.swift */,
 				8FFD753C29095660005237A9 /* PlantEntryView.swift */,
@@ -225,6 +235,8 @@
 		8F24E75A28EEDC99008D5AEE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8FA07B26290D0A340019C142 /* AddEventViewModel.swift */,
+				8FA07B2A290D469C0019C142 /* AddReminderViewModel.swift */,
 				8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */,
 				8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */,
 				8F095E8F2903DEE300DBCECA /* CreateTeamViewModel.swift */,
@@ -399,6 +411,7 @@
 				8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
 				8F095E922903E24A00DBCECA /* Team.swift in Sources */,
+				8FA07B2D290D48CB0019C142 /* AddReminderView.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
 				8FA07B23290BDC570019C142 /* PictureView.swift in Sources */,
 				8F095E9829040E4800DBCECA /* Place.swift in Sources */,
@@ -406,10 +419,12 @@
 				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,
 				8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */,
+				8FA07B2B290D469D0019C142 /* AddReminderViewModel.swift in Sources */,
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
 				8FFD7544290ABF27005237A9 /* Picture.swift in Sources */,
+				8FA07B29290D0B8C0019C142 /* AddEventView.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
@@ -429,6 +444,7 @@
 				8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */,
 				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
+				8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,

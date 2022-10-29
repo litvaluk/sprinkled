@@ -116,6 +116,12 @@ extension Date {
 	}
 }
 
+extension Date {
+	func encodeToStringForTransfer() -> String {
+		self.ISO8601Format(.iso8601(timeZone: .current, includingFractionalSeconds: true)) + "Z"
+	}
+}
+
 extension View {
 	@ViewBuilder
 	func redactedShimmering(if condition: @autoclosure () -> Bool) -> some View {

@@ -13,6 +13,16 @@ export class EventService {
         ...createEventDto,
         userId: userId,
       },
+      include: {
+        action: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+      },
     });
   }
 

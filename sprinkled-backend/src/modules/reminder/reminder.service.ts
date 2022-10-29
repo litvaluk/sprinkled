@@ -13,6 +13,9 @@ export class ReminderService {
         ...createReminderDto,
         creatorId: userId,
       },
+      include: {
+        action: true,
+      },
     });
   }
 

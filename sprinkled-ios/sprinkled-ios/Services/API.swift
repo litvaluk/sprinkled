@@ -15,6 +15,8 @@ protocol APIProtocol {
 	func renameTeam(teamId: Int, newName: String) async throws -> Void
 	func deleteTeam(teamId: Int) async throws -> Void
 	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry
+	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event
+	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func refreshToken() async -> Void
 }
 
@@ -107,6 +109,27 @@ final class API : APIProtocol {
 	
 	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry {
 		return try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)")
+	}
+	
+	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event {
+		let body = [
+			"plantEntryId": plantEntryId,
+			"actionId": actionId,
+			"date": date.encodeToStringForTransfer(),
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "events", method: "POST", body: bodyData)
+	}
+	
+	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
+		let body = [
+			"plantEntryId": plantEntryId,
+			"actionId": actionId,
+			"date": date.encodeToStringForTransfer(),
+			"period": period
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "reminders", method: "POST", body: bodyData)
 	}
 	
 	func refreshToken() async {
@@ -307,5 +330,13 @@ final class TestAPI : APIProtocol {
 	
 	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry {
 		return TestData.plantEntries[0]
+	}
+	
+	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event {
+		return TestData.events[0]
+	}
+	
+	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
+		return TestData.reminders[0]
 	}
 }
