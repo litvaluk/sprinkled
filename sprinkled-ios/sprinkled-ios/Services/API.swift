@@ -184,7 +184,7 @@ final class API : APIProtocol {
 		let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
 		let headers = request.allHTTPHeaderFields ?? [:]
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
-		let (data, _) = try! await performDataRequest(for: request)
+		let (data, _) = try await performDataRequest(for: request)
 		
 		return try JSONDecoder.app.decode(Response.self, from: data)
 	}
@@ -208,7 +208,7 @@ final class API : APIProtocol {
 		let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
 		let headers = request.allHTTPHeaderFields ?? [:]
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(accessToken)"], uniquingKeysWith: { $1 })
-		_ = try! await performDataRequest(for: request)
+		_ = try await performDataRequest(for: request)
 	}
 
 	private func prepareRequest(

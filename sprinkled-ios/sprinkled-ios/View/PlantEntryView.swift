@@ -3,8 +3,8 @@ import Kingfisher
 import Shimmer
 
 enum PlantEntryMenuAction: Hashable, Equatable {
-	case addEvent
-	case addReminder
+	case addEvent(PlantEntry)
+	case addReminder(PlantEntry)
 	case addPhoto
 }
 
@@ -88,18 +88,17 @@ struct PlantEntryHeaderView: View {
 			}
 			Spacer()
 			Menu {
-				NavigationLink(value: PlantEntryMenuAction.addEvent) {
-					Text("Add event")
+				if let plantEntry = vm.plantEntry {
+					NavigationLink(value: PlantEntryMenuAction.addEvent(plantEntry)) {
+						Text("Add event")
+					}
+					NavigationLink(value: PlantEntryMenuAction.addReminder(plantEntry)) {
+						Text("Add reminder")
+					}
+					NavigationLink(value: PlantEntryMenuAction.addPhoto) {
+						Text("Add photo")
+					}
 				}
-				.disabled(vm.plantEntry == nil)
-				NavigationLink(value: PlantEntryMenuAction.addReminder) {
-					Text("Add reminder")
-				}
-				.disabled(vm.plantEntry == nil)
-				NavigationLink(value: PlantEntryMenuAction.addPhoto) {
-					Text("Add photo")
-				}
-				.disabled(vm.plantEntry == nil)
 			} label: {
 				ZStack {
 					RoundedRectangle(cornerRadius: 15)
@@ -112,15 +111,16 @@ struct PlantEntryHeaderView: View {
 						.frame(width: 30, height: 30)
 				}
 			}
-		}
-		.navigationDestination(for: PlantEntryMenuAction.self) { action in
-			switch (action) {
-			case PlantEntryMenuAction.addEvent:
-				AddEventView(vm: AddEventViewModel(plantEntryId: vm.plantEntryId, plantEntryName: vm.plantEntry!.name))
-			case PlantEntryMenuAction.addReminder:
-				AddReminderView(vm: AddReminderViewModel(plantEntryId: vm.plantEntryId, plantEntryName: vm.plantEntry!.name))
-			case PlantEntryMenuAction.addPhoto:
-				Text("Take photo [\(vm.plantEntryId)]")
+			.disabled(vm.plantEntry == nil)
+			.navigationDestination(for: PlantEntryMenuAction.self) { action in
+				switch (action) {
+				case PlantEntryMenuAction.addEvent(let plantEntry):
+					AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
+				case PlantEntryMenuAction.addReminder(let plantEntry):
+					AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
+				case PlantEntryMenuAction.addPhoto:
+					Text("Take photo [\(vm.plantEntryId)]")
+				}
 			}
 		}
 		.padding(.horizontal)
