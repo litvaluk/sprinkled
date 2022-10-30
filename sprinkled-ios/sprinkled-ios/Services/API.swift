@@ -17,6 +17,7 @@ protocol APIProtocol {
 	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry
 	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event
 	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
+	func fetchReminders() async throws -> [ReminderForTaskView]
 	func refreshToken() async -> Void
 }
 
@@ -130,6 +131,10 @@ final class API : APIProtocol {
 		] as [String : Any]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		return try await makeAuthenticatedRequest(path: "reminders", method: "POST", body: bodyData)
+	}
+	
+	func fetchReminders() async throws -> [ReminderForTaskView] {
+		return try await makeAuthenticatedRequest(path: "reminders")
 	}
 	
 	func refreshToken() async {
@@ -338,5 +343,9 @@ final class TestAPI : APIProtocol {
 	
 	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
 		return TestData.reminders[0]
+	}
+	
+	func fetchReminders() async throws -> [ReminderForTaskView] {
+		return TestData.remindersForTaskView
 	}
 }

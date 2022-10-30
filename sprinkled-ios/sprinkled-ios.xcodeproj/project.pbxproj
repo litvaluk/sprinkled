@@ -53,6 +53,8 @@
 		8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A828F0240800C54AF2 /* AuthResponse.swift */; };
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
+		8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */; };
+		8FB43FF0290EBF36009202F4 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8FB43FEF290EBF36009202F4 /* Collections */; };
 		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
 		8FFD7535290583FA005237A9 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7534290583FA005237A9 /* TeamView.swift */; };
 		8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753629058446005237A9 /* TeamViewModel.swift */; };
@@ -126,6 +128,7 @@
 		8FA563A828F0240800C54AF2 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		8FA563B028F04AAA00C54AF2 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 		8FFD7534290583FA005237A9 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		8FFD753629058446005237A9 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 			files = (
 				8FFD75422909621E005237A9 /* Shimmer in Frameworks */,
 				8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */,
+				8FB43FF0290EBF36009202F4 /* Collections in Frameworks */,
 				8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +251,7 @@
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
+				8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */,
 				8FFD753629058446005237A9 /* TeamViewModel.swift */,
 			);
 			path = ViewModel;
@@ -309,6 +314,7 @@
 				8FA3C83E28F1992E00F1D070 /* JWTDecode */,
 				8F6B23DF28F8268F0079F0FC /* Kingfisher */,
 				8FFD75412909621E005237A9 /* Shimmer */,
+				8FB43FEF290EBF36009202F4 /* Collections */,
 			);
 			productName = "sprinkled-ios";
 			productReference = 8F24E74528EECB86008D5AEE /* sprinkled-ios.app */;
@@ -364,6 +370,7 @@
 				8FA3C83D28F1992E00F1D070 /* XCRemoteSwiftPackageReference "JWTDecode" */,
 				8F6B23DE28F8268F0079F0FC /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				8FFD75402909621E005237A9 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+				8FB43FEE290EBF36009202F4 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 8F24E74628EECB86008D5AEE /* Products */;
 			projectDirPath = "";
@@ -445,6 +452,7 @@
 				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */,
+				8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
 				8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */,
 				8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */,
@@ -754,6 +762,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		8FB43FEE290EBF36009202F4 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		8FFD75402909621E005237A9 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
@@ -774,6 +790,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8FA3C83D28F1992E00F1D070 /* XCRemoteSwiftPackageReference "JWTDecode" */;
 			productName = JWTDecode;
+		};
+		8FB43FEF290EBF36009202F4 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8FB43FEE290EBF36009202F4 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
 		};
 		8FFD75412909621E005237A9 /* Shimmer */ = {
 			isa = XCSwiftPackageProductDependency;

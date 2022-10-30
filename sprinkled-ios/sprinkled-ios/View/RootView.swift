@@ -11,7 +11,7 @@ struct RootView: View {
 		if (!viewModel.accessToken.isEmpty) {
 			ZStack {
 				TabView(selection: tabBarState.handler) {
-					TaskView()
+					TaskView(vm: TaskViewModel())
 						.tabItem {
 							if (tabBarState.selection == 0) {
 								Image("TaskViewIconSelected")
