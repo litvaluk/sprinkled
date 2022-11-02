@@ -35,7 +35,7 @@ struct RootView: View {
 								Image("SearchViewIcon")
 							}
 						}.tag(2)
-					ProfileView(viewModel: ProfileViewModel())
+					ProfileView(vm: ProfileViewModel())
 						.tabItem {
 							if (tabBarState.selection == 3) {
 								Image("ProfileViewIconSelected")

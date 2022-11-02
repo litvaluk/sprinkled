@@ -8,7 +8,7 @@ final class ProfileViewModel: ObservableObject {
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 	
-	@Published var unitSystemSelection = 0
+	@Published var unitSystemSelection = "Metric"
 	@Published var reminderNotificationsEnabled: Bool
 	@Published var eventNotificationsEnabled: Bool
 	

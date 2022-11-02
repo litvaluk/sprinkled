@@ -1,49 +1,45 @@
 import SwiftUI
 
 struct ProfileView: View {
-	@StateObject var viewModel: ProfileViewModel
+	@StateObject var vm: ProfileViewModel
 	
 	var body: some View {
 		NavigationStack {
-			Form {
-				Section(header: Text("Credentials")) {
-					Button("Change username") {}
-					Button("Change password") {}
-				}
-				Section(header: Text("Notifications")) {
-					Toggle("Reminder notifications", isOn: $viewModel.reminderNotificationsEnabled)
-						.onChange(of: viewModel.reminderNotificationsEnabled) { _ in
-						   viewModel.onReminderNotificationsToggleChange()
-					   }
-					Toggle("Event notifications", isOn: $viewModel.eventNotificationsEnabled)
-						.onChange(of: viewModel.eventNotificationsEnabled) { _ in
-						   viewModel.onEventNotificationsToggleChange()
-					   }
-				}
-				Section(header: Text("Other")) {
-					Picker("Unit system", selection: $viewModel.unitSystemSelection) {
-						Text("Metric").tag(0)
-						Text("Imperial").tag(1)
+			VStack(spacing: 20) {
+					SprinkledListSection(headerText: "Credentials") {
+						SprinkledListNavigationLink(title: "Change username", value: "placeholder")
+						SprinkledListNavigationLink(title: "Change password", value: "placeholder")
 					}
-					.pickerStyle(.automatic)
-				}
-				HStack {
-					Spacer()
-					Button("Sign Out", role: .destructive) {
-						viewModel.logout()
+					SprinkledListSection(headerText: "Notifications") {
+						SprinkledListToggle(title: "Reminder notifications", isOn: $vm.reminderNotificationsEnabled)
+						SprinkledListToggle(title: "Event notifications", isOn: $vm.eventNotificationsEnabled)
+					}
+					SprinkledListSection(headerText: "Other") {
+						SprinkledListMenuPicker(title: "Unit system", options: ["Metric", "Imperial"], selection: $vm.unitSystemSelection)
 					}
 					Spacer()
+					Button(role: .destructive) {
+						vm.logout()
+					} label: {
+						HStack {
+							Spacer()
+							Text("Sign out")
+								.foregroundColor(.red)
+							Spacer()
+						}
+						.padding(15)
+						.background(.thinMaterial)
+						.cornerRadius(10)
+					}
 				}
-				
-			}
-			.tint(.sprinkledGreen)
-			.navigationTitle(viewModel.getAuthenticatedUser()?.capitalizedFirstLetter() ?? "Profile")
+				.padding()
+			.navigationTitle(vm.getAuthenticatedUser()?.capitalizedFirstLetter() ?? "Profile")
 		}
 	}
 }
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProfileView(viewModel: ProfileViewModel())
+		ProfileView(vm: ProfileViewModel())
 	}
 }
