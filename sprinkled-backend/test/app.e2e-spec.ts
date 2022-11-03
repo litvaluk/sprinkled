@@ -47,6 +47,7 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'password',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -67,6 +68,7 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'password',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -82,6 +84,7 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'password',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -97,6 +100,7 @@ describe('Sprinkled', () => {
           email: 'newUser2@gmail.com',
           password: 'pwd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -109,7 +113,12 @@ describe('Sprinkled', () => {
 
     describe('Login', () => {
       it('should login a user', () => {
-        const dto: LoginDto = { username: 'newUser', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
+        const dto: LoginDto = {
+          username: 'newUser',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -124,7 +133,12 @@ describe('Sprinkled', () => {
       });
 
       it('should not login a user with wrong password', () => {
-        const dto: LoginDto = { username: 'newUser', password: 'wrong_password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
+        const dto: LoginDto = {
+          username: 'newUser',
+          password: 'wrong_password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -134,7 +148,12 @@ describe('Sprinkled', () => {
       });
 
       it('should not login a nonexistent user', () => {
-        const dto: LoginDto = { username: 'non_existing_user', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
+        const dto: LoginDto = {
+          username: 'non_existing_user',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -203,7 +222,12 @@ describe('Sprinkled', () => {
       await pactum
         .spec()
         .post('http://localhost:3001/auth/login')
-        .withJson({ username: 'user', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' })
+        .withJson({
+          username: 'user',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
+        })
         .stores('accessTokenUser', 'accessToken');
     });
 
@@ -293,7 +317,12 @@ describe('Sprinkled', () => {
         await pactum
           .spec()
           .post('http://localhost:3001/auth/login')
-          .withJson({ username: 'userToBeDeleted', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' })
+          .withJson({
+            username: 'userToBeDeleted',
+            password: 'password',
+            deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+            pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
+          })
           .stores('accessTokenUserToBeDeleted', 'accessToken');
       });
 

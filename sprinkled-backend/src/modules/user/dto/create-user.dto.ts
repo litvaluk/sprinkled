@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -16,4 +16,8 @@ export class CreateUserDto {
 
   @IsUUID()
   deviceId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  pushToken: string;
 }

@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { HttpRequestLoggerMiddleware } from '../middleware';
 import { ActionModule } from './action';
 import { AuthModule } from './auth';
@@ -25,6 +26,7 @@ import { UserModule } from './user';
     EventModule,
     ReminderModule,
     NotificationModule,
+    ScheduleModule.forRoot(),
   ],
 })
 export class AppModule implements NestModule {

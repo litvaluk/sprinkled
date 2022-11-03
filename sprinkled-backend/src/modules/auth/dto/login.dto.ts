@@ -11,4 +11,8 @@ export class LoginDto {
 
   @IsUUID()
   deviceId: string;
+
+  @IsString()
+  @IsNotEmpty()
+  pushToken: string;
 }

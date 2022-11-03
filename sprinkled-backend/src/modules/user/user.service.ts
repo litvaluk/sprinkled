@@ -20,39 +20,8 @@ export class UserService {
       },
     });
 
-    const device = await this.prisma.device.findUnique({
-      where: {
-        deviceId: createUserDto.deviceId,
-      },
-    });
-
-    if (!device) {
-      // if device does not exist, create it and assign it to the user
-      await this.prisma.device.create({
-        data: {
-          deviceId: createUserDto.deviceId,
-          users: {
-            connect: {
-              id: createdUser.id,
-            },
-          },
-        },
-      });
-    } else {
-      // if device exists, assign it to the user
-      await this.prisma.device.update({
-        where: {
-          deviceId: createUserDto.deviceId,
-        },
-        data: {
-          users: {
-            connect: {
-              id: createdUser.id,
-            },
-          },
-        },
-      });
-    }
+    let deviceId = await this.addDeviceIfNeeded(createUserDto.deviceId, createdUser.id);
+    await this.addPushTokenIfNeeded(createUserDto.pushToken, deviceId);
 
     return createdUser;
   }
@@ -133,5 +102,64 @@ export class UserService {
         refreshToken: '',
       },
     });
+  }
+
+  async addDeviceIfNeeded(deviceId: string, userId: number) {
+    let device = await this.prisma.device.findUnique({
+      where: {
+        deviceId: deviceId,
+      },
+    });
+
+    if (!device) {
+      // if device does not exist, create it and assign it to the user
+      device = await this.prisma.device.create({
+        data: {
+          deviceId: deviceId,
+          users: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+    } else {
+      // if device exists, assign it to the user
+      await this.prisma.device.update({
+        where: {
+          deviceId: deviceId,
+        },
+        data: {
+          users: {
+            connect: {
+              id: userId,
+            },
+          },
+        },
+      });
+    }
+
+    return device.id;
+  }
+
+  async addPushTokenIfNeeded(pushToken: string, deviceId: number) {
+    const pushTokenExists = await this.prisma.pushToken.findFirst({
+      where: {
+        token: pushToken,
+      },
+    });
+
+    if (!pushTokenExists) {
+      await this.prisma.pushToken.create({
+        data: {
+          token: pushToken,
+          device: {
+            connect: {
+              id: deviceId,
+            },
+          },
+        },
+      });
+    }
   }
 }

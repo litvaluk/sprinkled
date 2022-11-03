@@ -17,6 +17,7 @@ final class AuthViewModel: ObservableObject {
 	
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
+	@AppStorage("pushToken") var pushToken = ""
 	
 	@MainActor
 	func signInUser() async {
@@ -27,7 +28,10 @@ final class AuthViewModel: ObservableObject {
 			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
 				throw IdentifierForVendorNotFound()
 			}
-			try await self.api.signIn(signInUsername, signInPassword, deviceId)
+			guard !pushToken.isEmpty else {
+				throw InvalidPushToken()
+			}
+			try await self.api.signIn(signInUsername, signInPassword, deviceId, pushToken)
 		} catch {
 			errorMessage = "Something went wrong."
 		}
@@ -50,7 +54,10 @@ final class AuthViewModel: ObservableObject {
 			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
 				throw IdentifierForVendorNotFound()
 			}
-			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId)
+			guard !pushToken.isEmpty else {
+				throw InvalidPushToken()
+			}
+			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId, pushToken)
 		} catch {
 			errorMessage = "Something went wrong."
 		}

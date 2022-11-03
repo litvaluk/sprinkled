@@ -25,6 +25,10 @@ struct SprinkledApp: App {
 			UserDefaults.standard.set("", forKey: "accessToken")
 			UserDefaults.standard.set("", forKey: "refreshToken")
 		}
+		
+		DispatchQueue.main.async {
+		  UIApplication.shared.registerForRemoteNotifications()
+		}
 	}
 	
     var body: some Scene {

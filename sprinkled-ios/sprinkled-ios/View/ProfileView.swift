@@ -12,7 +12,13 @@ struct ProfileView: View {
 					}
 					SprinkledListSection(headerText: "Notifications") {
 						SprinkledListToggle(title: "Reminder notifications", isOn: $vm.reminderNotificationsEnabled)
+							.onChange(of: vm.reminderNotificationsEnabled) { _ in
+							   vm.onReminderNotificationsToggleChange()
+						   }
 						SprinkledListToggle(title: "Event notifications", isOn: $vm.eventNotificationsEnabled)
+							.onChange(of: vm.eventNotificationsEnabled) { _ in
+							   vm.onEventNotificationsToggleChange()
+						   }
 					}
 					SprinkledListSection(headerText: "Other") {
 						SprinkledListMenuPicker(title: "Unit system", options: ["Metric", "Imperial"], selection: $vm.unitSystemSelection)

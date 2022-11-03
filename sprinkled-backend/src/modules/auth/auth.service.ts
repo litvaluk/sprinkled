@@ -62,43 +62,8 @@ export class AuthService {
       throw new ForbiddenException('Invalid username or password');
     }
 
-    // find device
-    const device = await this.prisma.device.findUnique({
-      where: {
-        deviceId: loginDto.deviceId,
-      },
-      include: {
-        users: true,
-      },
-    });
-
-    if (!device) {
-      // if device does not exist, create and assign it to the user
-      await this.prisma.device.create({
-        data: {
-          deviceId: loginDto.deviceId,
-          users: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-      });
-    } else if (!device.users.find((deviceUser) => deviceUser.id === user.id)) {
-      // if device exists but is not assigned to the user, assign it
-      await this.prisma.device.update({
-        where: {
-          id: device.id,
-        },
-        data: {
-          users: {
-            connect: {
-              id: user.id,
-            },
-          },
-        },
-      });
-    }
+    let deviceId = await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
+    await this.userService.addPushTokenIfNeeded(loginDto.pushToken, deviceId);
 
     const tokens = await this._generateTokens(user.id, user.username);
     await this.userService.updateTokens(user.id, tokens.accessToken, tokens.refreshToken);

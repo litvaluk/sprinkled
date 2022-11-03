@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { Notification, Provider } from '@parse/node-apn';
 import { PrismaService } from '../prisma';
 
@@ -17,6 +18,12 @@ export class NotificationService {
       production: process.env.APNS_PRODUCTION === 'true',
     };
     this.apnProvider = new Provider(options);
+  }
+
+  @Cron('0 * * * * *') // every minute
+  handleReminderNotifications() {
+    this.logger.log('Handling reminder notifications');
+    // TODO: implement
   }
 
   async sendNotification(userId: number, title: string, body: string, notificationType: NotificationType) {

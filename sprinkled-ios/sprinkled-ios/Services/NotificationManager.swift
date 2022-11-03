@@ -22,9 +22,6 @@ final class NotificationManager: NotificationManagerProtocol {
 				print("failed to get notification permission: \(error)")
 				return
 			}
-			DispatchQueue.main.async {
-			  UIApplication.shared.registerForRemoteNotifications()
-			}
 		})
 	}
 	
