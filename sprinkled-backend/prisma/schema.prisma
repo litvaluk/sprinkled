@@ -15,33 +15,41 @@ model User {
   accessToken  String
   refreshToken String
   teams        Team[]
-  createdTeams Team[]       @relation("creator")
   pictures     Picture[]
   places       Place[]
   plantEntries PlantEntry[]
   events       Event[]
   reminders    Reminder[]
-  PushToken    PushToken[]
+  devices      Device[]
+  adminOf      Team[]       @relation("admins")
 
   @@map("users")
 }
 
+model Device {
+  id                           Int         @id @default(autoincrement())
+  deviceId                     String      @unique
+  reminderNotificationsEnabled Boolean     @default(false)
+  eventNotificationsEnabled    Boolean     @default(false)
+  pushTokens                   PushToken[]
+  users                        User[]
+}
+
 model PushToken {
-  id     Int    @id @default(autoincrement())
-  token  String @unique
-  userId Int
-  user   User   @relation(fields: [userId], references: [id])
+  id       Int    @id @default(autoincrement())
+  token    String @unique
+  device   Device @relation(fields: [deviceId], references: [id])
+  deviceId Int
 
   @@map("push_tokens")
 }
 
 model Team {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  users     User[]
-  places    Place[]
-  creator   User    @relation(fields: [creatorId], references: [id], name: "creator")
-  creatorId Int
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  users  User[]
+  places Place[]
+  admins User[]  @relation("admins")
 
   @@map("teams")
 }
@@ -117,6 +125,9 @@ model Event {
   plantEntryId Int
   action       Action     @relation(fields: [actionId], references: [id])
   actionId     Int
+  completed    Boolean    @default(true)
+  Reminder     Reminder?  @relation(fields: [reminderId], references: [id])
+  reminderId   Int?
 
   @@map("events")
 }
@@ -140,6 +151,7 @@ model Reminder {
   plantEntryId Int
   creator      User       @relation(fields: [creatorId], references: [id])
   creatorId    Int
+  events       Event[]
 
   @@map("reminders")
 }

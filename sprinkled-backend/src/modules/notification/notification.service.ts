@@ -19,10 +19,37 @@ export class NotificationService {
     this.apnProvider = new Provider(options);
   }
 
-  async sendNotification(userId: number, title: string, body: string) {
+  async sendNotification(userId: number, title: string, body: string, notificationType: NotificationType) {
+    let userConstraint = {
+      device: {
+        users: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+    };
+
+    let notificationsEnabledConstraint;
+    if (notificationType === NotificationType.REMINDER) {
+      notificationsEnabledConstraint = {
+        device: {
+          reminderNotificationsEnabled: true,
+        },
+      };
+    } else if (notificationType === NotificationType.EVENT) {
+      notificationsEnabledConstraint = {
+        device: {
+          reminderNotificationsEnabled: true,
+        },
+      };
+    } else {
+      throw new Error('Invalid notification type');
+    }
+
     let pushTokens = await this.prisma.pushToken.findMany({
       where: {
-        userId,
+        AND: [userConstraint, notificationsEnabledConstraint],
       },
     });
     for (let pushToken of pushTokens) {
@@ -52,4 +79,9 @@ export class NotificationService {
     notification.sound = 'default';
     return notification;
   }
+}
+
+export enum NotificationType {
+  REMINDER,
+  EVENT,
 }

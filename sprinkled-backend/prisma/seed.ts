@@ -146,9 +146,13 @@ async function createTeams() {
   await prisma.team.create({
     data: {
       name: 'team1',
-      creatorId: 1,
       users: {
         connect: [{ id: 1 }, { id: 2 }],
+      },
+      admins: {
+        connect: {
+          id: 1,
+        },
       },
     },
   });
@@ -156,8 +160,12 @@ async function createTeams() {
   await prisma.team.create({
     data: {
       name: 'team2',
-      creatorId: 2,
       users: {
+        connect: {
+          id: 2,
+        },
+      },
+      admins: {
         connect: {
           id: 2,
         },

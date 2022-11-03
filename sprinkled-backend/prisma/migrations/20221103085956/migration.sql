@@ -11,10 +11,20 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
+CREATE TABLE "Device" (
+    "id" SERIAL NOT NULL,
+    "deviceId" TEXT NOT NULL,
+    "reminderNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
+    "eventNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "Device_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "push_tokens" (
     "id" SERIAL NOT NULL,
     "token" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "deviceId" INTEGER NOT NULL,
 
     CONSTRAINT "push_tokens_pkey" PRIMARY KEY ("id")
 );
@@ -23,7 +33,6 @@ CREATE TABLE "push_tokens" (
 CREATE TABLE "teams" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "creatorId" INTEGER NOT NULL,
 
     CONSTRAINT "teams_pkey" PRIMARY KEY ("id")
 );
@@ -89,6 +98,8 @@ CREATE TABLE "events" (
     "userId" INTEGER NOT NULL,
     "plantEntryId" INTEGER NOT NULL,
     "actionId" INTEGER NOT NULL,
+    "completed" BOOLEAN NOT NULL DEFAULT true,
+    "reminderId" INTEGER,
 
     CONSTRAINT "events_pkey" PRIMARY KEY ("id")
 );
@@ -114,7 +125,19 @@ CREATE TABLE "reminders" (
 );
 
 -- CreateTable
+CREATE TABLE "_DeviceToUser" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_TeamToUser" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_admins" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -126,10 +149,19 @@ CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Device_deviceId_key" ON "Device"("deviceId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "push_tokens_token_key" ON "push_tokens"("token");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "teams_name_key" ON "teams"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_DeviceToUser_AB_unique" ON "_DeviceToUser"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_DeviceToUser_B_index" ON "_DeviceToUser"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_TeamToUser_AB_unique" ON "_TeamToUser"("A", "B");
@@ -137,11 +169,14 @@ CREATE UNIQUE INDEX "_TeamToUser_AB_unique" ON "_TeamToUser"("A", "B");
 -- CreateIndex
 CREATE INDEX "_TeamToUser_B_index" ON "_TeamToUser"("B");
 
--- AddForeignKey
-ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "_admins_AB_unique" ON "_admins"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_admins_B_index" ON "_admins"("B");
 
 -- AddForeignKey
-ALTER TABLE "teams" ADD CONSTRAINT "teams_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_deviceId_fkey" FOREIGN KEY ("deviceId") REFERENCES "Device"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "places" ADD CONSTRAINT "places_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "teams"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -174,6 +209,9 @@ ALTER TABLE "events" ADD CONSTRAINT "events_plantEntryId_fkey" FOREIGN KEY ("pla
 ALTER TABLE "events" ADD CONSTRAINT "events_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "events" ADD CONSTRAINT "events_reminderId_fkey" FOREIGN KEY ("reminderId") REFERENCES "reminders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -183,7 +221,19 @@ ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Device"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "_TeamToUser" ADD CONSTRAINT "_TeamToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "teams"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_TeamToUser" ADD CONSTRAINT "_TeamToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_admins" ADD CONSTRAINT "_admins_A_fkey" FOREIGN KEY ("A") REFERENCES "teams"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_admins" ADD CONSTRAINT "_admins_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

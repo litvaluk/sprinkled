@@ -10,8 +10,12 @@ export class TeamService {
     return await this.prisma.team.create({
       data: {
         ...createTeamDto,
-        creatorId: creatorId,
         users: {
+          connect: {
+            id: creatorId,
+          },
+        },
+        admins: {
           connect: {
             id: creatorId,
           },
@@ -131,9 +135,21 @@ export class TeamService {
             username: true,
           },
         },
+        admins: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
-    return fetched.users;
+
+    return fetched.users.map((user) => {
+      return {
+        id: user.id,
+        username: user.username,
+        isAdmin: fetched.admins.some((admin) => admin.id === user.id),
+      };
+    });
   }
 
   async addTeamMember(id: number, userId: number) {
@@ -158,6 +174,36 @@ export class TeamService {
       },
       data: {
         users: {
+          disconnect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
+  async giveAdminRights(id: number, userId: number) {
+    return await this.prisma.team.update({
+      where: {
+        id: id,
+      },
+      data: {
+        admins: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeAdminRights(id: number, userId: number) {
+    return await this.prisma.team.update({
+      where: {
+        id: id,
+      },
+      data: {
+        admins: {
           disconnect: {
             id: userId,
           },

@@ -3,7 +3,7 @@ import { HttpRequestLoggerMiddleware } from '../middleware';
 import { ActionModule } from './action';
 import { AuthModule } from './auth';
 import { EventModule } from './event';
-import { NotificationModule } from './notification/notification.module';
+import { NotificationModule } from './notification';
 import { PictureModule } from './picture';
 import { PlaceModule } from './place';
 import { PlantModule } from './plant';
