@@ -42,7 +42,12 @@ describe('Sprinkled', () => {
   describe('Auth', () => {
     describe('Register', () => {
       it('should register a new user', () => {
-        const dto: CreateUserDto = { username: 'newUser', email: 'newUser@gmail.com', password: 'password' };
+        const dto: CreateUserDto = {
+          username: 'newUser',
+          email: 'newUser@gmail.com',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
@@ -57,17 +62,42 @@ describe('Sprinkled', () => {
       });
 
       it('should not register a new user with an existing username', () => {
-        const dto: CreateUserDto = { username: 'newUser', email: 'newUser@gmail.com', password: 'password' };
+        const dto: CreateUserDto = {
+          username: 'newUser',
+          email: 'newUser@gmail.com',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
           .withJson(dto)
           .expectStatus(403)
-          .expectJsonLike({ message: 'Username already taken' });
+          .expectJsonLike({ message: 'Username or email already taken' });
+      });
+
+      it('should not register a new user with an existing email', () => {
+        const dto: CreateUserDto = {
+          username: 'newUser2',
+          email: 'newUser@gmail.com',
+          password: 'password',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+        };
+        return pactum
+          .spec()
+          .post('http://localhost:3001/auth/register')
+          .withJson(dto)
+          .expectStatus(403)
+          .expectJsonLike({ message: 'Username or email already taken' });
       });
 
       it('should not register a new user with short password', () => {
-        const dto: CreateUserDto = { username: 'newUser2', email: 'newUser2@gmail.com', password: 'pwd' };
+        const dto: CreateUserDto = {
+          username: 'newUser2',
+          email: 'newUser2@gmail.com',
+          password: 'pwd',
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/register')
@@ -79,7 +109,7 @@ describe('Sprinkled', () => {
 
     describe('Login', () => {
       it('should login a user', () => {
-        const dto: LoginDto = { username: 'newUser', password: 'password' };
+        const dto: LoginDto = { username: 'newUser', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -94,7 +124,7 @@ describe('Sprinkled', () => {
       });
 
       it('should not login a user with wrong password', () => {
-        const dto: LoginDto = { username: 'newUser', password: 'wrong_password' };
+        const dto: LoginDto = { username: 'newUser', password: 'wrong_password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -104,7 +134,7 @@ describe('Sprinkled', () => {
       });
 
       it('should not login a nonexistent user', () => {
-        const dto: LoginDto = { username: 'non_existing_user', password: 'password' };
+        const dto: LoginDto = { username: 'non_existing_user', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/login')
@@ -173,7 +203,7 @@ describe('Sprinkled', () => {
       await pactum
         .spec()
         .post('http://localhost:3001/auth/login')
-        .withJson({ username: 'user', password: 'password' })
+        .withJson({ username: 'user', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' })
         .stores('accessTokenUser', 'accessToken');
     });
 
@@ -263,7 +293,7 @@ describe('Sprinkled', () => {
         await pactum
           .spec()
           .post('http://localhost:3001/auth/login')
-          .withJson({ username: 'userToBeDeleted', password: 'password' })
+          .withJson({ username: 'userToBeDeleted', password: 'password', deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4' })
           .stores('accessTokenUserToBeDeleted', 'accessToken');
       });
 

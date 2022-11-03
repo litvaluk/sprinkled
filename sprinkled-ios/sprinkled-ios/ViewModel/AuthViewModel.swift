@@ -24,7 +24,10 @@ final class AuthViewModel: ObservableObject {
 		isProcessing = true
 		
 		do {
-			try await self.api.signIn(signInUsername, signInPassword)
+			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+				throw IdentifierForVendorNotFound()
+			}
+			try await self.api.signIn(signInUsername, signInPassword, deviceId)
 		} catch {
 			errorMessage = "Something went wrong."
 		}
@@ -44,7 +47,10 @@ final class AuthViewModel: ObservableObject {
 		}
 		
 		do {
-			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword)
+			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+				throw IdentifierForVendorNotFound()
+			}
+			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId)
 		} catch {
 			errorMessage = "Something went wrong."
 		}

@@ -190,9 +190,9 @@ struct TestData {
 	]
 	
 	static let teams = [
-		Team(id: 1, name: "Team 1", creatorId: 1),
-		Team(id: 2, name: "Team 2", creatorId: 2),
-		Team(id: 3, name: "Team 3", creatorId: 3),
+		Team(id: 1, name: "Team 1"),
+		Team(id: 2, name: "Team 2"),
+		Team(id: 3, name: "Team 3"),
 	]
 	
 	static let places = [
@@ -203,10 +203,10 @@ struct TestData {
 	]
 	
 	static let teamMembers = [
-		TeamMember(id: 1, username: "User1"),
-		TeamMember(id: 2, username: "User2"),
-		TeamMember(id: 3, username: "User3"),
-		TeamMember(id: 4, username: "User4"),
+		TeamMember(id: 1, username: "User1", isAdmin: true),
+		TeamMember(id: 2, username: "User2", isAdmin: false),
+		TeamMember(id: 3, username: "User3", isAdmin: false),
+		TeamMember(id: 4, username: "User4", isAdmin: true),
 	]
 	
 	static let users = [
@@ -221,9 +221,9 @@ struct TestData {
 	]
 
 	static let events = [
-		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0]),
-		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1]),
-		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2])
+		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminderId: nil),
+		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminderId: nil),
+		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: true, reminderId: nil)
 	]
 
 	static let reminders = [

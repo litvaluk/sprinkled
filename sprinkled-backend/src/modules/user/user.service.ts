@@ -10,7 +10,7 @@ export class UserService {
 
   // creates user with no tokens
   async create(createUserDto: CreateUserDto) {
-    return await this.prisma.user.create({
+    const createdUser = await this.prisma.user.create({
       data: {
         username: createUserDto.username,
         email: createUserDto.email,
@@ -19,6 +19,42 @@ export class UserService {
         refreshToken: '',
       },
     });
+
+    const device = await this.prisma.device.findUnique({
+      where: {
+        deviceId: createUserDto.deviceId,
+      },
+    });
+
+    if (!device) {
+      // if device does not exist, create it and assign it to the user
+      await this.prisma.device.create({
+        data: {
+          deviceId: createUserDto.deviceId,
+          users: {
+            connect: {
+              id: createdUser.id,
+            },
+          },
+        },
+      });
+    } else {
+      // if device exists, assign it to the user
+      await this.prisma.device.update({
+        where: {
+          deviceId: createUserDto.deviceId,
+        },
+        data: {
+          users: {
+            connect: {
+              id: createdUser.id,
+            },
+          },
+        },
+      });
+    }
+
+    return createdUser;
   }
 
   async findAll(): Promise<User[]> {
