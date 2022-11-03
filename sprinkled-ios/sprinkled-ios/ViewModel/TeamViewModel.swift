@@ -1,8 +1,11 @@
 import Foundation
 import SwiftUI
+import JWTDecode
 
 final class TeamViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
+
+	@AppStorage("accessToken") var accessToken = ""
 	
 	let teamId: Int
 	@Published var teamName: String
@@ -23,7 +26,7 @@ final class TeamViewModel: ObservableObject {
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 		} catch {
-			print("❌ Error while fetching plants.")
+			print("❌ Error while fetching team members.")
 		}
 	}
 	
@@ -35,7 +38,7 @@ final class TeamViewModel: ObservableObject {
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 		} catch {
-			print("❌ Error while fetching plants.")
+			print("❌ Error while deleting team.")
 		}
 		return false
 	}
@@ -48,9 +51,35 @@ final class TeamViewModel: ObservableObject {
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 		} catch {
-			print("❌ Error while fetching plants.")
+			print("❌ Error while renaming team.")
 		}
 		return false
 	}
 	
+	@MainActor
+	func giveAdminRights(userId: Int) async {
+		do {
+			try await api.giveAdminRights(teamId: teamId, userId: userId)
+		} catch is ExpiredRefreshToken {
+			print("⌛️ Refresh token expired.")
+		} catch {
+			print("❌ Error while giving admin rights.")
+		}
+	}
+	
+	@MainActor
+	func removeAdminRights(userId: Int) async {
+		do {
+			try await api.removeAdminRights(teamId: teamId, userId: userId)
+		} catch is ExpiredRefreshToken {
+			print("⌛️ Refresh token expired.")
+		} catch {
+			print("❌ Error while removing admin rights.")
+		}
+	}
+	
+	func getAuthenticatedUserId() -> Int? {
+		return try? decode(jwt: self.accessToken).userId
+	}
+	 
 }

@@ -18,21 +18,41 @@ struct TeamView: View {
 						.foregroundColor(.sprinkledGray)
 					HStack {
 						Text(member.username)
-//						Image(systemName: "gearshape.2.fill")
+						if (member.isAdmin) {
+							Image(systemName: "gearshape.2.fill")
+						}
 						Spacer()
-						Menu {
-							Button {} label: {
-								Text("Remove member")
+						if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
+							Menu {
+								Button {} label: {
+									Text("Remove member")
+								}
+								if (!member.isAdmin) {
+									Button {
+										Task {
+											await vm.giveAdminRights(userId: member.id)
+											await vm.fetchTeamMembers()
+										}
+									} label: {
+										Text("Give admin rights")
+									}
+								} else if (vm.teamMembers.filter({$0.isAdmin}).count > 1) {
+									Button {
+										Task {
+											await vm.removeAdminRights(userId: member.id)
+											await vm.fetchTeamMembers()
+										}
+									} label: {
+										Text("Remove admin rights")
+									}
+								}
+							} label: {
+								Image(systemName: "ellipsis")
+									.resizable()
+									.scaledToFit()
+									.frame(width: 20)
+									.foregroundColor(.primary)
 							}
-							Button {} label: {
-								Text("Give admin rights")
-							}
-						} label: {
-							Image(systemName: "ellipsis")
-								.resizable()
-								.scaledToFit()
-								.frame(width: 20)
-								.foregroundColor(.primary)
 						}
 					}
 					.padding(.horizontal)
@@ -44,31 +64,33 @@ struct TeamView: View {
 		.padding()
 		.navigationTitle(vm.teamName)
 		.toolbar {
-			ToolbarItem {
-				Menu {
-					Button {} label: {
-						Text("Add member")
-					}
-					Button {
-						withAnimation(.easeIn(duration: 0.07)) {
-							vm.showRenameTeamModal = true
+			if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
+				ToolbarItem {
+					Menu {
+						Button {} label: {
+							Text("Add member")
+						}
+						Button {
+							withAnimation(.easeIn(duration: 0.07)) {
+								vm.showRenameTeamModal = true
+							}
+						} label: {
+							Text("Rename team")
+						}
+						Button {
+							withAnimation(.easeIn(duration: 0.07)) {
+								vm.showDeleteTeamModal = true
+							}
+						} label: {
+							Text("Delete team")
 						}
 					} label: {
-						Text("Rename team")
+						Image(systemName: "ellipsis")
+							.resizable()
+							.scaledToFit()
+							.frame(width: 25, height: 25)
+							.foregroundColor(.primary)
 					}
-					Button {
-						withAnimation(.easeIn(duration: 0.07)) {
-							vm.showDeleteTeamModal = true
-						}
-					} label: {
-						Text("Delete team")
-					}
-				} label: {
-					Image(systemName: "ellipsis")
-						.resizable()
-						.scaledToFit()
-						.frame(width: 25, height: 25)
-						.foregroundColor(.primary)
 				}
 			}
 		}
@@ -115,7 +137,7 @@ struct TeamView: View {
 							vm.showRenameTeamModal = false
 							vm.teamName = vm.renameTeamModalValue
 							vm.renameTeamModalValue = ""
-
+							
 						}
 					}
 				}

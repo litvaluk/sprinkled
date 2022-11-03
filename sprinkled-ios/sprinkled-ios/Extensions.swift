@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import JWTDecode
 
 extension Color {
 	static let sprinkledGreen = Color("SprinkledGreen")
@@ -132,5 +133,15 @@ extension View {
 	@ViewBuilder
 	func redactedShimmering() -> some View {
 		redactedShimmering(if: true)
+	}
+}
+
+extension JWT {
+	var username: String? {
+		return self["username"].string
+	}
+	
+	var userId: Int? {
+		return self["sub"].rawValue as? Int
 	}
 }

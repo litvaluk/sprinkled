@@ -74,8 +74,9 @@ export class TeamController {
   async giveAdminRights(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Param('userId', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) userId: number,
+    @UserId() byUserId: number,
   ) {
-    await this.teamService.giveAdminRights(id, userId);
+    await this.teamService.giveAdminRights(id, userId, byUserId);
   }
 
   @Post(':id/members/:userId/remove-admin-rights')
@@ -83,7 +84,8 @@ export class TeamController {
   async removeAdminRights(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Param('userId', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) userId: number,
+    @UserId() byUserId: number,
   ) {
-    await this.teamService.removeAdminRights(id, userId);
+    await this.teamService.removeAdminRights(id, userId, byUserId);
   }
 }

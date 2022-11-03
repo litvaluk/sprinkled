@@ -25,7 +25,7 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	func getAuthenticatedUser() -> String? {
-		return try? decode(jwt: accessToken).claim(name: "username").string
+		return try? decode(jwt: accessToken).username
 	}
 	
 	func onReminderNotificationsToggleChange() {

@@ -18,6 +18,8 @@ protocol APIProtocol {
 	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event
 	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func fetchReminders() async throws -> [ReminderForTaskView]
+	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void
+	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -139,6 +141,14 @@ final class API : APIProtocol {
 		return try await makeAuthenticatedRequest(path: "reminders")
 	}
 	
+	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members/\(userId)/give-admin-rights", method: "POST")
+	}
+	
+	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members/\(userId)/remove-admin-rights", method: "POST")
+	}
+	
 	func refreshToken() async {
 		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
@@ -148,7 +158,23 @@ final class API : APIProtocol {
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(refreshToken)"], uniquingKeysWith: { $1 })
 
-		let (data, response) = try! await performDataRequest(for: request)
+		
+		let (data, response): (Data, URLResponse)
+		
+		do {
+			(data, response) = try await performDataRequest(for: request)
+		} catch {
+			guard let errorCode = (error as? URLError)?.code else {
+				return
+			}
+			switch (errorCode) {
+			case .cancelled:
+				print("🚫 cancelled call to refresh token")
+				return
+			default:
+				fatalError("your message here")
+			}
+		}
 		
 		if ((response as? HTTPURLResponse)?.statusCode == 401) {
 			UserDefaults.standard.set("", forKey: "accessToken")
@@ -349,5 +375,13 @@ final class TestAPI : APIProtocol {
 	
 	func fetchReminders() async throws -> [ReminderForTaskView] {
 		return TestData.remindersForTaskView
+	}
+	
+	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void {
+		return
+	}
+	
+	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void {
+		return
 	}
 }

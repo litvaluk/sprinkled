@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 
@@ -182,7 +182,20 @@ export class TeamService {
     });
   }
 
-  async giveAdminRights(id: number, userId: number) {
+  async giveAdminRights(id: number, userId: number, byUserId: number) {
+    let team = await this.prisma.team.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        admins: true,
+      },
+    });
+
+    if (!team.admins.find((admin) => admin.id === byUserId)) {
+      throw new ForbiddenException('Unable to give admin rights by a non-admin user');
+    }
+
     return await this.prisma.team.update({
       where: {
         id: id,
@@ -197,7 +210,22 @@ export class TeamService {
     });
   }
 
-  async removeAdminRights(id: number, userId: number) {
+  async removeAdminRights(id: number, userId: number, byUserId: number) {
+    let team = await this.prisma.team.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        admins: true,
+      },
+    });
+
+    if (!team.admins.find((admin) => admin.id === byUserId)) {
+      throw new ForbiddenException('Unable to remove admin rights by a non-admin user');
+    } else if (team.admins.length === 1) {
+      throw new ForbiddenException('Unable to remove last admin');
+    }
+
     return await this.prisma.team.update({
       where: {
         id: id,
