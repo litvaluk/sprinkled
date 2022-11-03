@@ -33,6 +33,8 @@ model Device {
   eventNotificationsEnabled    Boolean     @default(false)
   pushTokens                   PushToken[]
   users                        User[]
+
+  @@map("devices")
 }
 
 model PushToken {

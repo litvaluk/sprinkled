@@ -11,13 +11,13 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "Device" (
+CREATE TABLE "devices" (
     "id" SERIAL NOT NULL,
     "deviceId" TEXT NOT NULL,
     "reminderNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
     "eventNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Device_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "devices_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -149,7 +149,7 @@ CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Device_deviceId_key" ON "Device"("deviceId");
+CREATE UNIQUE INDEX "devices_deviceId_key" ON "devices"("deviceId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "push_tokens_token_key" ON "push_tokens"("token");
@@ -176,7 +176,7 @@ CREATE UNIQUE INDEX "_admins_AB_unique" ON "_admins"("A", "B");
 CREATE INDEX "_admins_B_index" ON "_admins"("B");
 
 -- AddForeignKey
-ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_deviceId_fkey" FOREIGN KEY ("deviceId") REFERENCES "Device"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_deviceId_fkey" FOREIGN KEY ("deviceId") REFERENCES "devices"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "places" ADD CONSTRAINT "places_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "teams"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -221,7 +221,7 @@ ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Device"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "devices"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
