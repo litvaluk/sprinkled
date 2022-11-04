@@ -27,6 +27,9 @@ export class PlantEntryService {
       },
       include: {
         events: {
+          where: {
+            completed: true,
+          },
           include: {
             action: true,
             user: {
