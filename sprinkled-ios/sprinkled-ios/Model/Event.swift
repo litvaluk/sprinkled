@@ -9,5 +9,6 @@ struct Event: Codable, Identifiable, Hashable, Equatable {
 	let user: User
 	let action: Action
 	let completed: Bool
+	let reminded: Bool?
 	let reminderId: Int?
 }

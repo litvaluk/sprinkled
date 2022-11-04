@@ -30,6 +30,22 @@ export class EventService {
     return await this.prisma.event.findMany();
   }
 
+  async findUncompleted(): Promise<Event[]> {
+    return await this.prisma.event.findMany({
+      where: {
+        completed: false,
+      },
+    });
+  }
+
+  async findCompleted(): Promise<Event[]> {
+    return await this.prisma.event.findMany({
+      where: {
+        completed: true,
+      },
+    });
+  }
+
   async findOne(id: number): Promise<Event> {
     return await this.prisma.event.findUnique({
       where: {

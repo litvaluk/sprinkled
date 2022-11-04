@@ -221,9 +221,9 @@ struct TestData {
 	]
 
 	static let events = [
-		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminderId: nil),
-		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminderId: nil),
-		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: true, reminderId: nil)
+		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminded: nil, reminderId: nil),
+		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminded: nil, reminderId: nil),
+		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: true, reminded: nil, reminderId: nil)
 	]
 
 	static let reminders = [

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { Notification, Provider } from '@parse/node-apn';
+import { User } from '@prisma/client';
 import { PrismaService } from '../prisma';
 
 @Injectable()
@@ -21,17 +22,34 @@ export class NotificationService {
   }
 
   @Cron('0 * * * * *') // every minute
-  handleReminderNotifications() {
+  async handleReminderNotifications() {
     this.logger.log('Handling reminder notifications');
-    // TODO: implement
+    for (let event of await this._getEventsToRemind()) {
+      let usersLinkedToEvent = await this._getUsersLinkedToEvent(event.id);
+      await this._sendNotificationToUsers(
+        usersLinkedToEvent,
+        'Sprinkled',
+        'It is time to ' + event.action.type + '.',
+        NotificationType.REMINDER,
+      );
+      await this._markEventAsReminded(event.id);
+    }
   }
 
-  async sendNotification(userId: number, title: string, body: string, notificationType: NotificationType) {
+  async sendEventNotification(eventId: number, triggeredByUserId: number, title: string, body: string) {
+    let usersLinkedToEvent = await this._getUsersLinkedToEvent(eventId);
+    let usersToBeNotified = usersLinkedToEvent.filter((user) => user.id !== triggeredByUserId);
+    await this._sendNotificationToUsers(usersToBeNotified, title, body, NotificationType.EVENT);
+  }
+
+  private async _sendNotificationToUsers(users: User[], title: string, body: string, notificationType: NotificationType) {
     let userConstraint = {
       device: {
         users: {
           some: {
-            id: userId,
+            id: {
+              in: users.map((user) => user.id),
+            },
           },
         },
       },
@@ -63,6 +81,75 @@ export class NotificationService {
       let notification = this._createNotification(title, body);
       await this._sendNotification(notification, pushToken.token);
     }
+  }
+
+  private async _getEventsToRemind() {
+    return await this.prisma.event.findMany({
+      where: {
+        date: {
+          lte: new Date(),
+        },
+        completed: false,
+        reminded: false,
+      },
+      include: {
+        action: true,
+      },
+    });
+  }
+
+  private async _getUsersLinkedToEvent(eventId: number) {
+    return await this.prisma.user.findMany({
+      where: {
+        OR: [
+          {
+            places: {
+              some: {
+                plantEntries: {
+                  some: {
+                    events: {
+                      some: {
+                        id: eventId,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          {
+            teams: {
+              some: {
+                places: {
+                  some: {
+                    plantEntries: {
+                      some: {
+                        events: {
+                          some: {
+                            id: eventId,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  private async _markEventAsReminded(eventId: number) {
+    await this.prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        reminded: true,
+      },
+    });
   }
 
   private async _sendNotification(notification: Notification, pushToken: string) {

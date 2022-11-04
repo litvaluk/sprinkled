@@ -119,7 +119,7 @@ extension Date {
 
 extension Date {
 	func encodeToStringForTransfer() -> String {
-		self.ISO8601Format(.iso8601(timeZone: .current, includingFractionalSeconds: true)) + "Z"
+		self.ISO8601Format(.iso8601(timeZone: .gmt, includingFractionalSeconds: true)) + "Z"
 	}
 }
 

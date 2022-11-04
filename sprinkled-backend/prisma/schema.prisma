@@ -128,6 +128,7 @@ model Event {
   action       Action     @relation(fields: [actionId], references: [id])
   actionId     Int
   completed    Boolean    @default(true)
+  reminded     Boolean?
   Reminder     Reminder?  @relation(fields: [reminderId], references: [id])
   reminderId   Int?
 

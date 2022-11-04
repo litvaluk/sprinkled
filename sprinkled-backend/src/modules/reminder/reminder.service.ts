@@ -8,7 +8,7 @@ export class ReminderService {
   constructor(private prisma: PrismaService) {}
 
   async create(createReminderDto: CreateReminderDto, userId: number): Promise<Reminder> {
-    return await this.prisma.reminder.create({
+    let createdReminder = await this.prisma.reminder.create({
       data: {
         ...createReminderDto,
         creatorId: userId,
@@ -17,6 +17,38 @@ export class ReminderService {
         action: true,
       },
     });
+
+    if (createReminderDto.period > 0) {
+      let events = [];
+      for (let i = 0; i < 10; i++) {
+        events.push({
+          date: this._addDays(createdReminder.date, i * createdReminder.period),
+          userId: userId,
+          plantEntryId: createReminderDto.plantEntryId,
+          actionId: createReminderDto.actionId,
+          completed: false,
+          reminded: false,
+          reminderId: createdReminder.id,
+        });
+      }
+      await this.prisma.event.createMany({
+        data: events,
+      });
+    } else {
+      await this.prisma.event.create({
+        data: {
+          date: createdReminder.date,
+          userId: userId,
+          plantEntryId: createReminderDto.plantEntryId,
+          actionId: createReminderDto.actionId,
+          completed: false,
+          reminded: false,
+          reminderId: createdReminder.id,
+        },
+      });
+    }
+
+    return createdReminder;
   }
 
   async findAll(): Promise<Reminder[]> {
@@ -53,10 +85,22 @@ export class ReminderService {
   }
 
   async remove(id: number) {
+    await this.prisma.event.deleteMany({
+      where: {
+        reminderId: id,
+        completed: false,
+      },
+    });
     await this.prisma.reminder.delete({
       where: {
         id: id,
       },
     });
+  }
+
+  _addDays(date: Date, days: number) {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }

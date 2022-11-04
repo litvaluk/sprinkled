@@ -1,8 +1,24 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Event } from '@prisma/client';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
+import { NotificationService } from '../notification';
+import { UserService } from '../user';
 import { CreateEventDto, UpdateEventDto } from './dto';
 import { EventService } from './event.service';
 
@@ -11,25 +27,45 @@ import { EventService } from './event.service';
 @ApiBearerAuth()
 @ApiTags('events')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(
+    private readonly eventService: EventService,
+    private readonly userService: UserService,
+    private readonly notificationService: NotificationService,
+  ) {}
 
   @Post()
-  async createAction(@Body() createEventDto: CreateEventDto, @UserId() userId: number): Promise<Event> {
-    return await this.eventService.create(createEventDto, userId);
+  async createEvent(@Body() createEventDto: CreateEventDto, @UserId() userId: number): Promise<Event> {
+    let newEvent = await this.eventService.create(createEventDto, userId);
+    let user = await this.userService.findOneSafe(userId);
+    await this.notificationService.sendEventNotification(
+      newEvent.id,
+      user.id,
+      'Sprinkled',
+      'User ' + user.username + ' has just added a new event.',
+    );
+    return newEvent;
   }
 
   @Get()
-  async getActions(): Promise<Event[]> {
-    return await this.eventService.findAll();
+  async getEvents(@Query('completed') completed?: string): Promise<Event[]> {
+    if (completed === undefined) {
+      return await this.eventService.findAll();
+    } else if (completed === 'true') {
+      return await this.eventService.findCompleted();
+    } else if (completed === 'false') {
+      return await this.eventService.findUncompleted();
+    } else {
+      throw new BadRequestException('Invalid value for query parameter completed');
+    }
   }
 
   @Get(':id')
-  async getAction(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Event> {
+  async getEvent(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Event> {
     return await this.eventService.findOne(id);
   }
 
   @Put(':id')
-  async updateAction(
+  async updateEvent(
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @Body() updateEventDto: UpdateEventDto,
   ): Promise<Event> {
@@ -38,7 +74,7 @@ export class EventController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deleteAction(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
+  async deleteEvent(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     await this.eventService.remove(id);
   }
 }

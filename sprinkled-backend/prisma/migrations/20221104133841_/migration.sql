@@ -99,6 +99,7 @@ CREATE TABLE "events" (
     "plantEntryId" INTEGER NOT NULL,
     "actionId" INTEGER NOT NULL,
     "completed" BOOLEAN NOT NULL DEFAULT true,
+    "reminded" BOOLEAN,
     "reminderId" INTEGER,
 
     CONSTRAINT "events_pkey" PRIMARY KEY ("id")
