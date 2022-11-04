@@ -20,6 +20,10 @@ protocol APIProtocol {
 	func fetchReminders() async throws -> [ReminderForTaskView]
 	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void
 	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void
+	func enableReminderNotifications(deviceId: String) async throws -> Void
+	func disableReminderNotifications(deviceId: String) async throws -> Void
+	func enableEventNotifications(deviceId: String) async throws -> Void
+	func disableEventNotifications(deviceId: String) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -149,6 +153,38 @@ final class API : APIProtocol {
 	
 	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void {
 		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members/\(userId)/remove-admin-rights", method: "POST")
+	}
+	
+	func enableReminderNotifications(deviceId: String) async throws -> Void {
+		let body = [
+			"deviceId": deviceId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "notifications/enable-reminder-notifications", method: "POST", body: bodyData)
+	}
+	
+	func disableReminderNotifications(deviceId: String) async throws -> Void {
+		let body = [
+			"deviceId": deviceId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "notifications/disable-reminder-notifications", method: "POST", body: bodyData)
+	}
+	
+	func enableEventNotifications(deviceId: String) async throws -> Void {
+		let body = [
+			"deviceId": deviceId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "notifications/enable-event-notifications", method: "POST", body: bodyData)
+	}
+	
+	func disableEventNotifications(deviceId: String) async throws -> Void {
+		let body = [
+			"deviceId": deviceId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "notifications/disable-event-notifications", method: "POST", body: bodyData)
 	}
 	
 	func refreshToken() async {
@@ -384,6 +420,22 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void {
+		return
+	}
+	
+	func enableReminderNotifications(deviceId: String) async throws -> Void {
+		return
+	}
+	
+	func disableReminderNotifications(deviceId: String) async throws -> Void {
+		return
+	}
+	
+	func enableEventNotifications(deviceId: String) async throws -> Void {
+		return
+	}
+	
+	func disableEventNotifications(deviceId: String) async throws -> Void {
 		return
 	}
 }

@@ -42,6 +42,50 @@ export class NotificationService {
     await this._sendNotificationToUsers(usersToBeNotified, title, body, NotificationType.EVENT);
   }
 
+  async enableReminderNotifications(deviceId: string) {
+    await this.prisma.device.update({
+      where: {
+        deviceId: deviceId,
+      },
+      data: {
+        reminderNotificationsEnabled: true,
+      },
+    });
+  }
+
+  async disableReminderNotifications(deviceId: string) {
+    await this.prisma.device.update({
+      where: {
+        deviceId: deviceId,
+      },
+      data: {
+        reminderNotificationsEnabled: false,
+      },
+    });
+  }
+
+  async enableEventNotifications(deviceId: string) {
+    await this.prisma.device.update({
+      where: {
+        deviceId: deviceId,
+      },
+      data: {
+        eventNotificationsEnabled: true,
+      },
+    });
+  }
+
+  async disableEventNotifications(deviceId: string) {
+    await this.prisma.device.update({
+      where: {
+        deviceId: deviceId,
+      },
+      data: {
+        eventNotificationsEnabled: false,
+      },
+    });
+  }
+
   private async _sendNotificationToUsers(users: User[], title: string, body: string, notificationType: NotificationType) {
     let userConstraint = {
       device: {
