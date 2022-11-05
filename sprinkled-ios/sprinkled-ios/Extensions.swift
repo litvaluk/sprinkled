@@ -23,28 +23,11 @@ extension JSONDecoder {
 	static let app: JSONDecoder = {
 		let decoder = JSONDecoder()
 		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = .gmt
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 		decoder.dateDecodingStrategy = .formatted(dateFormatter)
 		return decoder
 	}()
-}
-
-// for animating when keyboard shows/hides
-extension View {
-	var keyboardPublisher: AnyPublisher<Bool, Never> {
-		Publishers
-			.Merge(
-				NotificationCenter
-					.default
-					.publisher(for: UIResponder.keyboardWillShowNotification)
-					.map { _ in true },
-				NotificationCenter
-					.default
-					.publisher(for: UIResponder.keyboardWillHideNotification)
-					.map { _ in false })
-		//	  .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
-			.eraseToAnyPublisher()
-	}
 }
 
 extension String {
@@ -54,6 +37,10 @@ extension String {
 	
 	mutating func capitalizeFirstLetter() {
 		self = self.capitalizedFirstLetter()
+	}
+	
+	static func placeholder(_ length: Int) -> String {
+		String(Array(repeating: "X", count: length))
 	}
 }
 
@@ -75,7 +62,54 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 	}
 }
 
+extension Date {
+	static var placeholder: Date {
+		Date(timeIntervalSince1970: 0)
+	}
+	
+	func encodeToStringForTransfer() -> String {
+		self.ISO8601Format(.iso8601(timeZone: .gmt, includingFractionalSeconds: true)) + "Z"
+	}
+	
+	func zeroSeconds() -> Date {
+		let calendar = Calendar.current
+		let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
+		return calendar.date(from: dateComponents)!
+	}
+	
+	func toString(_ dateFormat: DateFormat, timeZone: TimeZone = .current) -> String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = timeZone
+		switch(dateFormat) {
+		case .HHmm:
+			dateFormatter.dateFormat = "HH:mm"
+		case .MMMdy:
+			dateFormatter.dateFormat = "MMM d, y"
+		case .MMMd:
+			dateFormatter.dateFormat = "MMM d"
+		}
+		return dateFormatter.string(from: self)
+	}
+	
+	enum DateFormat {
+		case HHmm
+		case MMMdy
+		case MMMd
+	}
+}
+
 extension View {
+	@ViewBuilder
+	func redactedShimmering(if condition: @autoclosure () -> Bool) -> some View {
+		redacted(reason: condition() ? .placeholder : [])
+			.shimmering(active: condition())
+	}
+	
+	@ViewBuilder
+	func redactedShimmering() -> some View {
+		redactedShimmering(if: true)
+	}
+	
 	@ViewBuilder
 	func modal<Content: View, Buttons: View>(title: String, showModal: Binding<Bool>, @ViewBuilder content: () -> Content, @ViewBuilder buttons: () -> Buttons) -> some View {
 		ZStack {
@@ -103,36 +137,21 @@ extension View {
 			}
 		}
 	}
-}
-
-extension String {
-	static func placeholder(_ length: Int) -> String {
-		String(Array(repeating: "X", count: length))
-	}
-}
-
-extension Date {
-	static var placeholder: Date {
-		Date(timeIntervalSince1970: 0)
-	}
-}
-
-extension Date {
-	func encodeToStringForTransfer() -> String {
-		self.ISO8601Format(.iso8601(timeZone: .gmt, includingFractionalSeconds: true)) + "Z"
-	}
-}
-
-extension View {
-	@ViewBuilder
-	func redactedShimmering(if condition: @autoclosure () -> Bool) -> some View {
-		redacted(reason: condition() ? .placeholder : [])
-			.shimmering(active: condition())
-	}
 	
-	@ViewBuilder
-	func redactedShimmering() -> some View {
-		redactedShimmering(if: true)
+	// for animating when keyboard shows/hides
+	var keyboardPublisher: AnyPublisher<Bool, Never> {
+		Publishers
+			.Merge(
+				NotificationCenter
+					.default
+					.publisher(for: UIResponder.keyboardWillShowNotification)
+					.map { _ in true },
+				NotificationCenter
+					.default
+					.publisher(for: UIResponder.keyboardWillHideNotification)
+					.map { _ in false })
+		//	  .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
+			.eraseToAnyPublisher()
 	}
 }
 

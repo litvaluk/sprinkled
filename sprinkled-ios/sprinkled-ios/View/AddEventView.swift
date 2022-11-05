@@ -74,19 +74,6 @@ struct DateItemView: View {
 	let title: String
 	let selection: Binding<Date>
 	let displayedComponents: DatePicker.Components
-	let dateFormatter: DateFormatter
-	
-	init(title: String, selection: Binding<Date>, displayedComponents: DatePicker.Components) {
-		self.title = title
-		self.selection = selection
-		self.displayedComponents = displayedComponents
-		self.dateFormatter = DateFormatter()
-		if (displayedComponents == .date) {
-			dateFormatter.dateFormat = "MMM d, y"
-		} else if (displayedComponents == .hourAndMinute) {
-			dateFormatter.dateFormat = "HH:mm"
-		}
-	}
 	
 	var body: some View {
 		ZStack {

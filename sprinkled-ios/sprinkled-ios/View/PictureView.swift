@@ -5,14 +5,6 @@ struct PictureView: View {
 	@EnvironmentObject var pictureViewState: PictureViewState
 	@GestureState var draggingOffset: CGSize = .zero
 	
-	let dayDateFormatter = DateFormatter()
-	let timeDateFormatter = DateFormatter()
-	
-	init() {
-		dayDateFormatter.dateFormat = "MMM d, y"
-		timeDateFormatter.dateFormat = "HH:mm"
-	}
-	
 	var body: some View {
 		if (!pictureViewState.pictures.isEmpty) {
 			ZStack {
@@ -44,9 +36,9 @@ struct PictureView: View {
 										.padding(.vertical, 3)
 									Spacer()
 									VStack(alignment: .trailing) {
-										Text(dayDateFormatter.string(from: picture.createdAt))
+										Text(picture.createdAt.toString(.MMMdy))
 											.foregroundColor(.white)
-										Text(timeDateFormatter.string(from: picture.createdAt))
+										Text(picture.createdAt.toString(.HHmm))
 											.foregroundColor(.white)
 									}
 									.padding(.horizontal)

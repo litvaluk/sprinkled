@@ -211,16 +211,6 @@ struct PlantEntryListItem: View {
 	let title: String
 	let subtitle: String
 	let date: Date
-	let dayDateFormatter = DateFormatter()
-	let timeDateFormatter = DateFormatter()
-	
-	init(title: String, subtitle: String, date: Date) {
-		self.title = title
-		self.subtitle = subtitle
-		self.date = date
-		dayDateFormatter.dateFormat = "MMM d, y"
-		timeDateFormatter.dateFormat = "HH:mm"
-	}
 	
 	var body: some View {
 		ZStack {
@@ -238,9 +228,9 @@ struct PlantEntryListItem: View {
 				Spacer()
 				VStack(alignment: .trailing) {
 					Spacer()
-					Text(dayDateFormatter.string(from: date))
+					Text(date.toString(.MMMdy))
 						.font(.subheadline)
-					Text(timeDateFormatter.string(from: date))
+					Text(date.toString(.HHmm))
 						.font(.subheadline)
 					Spacer()
 				}
@@ -255,15 +245,11 @@ struct GalleryItem: View {
 	let user: String
 	let date: Date
 	let pictureUrl: String?
-	let dayDateFormatter = DateFormatter()
-	let timeDateFormatter = DateFormatter()
 	
 	init(user: String, date: Date, pictureUrl: String? = nil) {
 		self.user = user
 		self.date = date
 		self.pictureUrl = pictureUrl
-		dayDateFormatter.dateFormat = "MMM d, y"
-		timeDateFormatter.dateFormat = "HH:mm"
 	}
 	
 	var body: some View {
@@ -285,10 +271,10 @@ struct GalleryItem: View {
 						Text(user)
 							.font(.caption2)
 							.foregroundColor(.black)
-						Text(dayDateFormatter.string(from: date))
+						Text(date.toString(.MMMdy))
 							.font(.caption2)
 							.foregroundColor(.black)
-						Text(timeDateFormatter.string(from: date))
+						Text(date.toString(.HHmm))
 							.font(.caption2)
 							.foregroundColor(.black)
 					}

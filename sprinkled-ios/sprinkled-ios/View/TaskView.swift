@@ -79,14 +79,6 @@ struct TaskListItem: View {
 	let title: String
 	let subtitle: String
 	let date: Date
-	let timeDateFormatter = DateFormatter()
-	
-	init(title: String, subtitle: String, date: Date) {
-		self.title = title
-		self.subtitle = subtitle
-		self.date = date
-		timeDateFormatter.dateFormat = "HH:mm"
-	}
 	
 	var body: some View {
 		ZStack {
@@ -104,7 +96,7 @@ struct TaskListItem: View {
 						.foregroundColor(.primary)
 				}
 				Spacer()
-				Text(timeDateFormatter.string(from: date))
+				Text(date.toString(.HHmm))
 					.foregroundColor(.primary)
 					.font(.subheadline)
 					.padding(5)

@@ -7,13 +7,6 @@ final class TaskViewModel: ObservableObject {
 	@Published var reminderMap: OrderedDictionary<String, [ReminderForTaskView]>? = nil
 	@Published var navigationPath = NavigationPath()
 	
-	let dateFormatter: DateFormatter
-	
-	init() {
-		dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "MMM d"
-	}
-	
 	@MainActor
 	func fetchReminders() async {
 		var reminders: [ReminderForTaskView]
@@ -28,7 +21,7 @@ final class TaskViewModel: ObservableObject {
 		}
 		reminders = reminders.filter { $0.date > .now }
 		reminderMap = OrderedDictionary.init(grouping: reminders) { reminder in
-			dateFormatter.string(from: reminder.date)
+			reminder.date.toString(.MMMd)
 		}
 		
 	}

@@ -4,7 +4,7 @@ final class AddEventViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 
 	@Published var actionSelection = 1
-	@Published var date = Date()
+	@Published var date = Date().zeroSeconds()
 	
 	@Published var isProcessing = false
 	@Published var errorMessage = ""

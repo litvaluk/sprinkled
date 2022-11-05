@@ -4,7 +4,7 @@ final class AddReminderViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 
 	@Published var actionSelection = 1
-	@Published var date = Date()
+	@Published var date = Date().zeroSeconds()
 	@Published var repeating = false
 	@Published var period = 1
 	@Published var periodPickerOpen = false
