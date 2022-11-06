@@ -25,7 +25,7 @@ struct ProfileView: View {
 						   }
 					}
 					SprinkledListSection(headerText: "Other") {
-						SprinkledListMenuPicker(title: "Unit system", options: ["Metric", "Imperial"], selection: $vm.unitSystemSelection)
+						SprinkledListMenuPicker(title: "Unit system", options: ["Metric", "Imperial"], selection: $vm.unitSystem)
 					}
 					Spacer()
 					Button(role: .destructive) {

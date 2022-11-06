@@ -48,6 +48,14 @@ extension Double {
 	func toString() -> String {
 		return String(format: "%.1f", self)
 	}
+	
+	func toInt() -> Int? {
+		if self >= Double(Int.min) && self < Double(Int.max) {
+			return Int(self)
+		} else {
+			return nil
+		}
+	}
 }
 
 // enable pop back gesture (for views inside navigation stack with hidden toolbar)
@@ -163,4 +171,9 @@ extension JWT {
 	var userId: Int? {
 		return self["sub"].rawValue as? Int
 	}
+}
+
+extension FloatingPoint {
+	var whole: Self { modf(self).0 }
+	var fraction: Self { modf(self).1 }
 }

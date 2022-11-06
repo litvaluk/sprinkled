@@ -17,13 +17,22 @@ struct PlantDetailView: View {
 					.padding([.top], 2)
 					.padding([.leading, .trailing], 10)
 					HStack {
-						InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(viewModel.plant.minTemp) + " °C - " + String(viewModel.plant.maxTemp) + " °C")
+						if (viewModel.unitSystem == "Imperial") {
+							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(Utils.calculateFahrenheit(Double(viewModel.plant.minTemp)).rounded().toInt()!) + " °F - " + String(Utils.calculateFahrenheit(Double(viewModel.plant.maxTemp)).rounded().toInt()!) + " °F")
+						} else {
+							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(viewModel.plant.minTemp) + " °C - " + String(viewModel.plant.maxTemp) + " °C")
+						}
 						InfoBoxView(icon: Image("Fullsun"), title: "Light", value: viewModel.plant.light)
 					}
 					.padding([.leading, .trailing], 10)
 					HStack {
-						InfoBoxView(icon: Image("Height"), title: "Height", value: viewModel.plant.minHeight.toString() + " - " + viewModel.plant.maxHeight.toString() + " m")
-						InfoBoxView(icon: Image("Spread"), title: "Spread", value: viewModel.plant.minSpread.toString() + " - " + viewModel.plant.maxSpread.toString() + " m")
+						if (viewModel.unitSystem == "Imperial") {
+							InfoBoxView(icon: Image("Height"), title: "Height", value: Utils.calculateFeetAndInches(viewModel.plant.minHeight).toString() + " - " + Utils.calculateFeetAndInches(viewModel.plant.maxHeight).toString())
+							InfoBoxView(icon: Image("Spread"), title: "Spread", value: Utils.calculateFeetAndInches(viewModel.plant.minSpread).toString() + " - " + Utils.calculateFeetAndInches(viewModel.plant.maxSpread).toString())
+						} else {
+							InfoBoxView(icon: Image("Height"), title: "Height", value: viewModel.plant.minHeight.toString() + " - " + viewModel.plant.maxHeight.toString() + " m")
+							InfoBoxView(icon: Image("Spread"), title: "Spread", value: viewModel.plant.minSpread.toString() + " - " + viewModel.plant.maxSpread.toString() + " m")
+						}
 					}
 					.padding([.leading, .trailing], 10)
 					DescriptionBoxView(text: viewModel.plant.description)

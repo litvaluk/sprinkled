@@ -56,6 +56,7 @@
 		8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */; };
 		8FB43FF0290EBF36009202F4 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8FB43FEF290EBF36009202F4 /* Collections */; };
 		8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FF12912C6E9009202F4 /* UIElements.swift */; };
+		8FE3447C2916A9AF00247333 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447B2916A9AF00247333 /* Utils.swift */; };
 		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
 		8FFD7535290583FA005237A9 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7534290583FA005237A9 /* TeamView.swift */; };
 		8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753629058446005237A9 /* TeamViewModel.swift */; };
@@ -131,6 +132,7 @@
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8FB43FF12912C6E9009202F4 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
+		8FE3447B2916A9AF00247333 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 		8FFD7534290583FA005237A9 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		8FFD753629058446005237A9 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				8F17B9C828FAD73D00B4308C /* TabBarState.swift */,
 				8F6B23DC28F81A640079F0FC /* TestData.swift */,
 				8FB43FF12912C6E9009202F4 /* UIElements.swift */,
+				8FE3447B2916A9AF00247333 /* Utils.swift */,
 				8F24E74C28EECB8A008D5AEE /* Assets.xcassets */,
 				8F24E74E28EECB8A008D5AEE /* Preview Content */,
 			);
@@ -439,6 +442,7 @@
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
+				8FE3447C2916A9AF00247333 /* Utils.swift in Sources */,
 				8FFD753929058C7A005237A9 /* TeamMember.swift in Sources */,
 				8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */,
 				8F24E75C28EEDCBD008D5AEE /* MyPlantsView.swift in Sources */,
