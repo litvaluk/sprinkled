@@ -57,6 +57,8 @@
 		8FB43FF0290EBF36009202F4 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8FB43FEF290EBF36009202F4 /* Collections */; };
 		8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FF12912C6E9009202F4 /* UIElements.swift */; };
 		8FE3447C2916A9AF00247333 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447B2916A9AF00247333 /* Utils.swift */; };
+		8FE3447E2918086E00247333 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447D2918086E00247333 /* AddMemberView.swift */; };
+		8FE3448029180A6800247333 /* AddMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447F29180A6800247333 /* AddMemberViewModel.swift */; };
 		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
 		8FFD7535290583FA005237A9 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7534290583FA005237A9 /* TeamView.swift */; };
 		8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753629058446005237A9 /* TeamViewModel.swift */; };
@@ -133,6 +135,8 @@
 		8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8FB43FF12912C6E9009202F4 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
 		8FE3447B2916A9AF00247333 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8FE3447D2918086E00247333 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
+		8FE3447F29180A6800247333 /* AddMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberViewModel.swift; sourceTree = "<group>"; };
 		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 		8FFD7534290583FA005237A9 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		8FFD753629058446005237A9 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				8FA07B28290D0B8C0019C142 /* AddEventView.swift */,
+				8FE3447D2918086E00247333 /* AddMemberView.swift */,
 				8FA07B2C290D48CB0019C142 /* AddReminderView.swift */,
 				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
@@ -246,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				8FA07B26290D0A340019C142 /* AddEventViewModel.swift */,
+				8FE3447F29180A6800247333 /* AddMemberViewModel.swift */,
 				8FA07B2A290D469C0019C142 /* AddReminderViewModel.swift */,
 				8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */,
 				8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */,
@@ -413,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE3448029180A6800247333 /* AddMemberViewModel.swift in Sources */,
 				8F095E962904066800DBCECA /* Styles.swift in Sources */,
 				8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */,
 				8FFD7548290AD3DB005237A9 /* Action.swift in Sources */,
@@ -429,6 +436,7 @@
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
 				8FA07B23290BDC570019C142 /* PictureView.swift in Sources */,
 				8F095E9829040E4800DBCECA /* Place.swift in Sources */,
+				8FE3447E2918086E00247333 /* AddMemberView.swift in Sources */,
 				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
 				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,

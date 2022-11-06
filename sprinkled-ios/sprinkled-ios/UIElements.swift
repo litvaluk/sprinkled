@@ -112,3 +112,20 @@ struct SprinkledListNavigationLink<Value: Hashable>: View {
 		}
 	}
 }
+
+struct SprinkledListItem<Content: View>: View {
+	let title: String
+	@ViewBuilder var content: () -> Content
+	
+	var body: some View {
+		HStack {
+			Text(title)
+				.foregroundColor(.primary)
+			Spacer()
+			content()
+		}
+		.padding(15)
+		.background(.thinMaterial)
+		.cornerRadius(10)
+	}
+}

@@ -1,5 +1,9 @@
 import SwiftUI
 
+enum TeamMenuAction: Hashable, Equatable {
+	case addMember
+}
+
 struct TeamView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@StateObject var vm: TeamViewModel
@@ -24,7 +28,10 @@ struct TeamView: View {
 						Spacer()
 						if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
 							Menu {
-								Button {} label: {
+								Button {
+									vm.teamMemberToBeRemoved = member
+									vm.showRemoveTeamMemberModal = true
+								} label: {
 									Text("Remove member")
 								}
 								if (!member.isAdmin) {
@@ -67,7 +74,7 @@ struct TeamView: View {
 			if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
 				ToolbarItem {
 					Menu {
-						Button {} label: {
+						NavigationLink(value: TeamMenuAction.addMember) {
 							Text("Add member")
 						}
 						Button {
@@ -92,6 +99,12 @@ struct TeamView: View {
 							.foregroundColor(.primary)
 					}
 				}
+			}
+		}
+		.navigationDestination(for: TeamMenuAction.self) { action in
+			switch(action) {
+			case .addMember:
+				AddMemberView(vm: AddMemberViewModel(teamId: vm.teamId, teamName: vm.teamName, teamMemberIds: vm.teamMembers.map{$0.id}))
 			}
 		}
 		.modal(title: "Are you sure?", showModal: $vm.showDeleteTeamModal) {
@@ -150,6 +163,39 @@ struct TeamView: View {
 			Button {
 				withAnimation(.easeOut(duration: 0.07)) {
 					vm.showRenameTeamModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
+		.modal(title: "Are you sure?", showModal: $vm.showRemoveTeamMemberModal) {
+			Text(vm.teamMemberToBeRemoved != nil ? "This action will remove user \(vm.teamMemberToBeRemoved!.username) from the team." : "This action will remove the user from the team.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.removeTeamMember(memberId: vm.teamMemberToBeRemoved!.id)) {
+						withAnimation(.easeOut(duration: 0.07)) {
+							vm.showRemoveTeamMemberModal = false
+						}
+						await vm.fetchTeamMembers()
+					}
+				}
+			} label: {
+				Text("Remove")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.showRemoveTeamMemberModal = false
 				}
 			} label: {
 				Text("Cancel")

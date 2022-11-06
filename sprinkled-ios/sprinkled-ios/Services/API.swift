@@ -24,6 +24,9 @@ protocol APIProtocol {
 	func disableReminderNotifications(deviceId: String) async throws -> Void
 	func enableEventNotifications(deviceId: String) async throws -> Void
 	func disableEventNotifications(deviceId: String) async throws -> Void
+	func fetchUsers() async throws -> [User]
+	func addTeamMember(teamId: Int, userId: Int) async throws -> Void
+	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -185,6 +188,22 @@ final class API : APIProtocol {
 		]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		try await makeAuthenticatedRequest(path: "notifications/disable-event-notifications", method: "POST", body: bodyData)
+	}
+	
+	func fetchUsers() async throws -> [User] {
+		return try await makeAuthenticatedRequest(path: "users")
+	}
+	
+	func addTeamMember(teamId: Int, userId: Int) async throws -> Void {
+		let body = [
+			"userId": userId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members", method: "POST", body: bodyData)
+	}
+	
+	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members/\(memberId)", method: "DELETE")
 	}
 	
 	func refreshToken() async {
@@ -436,6 +455,18 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func disableEventNotifications(deviceId: String) async throws -> Void {
+		return
+	}
+	
+	func fetchUsers() async throws -> [User] {
+		return TestData.users
+	}
+	
+	func addTeamMember(teamId: Int, userId: Int) async throws -> Void {
+		return
+	}
+	
+	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void {
 		return
 	}
 }

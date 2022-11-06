@@ -12,6 +12,8 @@ final class TeamViewModel: ObservableObject {
 	@Published var teamMembers: [TeamMember] = []
 	@Published var showDeleteTeamModal = false
 	@Published var showRenameTeamModal = false
+	@Published var showRemoveTeamMemberModal = false
+	@Published var teamMemberToBeRemoved: TeamMember?
 	@Published var renameTeamModalValue = ""
 	
 	init(teamId: Int, teamName: String) {
@@ -28,6 +30,18 @@ final class TeamViewModel: ObservableObject {
 		} catch {
 			print("❌ Error while fetching team members.")
 		}
+	}
+	
+	func removeTeamMember(memberId: Int) async -> Bool {
+		do {
+			try await api.removeTeamMember(teamId: teamId, memberId: memberId)
+			return true
+		} catch is ExpiredRefreshToken {
+			print("⌛️ Refresh token expired.")
+		} catch {
+			print("❌ Error while deleting team.")
+		}
+		return false
 	}
 	
 	@MainActor
