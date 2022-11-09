@@ -15,8 +15,10 @@ struct MyPlantsView: View {
 		NavigationStack(path: $viewModel.navigationPath) {
 			ScrollView {
 				if (viewModel.loading && viewModel.teamSummaries.isEmpty) {
-					ProgressView()
-						.padding(.top, 250)
+					ForEach(0..<2) { i in
+						TeamCardsView(teamSummary: nil)
+							.redactedShimmering()
+					}
 				} else {
 					VStack(alignment: .leading, spacing: 35) {
 						ForEach(viewModel.teamSummaries) { teamSummary in
@@ -84,33 +86,44 @@ struct MyPlantsView: View {
 }
 
 struct TeamCardsView: View {
-	let teamSummary: TeamSummary
+	let teamSummary: TeamSummary?
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
 			HStack{
-				Text(teamSummary.name)
+				Text(teamSummary?.name ?? .placeholder(10))
 					.font(.title2)
 					.fontWeight(.medium)
 				Spacer()
-				if (teamSummary.id != 0) {
-					NavigationLink(value: teamSummary) {
-						Image(systemName: "ellipsis")
-							.resizable()
-							.scaledToFit()
-							.frame(width: 20)
-							.foregroundColor(.primary)
+				if let teamSummary {
+					if (teamSummary.id != 0) {
+						NavigationLink(value: teamSummary) {
+							Image(systemName: "ellipsis")
+								.resizable()
+								.scaledToFit()
+								.frame(width: 20)
+								.foregroundColor(.primary)
+						}
 					}
 				}
 			}
 			ScrollView(.horizontal, showsIndicators: false) {
-				HStack {
-					ForEach(teamSummary.places) { place in
-						SingleCardView(teamSummaryPlace: place)
+				if let teamSummary {
+					HStack {
+						ForEach(teamSummary.places) { place in
+							SingleCardView(teamSummaryPlace: place)
+						}
+						AddCardView(teamId: teamSummary.id)
 					}
-					AddCardView(teamId: teamSummary.id)
+					.frame(maxWidth: .infinity)
+				} else {
+					HStack {
+						ForEach(0..<3) { _ in
+							SingleCardView(teamSummaryPlace: nil)
+						}
+					}
+					.frame(maxWidth: .infinity)
 				}
-				.frame(maxWidth: .infinity)
 			}
 		}
 		.padding([.horizontal])
@@ -118,7 +131,7 @@ struct TeamCardsView: View {
 }
 
 struct SingleCardView: View {
-	let teamSummaryPlace: TeamSummaryPlace
+	let teamSummaryPlace: TeamSummaryPlace?
 	
 	var body: some View {
 		VStack(spacing: 5) {
@@ -131,7 +144,7 @@ struct SingleCardView: View {
 						.padding(8)
 				}
 			}
-			Text(teamSummaryPlace.name)
+			Text(teamSummaryPlace?.name ?? .placeholder(8))
 		}
 	}
 }
@@ -159,32 +172,42 @@ struct AddCardView: View {
 }
 
 struct GridView: View {
-	let teamSummaryPlace: TeamSummaryPlace
+	let teamSummaryPlace: TeamSummaryPlace?
 	
 	var body: some View {
 		Grid {
-			GridRow {
-				if (teamSummaryPlace.plantEntries.count > 0) {
-					GridItemView(plantEntry: teamSummaryPlace.plantEntries[0])
-				} else {
-					Color.clear
+			if let teamSummaryPlace {
+				GridRow {
+					if (teamSummaryPlace.plantEntries.count > 0) {
+						GridItemView(plantEntry: teamSummaryPlace.plantEntries[0])
+					} else {
+						Color.clear
+					}
+					if (teamSummaryPlace.plantEntries.count > 1) {
+						GridItemView(plantEntry: teamSummaryPlace.plantEntries[1])
+					} else {
+						Color.clear
+					}
 				}
-				if (teamSummaryPlace.plantEntries.count > 1) {
-					GridItemView(plantEntry: teamSummaryPlace.plantEntries[1])
-				} else {
-					Color.clear
+				GridRow {
+					if (teamSummaryPlace.plantEntries.count > 2) {
+						GridItemView(plantEntry: teamSummaryPlace.plantEntries[2])
+					} else {
+						Color.clear
+					}
+					if (teamSummaryPlace.plantEntries.count > 3) {
+						GridItemView(plantEntry: teamSummaryPlace.plantEntries[3])
+					} else {
+						Color.clear
+					}
 				}
-			}
-			GridRow {
-				if (teamSummaryPlace.plantEntries.count > 2) {
-					GridItemView(plantEntry: teamSummaryPlace.plantEntries[2])
-				} else {
-					Color.clear
+			} else {
+				GridRow {
+					GridItemView(plantEntry: nil)
+					GridItemView(plantEntry: nil)
 				}
-				if (teamSummaryPlace.plantEntries.count > 3) {
-					GridItemView(plantEntry: teamSummaryPlace.plantEntries[3])
-				} else {
-					Color.clear
+				GridRow {
+					GridItemView(plantEntry: nil)
 				}
 			}
 		}
@@ -192,10 +215,10 @@ struct GridView: View {
 }
 
 struct GridItemView: View {
-	let plantEntry: TeamSummaryPlantEntry
+	let plantEntry: TeamSummaryPlantEntry?
 	
 	var body: some View {
-		if let headerPictureUrl = plantEntry.headerPictureUrl {
+		if let headerPictureUrl = plantEntry?.headerPictureUrl {
 			Color.clear
 				.aspectRatio(1, contentMode: .fill)
 				.clipped()
