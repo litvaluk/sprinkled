@@ -4,14 +4,14 @@ import Collections
 final class TaskViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 	
-	@Published var reminderMap: OrderedDictionary<String, [ReminderForTaskView]>? = nil
+	@Published var uncompletedEventsMap: OrderedDictionary<String, [Event]>? = nil
 	@Published var navigationPath = NavigationPath()
 	
 	@MainActor
-	func fetchReminders() async {
-		var reminders: [ReminderForTaskView]
+	func fetchUncompletedEvents() async {
+		var uncompletedEvents: [Event]
 		do {
-			reminders = try await api.fetchReminders()
+			uncompletedEvents = try await api.fetchUncompletedEvents()
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 			return
@@ -19,9 +19,9 @@ final class TaskViewModel: ObservableObject {
 			print("❌ Error while fetching plants.")
 			return
 		}
-		reminders = reminders.filter { $0.date > .now }
-		reminderMap = OrderedDictionary.init(grouping: reminders) { reminder in
-			reminder.date.toString(.MMMd)
+		uncompletedEvents = uncompletedEvents.filter { $0.date > .now }
+		uncompletedEventsMap = OrderedDictionary.init(grouping: uncompletedEvents) { event in
+			event.date.toString(.MMMd)
 		}
 		
 	}

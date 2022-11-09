@@ -17,7 +17,7 @@ protocol APIProtocol {
 	func fetchPlantEntry(plantEntryId: Int) async throws -> PlantEntry
 	func addEvent(plantEntryId: Int, actionId: Int, date: Date) async throws -> Event
 	func addReminder(plantEntryId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
-	func fetchReminders() async throws -> [ReminderForTaskView]
+	func fetchUncompletedEvents() async throws -> [Event]
 	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void
 	func removeAdminRights(teamId: Int, userId: Int) async throws -> Void
 	func enableReminderNotifications(deviceId: String) async throws -> Void
@@ -146,8 +146,8 @@ final class API : APIProtocol {
 		return try await makeAuthenticatedRequest(path: "reminders", method: "POST", body: bodyData)
 	}
 	
-	func fetchReminders() async throws -> [ReminderForTaskView] {
-		return try await makeAuthenticatedRequest(path: "reminders")
+	func fetchUncompletedEvents() async throws -> [Event] {
+		return try await makeAuthenticatedRequest(path: "events?completed=false")
 	}
 	
 	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void {
@@ -430,8 +430,8 @@ final class TestAPI : APIProtocol {
 		return TestData.reminders[0]
 	}
 	
-	func fetchReminders() async throws -> [ReminderForTaskView] {
-		return TestData.remindersForTaskView
+	func fetchUncompletedEvents() async throws -> [Event] {
+		return TestData.events.filter({!$0.completed})
 	}
 	
 	func giveAdminRights(teamId: Int, userId: Int) async throws -> Void {

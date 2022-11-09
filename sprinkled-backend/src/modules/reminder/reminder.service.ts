@@ -52,17 +52,7 @@ export class ReminderService {
   }
 
   async findAll(): Promise<Reminder[]> {
-    return await this.prisma.reminder.findMany({
-      include: {
-        action: true,
-        plantEntry: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
+    return await this.prisma.reminder.findMany();
   }
 
   async findOne(id: number): Promise<Reminder> {

@@ -11,4 +11,10 @@ struct Event: Codable, Identifiable, Hashable, Equatable {
 	let completed: Bool
 	let reminded: Bool?
 	let reminderId: Int?
+	let plantEntry: PlantEntryIdAndName
+	
+	struct PlantEntryIdAndName: Codable, Identifiable, Hashable, Equatable {
+		let id: Int
+		let name: String
+	}
 }

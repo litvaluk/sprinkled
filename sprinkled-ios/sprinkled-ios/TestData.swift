@@ -221,9 +221,9 @@ struct TestData {
 	]
 
 	static let events = [
-		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminded: nil, reminderId: nil),
-		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminded: nil, reminderId: nil),
-		Event(id: 3, date: Date(), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: true, reminded: nil, reminderId: nil)
+		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
+		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
+		Event(id: 3, date: Date(timeIntervalSince1970: 1696327200), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: false, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1"))
 	]
 
 	static let reminders = [
@@ -232,14 +232,6 @@ struct TestData {
 		Reminder(id: 3, date: Date(timeIntervalSince1970: 1696676400), period: 5, actionId: 1, plantEntryId: 1, creatorId: 1, action: actions[1]),
 		Reminder(id: 4, date: Date(timeIntervalSince1970: 1696327200), period: 0, actionId: 1, plantEntryId: 1, creatorId: 1, action: actions[1]),
 		Reminder(id: 5, date: Date(timeIntervalSince1970: 1696860000), period: 0, actionId: 3, plantEntryId: 1, creatorId: 2, action: actions[1])
-	]
-	
-	static let remindersForTaskView = [
-		ReminderForTaskView(id: 1, date: Date(timeIntervalSince1970: 1696165200), period: 0, action: actions[0], plantEntry: ReminderForTaskView.PlantEntryIdAndName(id: 1, name: "Plant 1")),
-		ReminderForTaskView(id: 2, date: Date(timeIntervalSince1970: 1696327200), period: 2, action: actions[1], plantEntry: ReminderForTaskView.PlantEntryIdAndName(id: 1, name: "Plant 1")),
-		ReminderForTaskView(id: 3, date: Date(timeIntervalSince1970: 1696676400), period: 5, action: actions[0], plantEntry: ReminderForTaskView.PlantEntryIdAndName(id: 1, name: "Plant 1")),
-		ReminderForTaskView(id: 4, date: Date(timeIntervalSince1970: 1696327200), period: 0, action: actions[0], plantEntry: ReminderForTaskView.PlantEntryIdAndName(id: 1, name: "Plant 1")),
-		ReminderForTaskView(id: 5, date: Date(timeIntervalSince1970: 1696860000), period: 0, action: actions[1], plantEntry: ReminderForTaskView.PlantEntryIdAndName(id: 1, name: "Plant 1"))
 	]
 
 	static let pictures = [

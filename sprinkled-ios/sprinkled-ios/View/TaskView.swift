@@ -6,20 +6,20 @@ struct TaskView: View {
 	var body: some View {
 		NavigationStack(path: $vm.navigationPath) {
 			ScrollView {
-				if let reminderMap = vm.reminderMap {
-					if (reminderMap.isEmpty) {
+				if let uncompletedEventsMap = vm.uncompletedEventsMap {
+					if (uncompletedEventsMap.isEmpty) {
 						Text("No upcoming tasks")
 							.foregroundColor(.secondary)
 							.padding(100)
 							
 					} else {
 						LazyVStack(spacing: 7) {
-							ForEach(Array(reminderMap), id: \.key) { dayAndMonths, reminders in
+							ForEach(Array(uncompletedEventsMap), id: \.key) { dayAndMonths, event in
 								Section {
 									VStack(spacing: 7) {
-										ForEach(reminders, id: \.id) { reminder in
-											NavigationLink(value: reminder.plantEntry) {
-												TaskListItem(title: reminder.action.type.capitalizedFirstLetter(), subtitle: "\(reminder.plantEntry.name)", date: reminder.date)
+										ForEach(event, id: \.id) { event in
+											NavigationLink(value: event.plantEntry) {
+												TaskListItem(title: event.action.type.capitalizedFirstLetter(), subtitle: "\(event.plantEntry.name)", date: event.date)
 											}
 										}
 									}
@@ -63,13 +63,13 @@ struct TaskView: View {
 					.padding()
 				}
 			}
-			.navigationDestination(for: ReminderForTaskView.PlantEntryIdAndName.self) { plantEntryIdAndName in
+			.navigationDestination(for: Event.PlantEntryIdAndName.self) { plantEntryIdAndName in
 				AddEventView(vm: AddEventViewModel(plantEntryId: plantEntryIdAndName.id, plantEntryName: plantEntryIdAndName.name))
 			}
 			.navigationTitle("Tasks")
 			.navigationBarTitleDisplayMode(.large)
 			.task {
-				await vm.fetchReminders()
+				await vm.fetchUncompletedEvents()
 			}
 		}
 	}

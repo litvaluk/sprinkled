@@ -27,13 +27,46 @@ export class EventService {
   }
 
   async findAll(): Promise<Event[]> {
-    return await this.prisma.event.findMany();
+    return await this.prisma.event.findMany({
+      include: {
+        action: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
   async findUncompleted(): Promise<Event[]> {
     return await this.prisma.event.findMany({
       where: {
         completed: false,
+      },
+      include: {
+        action: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }
@@ -42,6 +75,22 @@ export class EventService {
     return await this.prisma.event.findMany({
       where: {
         completed: true,
+      },
+      include: {
+        action: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }

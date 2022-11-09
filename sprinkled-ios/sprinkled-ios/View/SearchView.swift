@@ -33,8 +33,31 @@ struct SearchView: View {
 						.padding([.bottom], 8)
 						.id("top")
 						if (viewModel.plants.isEmpty && viewModel.loading) {
-							ProgressView()
-								.frame(width: gr.size.width, height: gr.size.height - 100)
+							ForEach(0..<5) { i in
+								HStack {
+									RoundedRectangle(cornerRadius: 10)
+										.frame(width: 60, height: 60)
+										.foregroundColor(.gray)
+										.padding([.leading, .trailing], 12)
+									VStack(alignment: .leading) {
+										Text(String.placeholder(18))
+											.foregroundColor(.primary)
+										Text(String.placeholder(18))
+											.font(.subheadline)
+											.foregroundColor(.secondary)
+									}
+									.padding([.top, .bottom])
+									Spacer()
+								}
+								.background(Color("SprinkledGray"))
+								.cornerRadius(15)
+								.padding([.leading, .trailing], 16)
+								.redactedShimmering()
+							}
+						} else if (viewModel.filteredPlants.isEmpty) {
+							Text("No plants found")
+								.foregroundColor(.secondary)
+								.padding(.top, 20)
 						} else {
 							ForEach(viewModel.filteredPlants) { plant in
 								NavigationLink(value: plant) {
@@ -97,5 +120,6 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
 	static var previews: some View {
 		SearchView(viewModel: SearchViewModel())
+			.environmentObject(TabBarState())
 	}
 }

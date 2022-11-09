@@ -39,6 +39,12 @@ export class PlantEntryService {
                 email: true,
               },
             },
+            plantEntry: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
         reminders: {
