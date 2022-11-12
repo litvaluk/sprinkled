@@ -23,24 +23,34 @@ struct SprinkledListSection<Content: View>: View {
 	}
 }
 
-struct SprinkledListToggle: View {
+struct SprinkledListItem<Content: View>: View {
 	let title: String
-	let isOn: Binding<Bool>
+	@ViewBuilder var content: () -> Content
 	
 	var body: some View {
 		HStack {
 			Text(title)
 				.foregroundColor(.primary)
-				.padding(.vertical, 15)
+				.padding(15)
 			Spacer()
+			content()
+		}
+		.background(.thinMaterial)
+		.cornerRadius(10)
+	}
+}
+
+struct SprinkledListToggle: View {
+	let title: String
+	let isOn: Binding<Bool>
+	
+	var body: some View {
+		SprinkledListItem(title: title) {
 			Toggle(title, isOn: isOn)
 				.tint(.sprinkledGreen)
 				.padding(.trailing, 12)
 				.labelsHidden()
 		}
-		.padding(.leading, 15)
-		.background(.thinMaterial)
-		.cornerRadius(10)
 	}
 }
 
@@ -57,10 +67,7 @@ struct SprinkledListMenuPicker: View {
 				}
 			}
 		} label: {
-			HStack {
-				Text(title)
-					.foregroundColor(.primary)
-				Spacer()
+			SprinkledListItem(title: title) {
 				Text(selection.wrappedValue)
 					.foregroundColor(.gray)
 				Image(systemName: "chevron.up.chevron.down")
@@ -70,10 +77,8 @@ struct SprinkledListMenuPicker: View {
 					.fontWeight(.semibold)
 					.foregroundColor(.gray)
 					.padding(.leading, 4)
+					.padding(.trailing, 10)
 			}
-			.padding(15)
-			.background(.thinMaterial)
-			.cornerRadius(10)
 		}
 	}
 }
@@ -94,10 +99,7 @@ struct SprinkledListNavigationLink<Value: Hashable>: View {
 	
 	var body: some View {
 		NavigationLink(value: value) {
-			HStack {
-				Text(title)
-					.foregroundColor(.primary)
-				Spacer()
+			SprinkledListItem(title: title) {
 				Image(systemName: "chevron.right")
 					.resizable()
 					.scaledToFit()
@@ -106,26 +108,21 @@ struct SprinkledListNavigationLink<Value: Hashable>: View {
 					.foregroundColor(.gray)
 					.padding(.leading, 4)
 			}
-			.padding(15)
-			.background(.thinMaterial)
-			.cornerRadius(10)
 		}
 	}
 }
 
-struct SprinkledListItem<Content: View>: View {
+struct SprinkledListDatePicker: View {
 	let title: String
-	@ViewBuilder var content: () -> Content
+	let selection: Binding<Date>
+	let displayedComponents: DatePicker.Components
 	
 	var body: some View {
-		HStack {
-			Text(title)
-				.foregroundColor(.primary)
-			Spacer()
-			content()
+		SprinkledListItem(title: title) {
+			DatePicker("Pick date", selection: selection, displayedComponents: displayedComponents)
+				.datePickerStyle(.compact)
+				.labelsHidden()
+				.padding(.trailing, 8)
 		}
-		.padding(15)
-		.background(.thinMaterial)
-		.cornerRadius(10)
 	}
 }

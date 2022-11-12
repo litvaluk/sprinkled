@@ -3,7 +3,7 @@ import SwiftUI
 final class AddEventViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 
-	@Published var actionSelection = 1
+	@Published var actionSelection = "water"
 	@Published var date = Date().zeroSeconds()
 	
 	@Published var isProcessing = false
@@ -24,7 +24,7 @@ final class AddEventViewModel: ObservableObject {
 		defer { isProcessing = false }
 		
 		do {
-			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: actionSelection, date: date)
+			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
 		} catch is ExpiredRefreshToken {
 			print("⌛️ Refresh token expired.")
 			return false

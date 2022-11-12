@@ -27,6 +27,10 @@ protocol APIProtocol {
 	func fetchUsers() async throws -> [User]
 	func addTeamMember(teamId: Int, userId: Int) async throws -> Void
 	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void
+	func deleteReminder(reminderId: Int) async throws -> Void
+	func deleteEvent(eventId: Int) async throws -> Void
+	func editEvent(eventId: Int, actionId: Int, date: Date) async throws -> Event
+	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func refreshToken() async -> Void
 }
 
@@ -204,6 +208,33 @@ final class API : APIProtocol {
 	
 	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void {
 		try await makeAuthenticatedRequest(path: "teams/\(teamId)/members/\(memberId)", method: "DELETE")
+	}
+	
+	func deleteReminder(reminderId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "reminders/\(reminderId)", method: "DELETE")
+	}
+	
+	func deleteEvent(eventId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "events/\(eventId)", method: "DELETE")
+	}
+	
+	func editEvent(eventId: Int, actionId: Int, date: Date) async throws -> Event {
+		let body = [
+			"actionId": actionId,
+			"date": date.encodeToStringForTransfer(),
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "events/\(eventId)", method: "PUT", body: bodyData)
+	}
+	
+	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
+		let body = [
+			"actionId": actionId,
+			"date": date.encodeToStringForTransfer(),
+			"period": period
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "reminders/\(reminderId)", method: "PUT", body: bodyData)
 	}
 	
 	func refreshToken() async {
@@ -468,5 +499,21 @@ final class TestAPI : APIProtocol {
 	
 	func removeTeamMember(teamId: Int, memberId: Int) async throws -> Void {
 		return
+	}
+	
+	func deleteReminder(reminderId: Int) async throws -> Void {
+		return
+	}
+	
+	func deleteEvent(eventId: Int) async throws -> Void {
+		return
+	}
+	
+	func editEvent(eventId: Int, actionId: Int, date: Date) async throws -> Event {
+		return TestData.events[0]
+	}
+	
+	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
+		return TestData.reminders[0]
 	}
 }

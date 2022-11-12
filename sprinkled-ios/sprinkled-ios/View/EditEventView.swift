@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct AddEventView: View {
+struct EditEventView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-	@StateObject var vm: AddEventViewModel
+	@StateObject var vm: EditEventViewModel
 	
-    var body: some View {
+	var body: some View {
 		VStack {
 			HStack {
 				Text(vm.plantEntryName)
@@ -27,12 +27,12 @@ struct AddEventView: View {
 			} else {
 				Button {
 					Task {
-						if (await vm.addNewEvent()) {
+						if (await vm.editEvent()) {
 							self.presentationMode.wrappedValue.dismiss()
 						}
 					}
 				} label: {
-					Text("Create")
+					Text("Edit")
 						.frame(maxWidth: .infinity, minHeight: 35)
 				}
 				.buttonStyle(.borderedProminent)
@@ -41,13 +41,13 @@ struct AddEventView: View {
 		}
 		.padding(.horizontal)
 		.padding(.bottom)
-		.navigationTitle("Add new event")
-    }
+		.navigationBarTitleDisplayMode(.large)
+		.navigationTitle("Edit event")
+	}
 }
 
-
-struct AddEventView_Previews: PreviewProvider {
+struct EditEventView_Previews: PreviewProvider {
     static var previews: some View {
-		AddEventView(vm: AddEventViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1"))
+		EditEventView(vm: EditEventViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1", event: TestData.events[0]))
     }
 }

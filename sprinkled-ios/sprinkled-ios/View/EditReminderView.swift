@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct AddReminderView: View {
+struct EditReminderView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-	@StateObject var vm: AddReminderViewModel
+	@StateObject var vm: EditReminderViewModel
 	
-	var body: some View {
+    var body: some View {
 		VStack {
 			HStack {
 				Text(vm.plantEntryName)
@@ -65,12 +65,12 @@ struct AddReminderView: View {
 			} else {
 				Button {
 					Task {
-						if (await vm.addNewReminder()) {
+						if (await vm.editReminder()) {
 							self.presentationMode.wrappedValue.dismiss()
 						}
 					}
 				} label: {
-					Text("Create")
+					Text("Edit")
 						.frame(maxWidth: .infinity, minHeight: 35)
 				}
 				.buttonStyle(.borderedProminent)
@@ -79,12 +79,13 @@ struct AddReminderView: View {
 		}
 		.padding(.horizontal)
 		.padding(.bottom)
-		.navigationTitle("Add new reminder")
-	}
+		.navigationBarTitleDisplayMode(.large)
+		.navigationTitle("Edit reminder")
+    }
 }
 
-struct AddReminderView_Previews: PreviewProvider {
-	static var previews: some View {
-		AddReminderView(vm: AddReminderViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1"))
-	}
+struct EditReminderView_Previews: PreviewProvider {
+    static var previews: some View {
+		EditReminderView(vm: EditReminderViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1", reminder: TestData.reminders[0]))
+    }
 }

@@ -121,8 +121,8 @@ model Plant {
 model Event {
   id           Int        @id @default(autoincrement())
   date         DateTime
-  user         User       @relation(fields: [userId], references: [id])
-  userId       Int
+  user         User?      @relation(fields: [userId], references: [id])
+  userId       Int?
   plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id])
   plantEntryId Int
   action       Action     @relation(fields: [actionId], references: [id])

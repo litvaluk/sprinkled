@@ -95,7 +95,7 @@ CREATE TABLE "plants" (
 CREATE TABLE "events" (
     "id" SERIAL NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" INTEGER,
     "plantEntryId" INTEGER NOT NULL,
     "actionId" INTEGER NOT NULL,
     "completed" BOOLEAN NOT NULL DEFAULT true,
@@ -201,7 +201,7 @@ ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_placeId_fkey" FOREIGN 
 ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_plantId_fkey" FOREIGN KEY ("plantId") REFERENCES "plants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "events" ADD CONSTRAINT "events_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "events" ADD CONSTRAINT "events_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "events" ADD CONSTRAINT "events_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

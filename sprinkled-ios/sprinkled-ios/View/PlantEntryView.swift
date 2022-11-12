@@ -8,6 +8,14 @@ enum PlantEntryMenuAction: Hashable, Equatable {
 	case addPhoto
 }
 
+enum PlantEntryReminderMenuAction: Hashable, Equatable {
+	case edit(PlantEntry, Reminder)
+}
+
+enum PlantEntryEventMenuAction: Hashable, Equatable {
+	case edit(PlantEntry, Event)
+}
+
 struct PlantEntryView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@StateObject var vm: PlantEntryViewModel
@@ -36,6 +44,72 @@ struct PlantEntryView: View {
 					.padding([.top], 12)
 					.padding([.leading], 7)
 			}
+		}
+		.modal(title: "Are you sure?", showModal: $vm.reminderToDelete.mappedToBool()) {
+			Text("This action will delete the chosen reminder.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.deleteReminder()) {
+						await vm.fetchPlantEntry()
+					}
+					withAnimation(.easeOut(duration: 0.07)) {
+						vm.reminderToDelete = nil
+					}
+				}
+			} label: {
+				Text("Delete")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.reminderToDelete = nil
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
+		.modal(title: "Are you sure?", showModal: $vm.eventToDelete.mappedToBool()) {
+			Text("This action will delete the chosen event.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.deleteEvent()) {
+						await vm.fetchPlantEntry()
+					}
+					withAnimation(.easeOut(duration: 0.07)) {
+						vm.eventToDelete = nil
+					}
+				}
+			} label: {
+				Text("Delete")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.eventToDelete = nil
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
 		}
 		.task {
 			await vm.fetchPlantEntry()
@@ -163,13 +237,32 @@ struct PlantEntryContent: View {
 			VStack (spacing: 8) {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.events) { event in
-						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user.username)", date: event.date)
+						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", date: event.date) {
+							NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
+								Text("Edit")
+								Image(systemName: "slider.horizontal.3")
+							}
+							Button {
+								vm.eventToDelete = event.id
+							} label: {
+								Text("Delete")
+								Image(systemName: "trash")
+							}
+						}
 					}
 				} else {
 					ForEach(0..<3) { _ in
-						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder)
-							.redactedShimmering()
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder) {
+							EmptyView()
+						}
+						.redactedShimmering()
 					}
+				}
+			}
+			.navigationDestination(for: PlantEntryEventMenuAction.self) { action in
+				switch(action) {
+				case .edit(let plantEntry, let event):
+					EditEventView(vm: EditEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, event: event))
 				}
 			}
 		case .reminders:
@@ -177,13 +270,32 @@ struct PlantEntryContent: View {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.reminders) { reminder in
 						let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
-						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, date: reminder.date)
+						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, date: reminder.date) {
+							NavigationLink(value: PlantEntryReminderMenuAction.edit(plantEntry, reminder)) {
+								Text("Edit")
+								Image(systemName: "slider.horizontal.3")
+							}
+							Button {
+								vm.reminderToDelete = reminder.id
+							} label: {
+								Text("Delete")
+								Image(systemName: "trash")
+							}
+						}
 					}
 				} else {
 					ForEach(0..<3) { _ in
-						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder)
-							.redactedShimmering()
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder) {
+							EmptyView()
+						}
+						.redactedShimmering()
 					}
+				}
+			}
+			.navigationDestination(for: PlantEntryReminderMenuAction.self) { action in
+				switch(action) {
+				case .edit(let plantEntry, let reminder):
+					EditReminderView(vm: EditReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, reminder: reminder))
 				}
 			}
 		case .gallery:
@@ -207,10 +319,18 @@ struct PlantEntryContent: View {
 	}
 }
 
-struct PlantEntryListItem: View {
+struct PlantEntryListItem<Content: View>: View {
 	let title: String
 	let subtitle: String
 	let date: Date
+	let content: () -> Content
+	
+	init(title: String, subtitle: String, date: Date, @ViewBuilder content: @escaping () -> Content) {
+		self.title = title
+		self.subtitle = subtitle
+		self.date = date
+		self.content = content
+	}
 	
 	var body: some View {
 		ZStack {
@@ -234,7 +354,13 @@ struct PlantEntryListItem: View {
 						.font(.subheadline)
 					Spacer()
 				}
-				.padding(.trailing, 5)
+				.padding(.horizontal, 5)
+				Menu {
+					content()
+				} label: {
+					Image(systemName: "ellipsis")
+						.padding(.trailing, 10)
+				}
 			}
 		}
 		.cornerRadius(10)
@@ -289,7 +415,9 @@ struct GalleryItem: View {
 
 struct PlantEntryView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1))
-			.environmentObject(PictureViewState())
+		NavigationStack {
+			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1))
+				.environmentObject(PictureViewState())
+		}
 	}
 }

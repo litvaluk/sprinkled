@@ -177,3 +177,28 @@ extension FloatingPoint {
 	var whole: Self { modf(self).0 }
 	var fraction: Self { modf(self).1 }
 }
+
+extension Binding where Value == Bool {
+	/// Creates a binding by mapping an optional value to a `Bool` that is
+	/// `true` when the value is non-`nil` and `false` when the value is `nil`.
+	///
+	/// Setting the value of the produce binding does nothing and logs a message
+	///
+	/// - parameter bindingToOptional: A `Binding` to an optional value, used to calculate the `wrappedValue`.
+	public init<Wrapped>(mappedTo bindingToOptional: Binding<Wrapped?>) {
+		self.init(
+			get: { bindingToOptional.wrappedValue != nil },
+			set: { _ in
+				print("Attempted to set the value of the produce binding. Setting the value of the produce binding does nothing.")
+			}
+		)
+	}
+}
+
+extension Binding {
+	/// Returns a binding by mapping this binding's value to a `Bool` that is
+	/// `true` when the value is non-`nil` and `false` when the value is `nil`.
+	public func mappedToBool<Wrapped>() -> Binding<Bool> where Value == Wrapped? {
+		return Binding<Bool>(mappedTo: self)
+	}
+}

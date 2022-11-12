@@ -22,6 +22,12 @@ export class EventService {
             email: true,
           },
         },
+        plantEntry: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }
@@ -110,6 +116,22 @@ export class EventService {
       },
       data: {
         ...updateEventDto,
+      },
+      include: {
+        action: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
   }
