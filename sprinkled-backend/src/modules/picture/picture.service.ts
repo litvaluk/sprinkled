@@ -14,6 +14,15 @@ export class PictureService {
         ...createPictureDto,
         userId: userId,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+        },
+      },
     });
   }
 

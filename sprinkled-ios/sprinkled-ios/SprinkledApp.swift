@@ -1,13 +1,11 @@
 import SwiftUI
 import UIKit
 import JWTDecode
+import FirebaseCore
 
 @main
 struct SprinkledApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-	
-	@Provider var api = API() as APIProtocol
-	@Provider var notificationManager = NotificationManager() as NotificationManagerProtocol
 	
 	init() {
 		let appearance = UITabBarAppearance()

@@ -344,7 +344,11 @@ struct PlantEntryContent: View {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.pictures) { picture in
 						Button {
-							pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures)
+							pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures, onDelete: {
+								Task {
+									await vm.fetchPlantEntry()
+								}
+							})
 						} label: {
 							GalleryItem(user: "\(picture.userId)", date: picture.createdAt, pictureUrl: picture.url)
 						}

@@ -3,3 +3,4 @@ struct ExpiredRefreshToken: Error {}
 struct IdentifierForVendorNotFound: Error {}
 struct InvalidPushToken: Error {}
 struct APIError: Error {}
+struct UIImageToJpegDataConversionError: Error {}

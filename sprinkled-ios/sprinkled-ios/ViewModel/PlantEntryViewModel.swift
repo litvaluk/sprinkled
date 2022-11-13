@@ -2,6 +2,7 @@ import SwiftUI
 
 final class PlantEntryViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
+	@Inject private var storageManager: StorageManagerProtocol
 	
 	@Published var plantEntry: PlantEntry?
 	@Published var selectedSection: PlantEntrySection = .history
@@ -65,8 +66,13 @@ final class PlantEntryViewModel: ObservableObject {
 	}
 	
 	func savePhoto() async {
-		// TODO
-		print("saving image")
+		do {
+			let url = try await storageManager.uploadImage(image: image)
+			print("Uploaded to Firebase Storage. Available at:", url.absoluteString)
+			_ = try await api.createPicture(plantEntryId: plantEntryId, pictureUrl: url)
+		} catch {
+			print("❌ Error while uploading image to Firebase Storage.")
+		}
 	}
 }
 

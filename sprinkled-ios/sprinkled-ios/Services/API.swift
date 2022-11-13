@@ -31,6 +31,8 @@ protocol APIProtocol {
 	func deleteEvent(eventId: Int) async throws -> Void
 	func editEvent(eventId: Int, actionId: Int, date: Date) async throws -> Event
 	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
+	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture
+	func deletePicture(pictureId: Int) async throws -> Void
 	func refreshToken() async -> Void
 }
 
@@ -235,6 +237,19 @@ final class API : APIProtocol {
 		] as [String : Any]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		return try await makeAuthenticatedRequest(path: "reminders/\(reminderId)", method: "PUT", body: bodyData)
+	}
+	
+	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture {
+		let body = [
+			"plantEntryId": plantEntryId,
+			"url": pictureUrl.absoluteString
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		return try await makeAuthenticatedRequest(path: "pictures", method: "POST", body: bodyData)
+	}
+	
+	func deletePicture(pictureId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "pictures/\(pictureId)", method: "DELETE")
 	}
 	
 	func refreshToken() async {
@@ -515,5 +530,13 @@ final class TestAPI : APIProtocol {
 	
 	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder {
 		return TestData.reminders[0]
+	}
+	
+	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture {
+		return TestData.pictures[0]
+	}
+	
+	func deletePicture(pictureId: Int) async throws -> Void {
+		return
 	}
 }

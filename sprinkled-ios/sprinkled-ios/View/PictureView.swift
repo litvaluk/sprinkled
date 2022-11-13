@@ -82,7 +82,9 @@ struct PictureView: View {
 						}
 						Spacer()
 						Button {
-							// TODO - remove
+							withAnimation(.easeOut(duration: 0.07)) {
+								pictureViewState.showDeleteModal = true
+							}
 						} label: {
 							Image(systemName: "xmark.bin.fill")
 								.resizable()
@@ -96,6 +98,37 @@ struct PictureView: View {
 					.padding([.top], 20)
 					.padding([.horizontal], 20)
 				}
+			}
+			.modal(title: "Are you sure?", showModal: $pictureViewState.showDeleteModal) {
+				Text("This action will delete the chosen photo.")
+					.font(.title3)
+					.foregroundColor(.secondary)
+					.multilineTextAlignment(.center)
+			} buttons: {
+				Button {
+					Task {
+						await pictureViewState.deleteCurrent()
+						withAnimation(.easeOut(duration: 0.07)) {
+							pictureViewState.showDeleteModal = false
+						}
+					}
+				} label: {
+					Text("Delete")
+						.frame(maxWidth: .infinity, minHeight: 28)
+				}
+				.tint(.sprinkledRed)
+				.buttonStyle(.borderedProminent)
+				.cornerRadius(10)
+				Button {
+					withAnimation(.easeOut(duration: 0.07)) {
+						pictureViewState.showDeleteModal = false
+					}
+				} label: {
+					Text("Cancel")
+						.frame(maxWidth: .infinity, minHeight: 28)
+				}
+				.buttonStyle(.borderedProminent)
+				.cornerRadius(10)
 			}
 		}
 	}
