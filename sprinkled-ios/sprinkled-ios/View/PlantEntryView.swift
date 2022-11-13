@@ -5,7 +5,6 @@ import Shimmer
 enum PlantEntryMenuAction: Hashable, Equatable {
 	case addEvent(PlantEntry)
 	case addReminder(PlantEntry)
-	case addPhoto
 }
 
 enum PlantEntryReminderMenuAction: Hashable, Equatable {
@@ -111,6 +110,48 @@ struct PlantEntryView: View {
 			.buttonStyle(.borderedProminent)
 			.cornerRadius(10)
 		}
+		.sheet(isPresented: $vm.showImagePickerChoiceSheet) {
+			VStack(spacing: 10) {
+				Button {
+					vm.showImagePickerChoiceSheet = false
+					vm.imagePickerSourceType = .camera
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+						vm.showImagePicker = true
+					}
+				} label: {
+					Text("Camera")
+						.frame(maxWidth: .infinity, minHeight: 35)
+				}
+				.buttonStyle(.borderedProminent)
+				.cornerRadius(10)
+				Button {
+					vm.showImagePickerChoiceSheet = false
+					vm.imagePickerSourceType = .photoLibrary
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						vm.showImagePicker = true
+					}
+				} label: {
+					Text("Photo library")
+						.frame(maxWidth: .infinity, minHeight: 35)
+				}
+				.buttonStyle(.borderedProminent)
+				.cornerRadius(10)
+			}
+			.padding()
+			.presentationDetents([.height(150)])
+			.presentationDragIndicator(.visible)
+		}
+		.fullScreenCover(isPresented: $vm.showImagePicker) {
+			ImagePicker(sourceType: vm.imagePickerSourceType, selectedImage: $vm.image)
+				.ignoresSafeArea()
+		}
+		.onChange(of: vm.image) { image in
+			Task {
+				vm.selectedSection = .gallery
+				await vm.savePhoto()
+				await vm.fetchPlantEntry()
+			}
+		}
 		.task {
 			await vm.fetchPlantEntry()
 		}
@@ -169,7 +210,9 @@ struct PlantEntryHeaderView: View {
 					NavigationLink(value: PlantEntryMenuAction.addReminder(plantEntry)) {
 						Text("Add reminder")
 					}
-					NavigationLink(value: PlantEntryMenuAction.addPhoto) {
+					Button {
+						vm.showImagePickerChoiceSheet = true
+					} label: {
 						Text("Add photo")
 					}
 				}
@@ -192,8 +235,6 @@ struct PlantEntryHeaderView: View {
 					AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
 				case PlantEntryMenuAction.addReminder(let plantEntry):
 					AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
-				case PlantEntryMenuAction.addPhoto:
-					Text("Take photo [\(vm.plantEntryId)]")
 				}
 			}
 		}

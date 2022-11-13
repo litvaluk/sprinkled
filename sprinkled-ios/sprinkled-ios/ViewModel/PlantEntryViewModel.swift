@@ -8,6 +8,10 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var loading = false
 	@Published var reminderToDelete: Int? = nil
 	@Published var eventToDelete: Int? = nil
+	@Published var image = UIImage()
+	@Published var showImagePickerChoiceSheet = false
+	@Published var showImagePicker = false
+	@Published var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
 	
 	let plantEntryId: Int
 
@@ -58,6 +62,11 @@ final class PlantEntryViewModel: ObservableObject {
 			print("❌ Error while removing event.")
 		}
 		return false
+	}
+	
+	func savePhoto() async {
+		// TODO
+		print("saving image")
 	}
 }
 
