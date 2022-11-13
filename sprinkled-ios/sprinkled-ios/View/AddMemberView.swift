@@ -22,14 +22,23 @@ struct AddMemberView: View {
 				}
 			}
 			.frame(height: 40)
-			.background(Color("SprinkledGray"))
+			.background(Color.sprinkledGray)
 			.cornerRadius(15)
 			.padding([.bottom], 20)
 			VStack {
-				ForEach(vm.filteredUsers) { user in
-					SprinkledListItem(title: user.username) {
-						AddButton(userId: user.id) {
-							await vm.addTeamMember(userId: user.id)
+				if (vm.loading && vm.users.isEmpty) {
+					ForEach(0..<5) { _ in
+						SprinkledListItem(title: .placeholder(8)) {
+							AddButton() {}
+						}
+						.redactedShimmering()
+					}
+				} else {
+					ForEach(vm.filteredUsers) { user in
+						SprinkledListItem(title: user.username) {
+							AddButton() {
+								await vm.addTeamMember(userId: user.id)
+							}
 						}
 					}
 				}
@@ -47,7 +56,6 @@ struct AddMemberView: View {
 }
 
 struct AddButton: View {
-	let userId: Int
 	let action: () async -> Void
 	@State var adding = false
 	@State var added = false
@@ -71,10 +79,10 @@ struct AddButton: View {
 				Image(systemName: "plus.circle.fill")
 					.resizable()
 					.scaledToFit()
-					.frame(width: 16, height: 16)
+					.frame(width: 20, height: 20)
 					.fontWeight(.semibold)
 					.foregroundColor(.primary)
-					.padding(.leading, 4)
+					.padding(.trailing)
 			}
 		}
 	}

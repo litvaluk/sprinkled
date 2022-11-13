@@ -43,10 +43,10 @@ final class AuthViewModel: ObservableObject {
 	func signUpUser() async {
 		errorMessage = ""
 		isProcessing = true
+		defer { isProcessing = false }
 		
 		if (signUpPassword != signUpPasswordConfirmation) {
 			errorMessage = "Passwords do not match."
-			isProcessing = false
 			return
 		}
 		
@@ -61,8 +61,6 @@ final class AuthViewModel: ObservableObject {
 		} catch {
 			errorMessage = "Something went wrong."
 		}
-		
-		isProcessing = false
 	}
 	
 	func toggleSignIn() {

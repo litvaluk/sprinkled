@@ -28,6 +28,7 @@ final class SearchViewModel: ObservableObject {
 	@MainActor
 	func fetchPlants() async {
 		loading = true
+		defer { loading = false }
 		do {
 			plants = try await api.fetchPlants()
 		} catch is ExpiredRefreshToken {
@@ -37,6 +38,5 @@ final class SearchViewModel: ObservableObject {
 			plants = []
 		}
 		updateFilteredPlants()
-		loading = false
 	}
 }

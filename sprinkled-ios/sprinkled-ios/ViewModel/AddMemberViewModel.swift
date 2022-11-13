@@ -36,6 +36,7 @@ final class AddMemberViewModel: ObservableObject {
 	@MainActor
 	func fetchUsers() async {
 		loading = true
+		defer { loading = false }
 		do {
 			users = try await api.fetchUsers()
 			users = users.filter({ user in
@@ -48,7 +49,6 @@ final class AddMemberViewModel: ObservableObject {
 			users = []
 		}
 		updateFilteredUsers()
-		loading = false
 	}
 	
 	@MainActor

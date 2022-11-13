@@ -11,6 +11,8 @@ final class MyPlantsViewModel: ObservableObject {
 	@MainActor
 	func fetchTeamSummaries() async {
 		loading = true
+		defer { loading = false }
+		
 		do {
 			teamSummaries = try await api.fetchTeamSummaries()
 		} catch is ExpiredRefreshToken {
@@ -19,6 +21,5 @@ final class MyPlantsViewModel: ObservableObject {
 			print("❌ Error while fetching team summaries.")
 			teamSummaries = []
 		}
-		loading = false
 	}
 }

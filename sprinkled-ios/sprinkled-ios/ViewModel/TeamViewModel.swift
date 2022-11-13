@@ -15,6 +15,7 @@ final class TeamViewModel: ObservableObject {
 	@Published var showRemoveTeamMemberModal = false
 	@Published var teamMemberToBeRemoved: TeamMember?
 	@Published var renameTeamModalValue = ""
+	@Published var loading = false
 	
 	init(teamId: Int, teamName: String) {
 		self.teamId = teamId
@@ -23,6 +24,8 @@ final class TeamViewModel: ObservableObject {
 	
 	@MainActor
 	func fetchTeamMembers() async {
+		loading = true
+		defer { loading = false }
 		do {
 			teamMembers = try await api.fetchTeamMembers(teamId: teamId)
 		} catch is ExpiredRefreshToken {

@@ -16,55 +16,70 @@ struct TeamView: View {
 					.fontWeight(.medium)
 				Spacer()
 			}
-			ForEach(vm.teamMembers) { member in
-				ZStack {
-					RoundedRectangle(cornerRadius: 10)
-						.foregroundColor(.sprinkledGray)
-					HStack {
-						Text(member.username)
-						if (member.isAdmin) {
-							Image(systemName: "gearshape.2.fill")
-						}
-						Spacer()
-						if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
-							Menu {
-								Button {
-									vm.teamMemberToBeRemoved = member
-									vm.showRemoveTeamMemberModal = true
-								} label: {
-									Text("Remove member")
-								}
-								if (!member.isAdmin) {
-									Button {
-										Task {
-											await vm.giveAdminRights(userId: member.id)
-											await vm.fetchTeamMembers()
-										}
-									} label: {
-										Text("Give admin rights")
-									}
-								} else if (vm.teamMembers.filter({$0.isAdmin}).count > 1) {
-									Button {
-										Task {
-											await vm.removeAdminRights(userId: member.id)
-											await vm.fetchTeamMembers()
-										}
-									} label: {
-										Text("Remove admin rights")
-									}
-								}
-							} label: {
-								Image(systemName: "ellipsis")
-									.resizable()
-									.scaledToFit()
-									.frame(width: 20)
-									.foregroundColor(.primary)
-							}
+			if (vm.loading && vm.teamMembers.isEmpty) {
+				ForEach(0..<5) { _ in
+					ZStack {
+						RoundedRectangle(cornerRadius: 10)
+							.foregroundColor(.sprinkledGray)
+						HStack {
+							Text(String.placeholder(10))
+							Spacer()
 						}
 					}
-					.padding(.horizontal)
+					.frame(height: 45)
+					.redactedShimmering()
 				}
-				.frame(height: 45)
+			} else {
+				ForEach(vm.teamMembers) { member in
+					ZStack {
+						RoundedRectangle(cornerRadius: 10)
+							.foregroundColor(.sprinkledGray)
+						HStack {
+							Text(member.username)
+							if (member.isAdmin) {
+								Image(systemName: "gearshape.2.fill")
+							}
+							Spacer()
+							if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
+								Menu {
+									Button {
+										vm.teamMemberToBeRemoved = member
+										vm.showRemoveTeamMemberModal = true
+									} label: {
+										Text("Remove member")
+									}
+									if (!member.isAdmin) {
+										Button {
+											Task {
+												await vm.giveAdminRights(userId: member.id)
+												await vm.fetchTeamMembers()
+											}
+										} label: {
+											Text("Give admin rights")
+										}
+									} else if (vm.teamMembers.filter({$0.isAdmin}).count > 1) {
+										Button {
+											Task {
+												await vm.removeAdminRights(userId: member.id)
+												await vm.fetchTeamMembers()
+											}
+										} label: {
+											Text("Remove admin rights")
+										}
+									}
+								} label: {
+									Image(systemName: "ellipsis")
+										.resizable()
+										.scaledToFit()
+										.frame(width: 20)
+										.foregroundColor(.primary)
+								}
+							}
+						}
+						.padding(.horizontal)
+					}
+					.frame(height: 45)
+				}
 			}
 			Spacer()
 		}
