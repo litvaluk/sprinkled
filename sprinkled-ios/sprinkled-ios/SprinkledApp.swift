@@ -8,15 +8,7 @@ struct SprinkledApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 	
 	init() {
-		let appearance = UITabBarAppearance()
-		let itemAppearance = UITabBarItemAppearance()
-		itemAppearance.normal.iconColor = UIColor(Color.primary)
-		itemAppearance.selected.iconColor = UIColor(Color.sprinkledGreen)
-		appearance.inlineLayoutAppearance = itemAppearance
-		appearance.stackedLayoutAppearance = itemAppearance
-		appearance.compactInlineLayoutAppearance = itemAppearance
-		UITabBar.appearance().scrollEdgeAppearance = appearance
-		UITabBar.appearance().standardAppearance = appearance
+		UITabBar.appearance().isHidden = true
 		
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		if (!refreshToken.isEmpty && (try! decode(jwt: refreshToken).expired)) {

@@ -16,43 +16,24 @@ struct RootView: View {
 	
 	var body: some View {
 		if (!vm.accessToken.isEmpty) {
-			ZStack {
-				TabView(selection: tabBarState.handler) {
+			ZStack(alignment: .bottom) {
+				TabView(selection: $tabBarState.selection) {
 					TaskView(vm: TaskViewModel(errorPopupsState: errorPopupsState))
-						.tabItem {
-							if (tabBarState.selection == 0) {
-								Image("TaskViewIconSelected")
-							} else {
-								Image("TaskViewIcon")
-							}
-						}.tag(0)
+						.padding(.bottom, 47)
+						.tag(0)
 					MyPlantsView(viewModel: MyPlantsViewModel(errorPopupsState: errorPopupsState))
-						.tabItem {
-							if (tabBarState.selection == 1) {
-								Image("MyPlantsViewIconSelected")
-							} else {
-								Image("MyPlantsViewIcon")
-							}
-						}.tag(1)
+						.padding(.bottom, 47)
+						.tag(1)
 					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState))
-						.tabItem {
-							if (tabBarState.selection == 2) {
-								Image("SearchViewIconSelected")
-							} else {
-								Image("SearchViewIcon")
-							}
-						}.tag(2)
+						.padding(.bottom, 47)
+						.tag(2)
 					ProfileView(vm: ProfileViewModel(errorPopupsState: errorPopupsState))
-						.tabItem {
-							if (tabBarState.selection == 3) {
-								Image("ProfileViewIconSelected")
-							} else {
-								Image("ProfileViewIcon")
-							}
-						}
+						.padding(.bottom, 47)
 						.tag(3)
 				}
 				.environmentObject(tabBarState)
+				TabBarView()
+					.environmentObject(tabBarState)
 				PictureView()
 					.zIndex(1)
 			}

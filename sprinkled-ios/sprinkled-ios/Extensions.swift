@@ -8,6 +8,7 @@ extension Color {
 	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
 	static let sprinkledGray = Color("SprinkledGray")
 	static let sprinkledRed = Color("SprinkledRed")
+	static let sprinkledTabBarColor = Color("SprinkledTabBarColor")
 	
 	init(hex: String) {
 		let scanner = Scanner(string: hex)
