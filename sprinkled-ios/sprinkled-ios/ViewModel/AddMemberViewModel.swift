@@ -46,9 +46,9 @@ final class AddMemberViewModel: ObservableObject {
 				!teamMemberIds.contains(user.id)
 			})
 			updateFilteredUsers()
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -60,9 +60,9 @@ final class AddMemberViewModel: ObservableObject {
 		do {
 			try await api.addTeamMember(teamId: teamId, userId: userId)
 			teamMemberIds.append(userId)
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

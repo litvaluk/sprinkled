@@ -29,9 +29,9 @@ final class PlantEntryViewModel: ObservableObject {
 		defer { loading = false }
 		do {
 			plantEntry = try await api.fetchPlantEntry(plantEntryId: plantEntryId)
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -46,9 +46,9 @@ final class PlantEntryViewModel: ObservableObject {
 		do {
 			try await api.deleteReminder(reminderId: reminderToDelete)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -64,9 +64,9 @@ final class PlantEntryViewModel: ObservableObject {
 		do {
 			try await api.deleteEvent(eventId: eventToDelete)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

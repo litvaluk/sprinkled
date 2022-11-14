@@ -18,9 +18,10 @@ final class TaskViewModel: ObservableObject {
 		var uncompletedEvents: [Event]
 		do {
 			uncompletedEvents = try await api.fetchUncompletedEvents()
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
+			// nothing
 			return
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 			return
 		} catch {

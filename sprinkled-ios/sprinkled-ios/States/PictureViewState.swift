@@ -50,10 +50,10 @@ class PictureViewState: ObservableObject {
 				selection = pictures[index - 1].id
 				pictures.remove(at: index)
 			}
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
 		}
-		catch APIError.notConnectedToInternet {
+		catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

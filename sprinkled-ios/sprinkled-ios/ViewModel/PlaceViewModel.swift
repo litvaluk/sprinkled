@@ -23,9 +23,9 @@ final class PlaceViewModel: ObservableObject {
 		do {
 			try await api.deletePlace(placeId: place.id)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -38,9 +38,9 @@ final class PlaceViewModel: ObservableObject {
 		do {
 			try await api.renamePlace(placeId: place.id, newName: renamePlaceModalValue)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

@@ -20,9 +20,9 @@ final class MyPlantsViewModel: ObservableObject {
 		defer { loading = false }
 		do {
 			teamSummaries = try await api.fetchTeamSummaries()
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

@@ -20,9 +20,9 @@ final class CreateTeamViewModel: ObservableObject {
 		do {
 			_ = try await api.createNewTeam(name: teamName)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

@@ -397,9 +397,10 @@ final class API : APIProtocol {
 			switch (errorCode) {
 			case .cancelled:
 				throw APIError.cancelled
-			case .notConnectedToInternet:
-				throw APIError.notConnectedToInternet
+			case .notConnectedToInternet, .dataNotAllowed, .networkConnectionLost:
+				throw APIError.connectionFailed
 			default:
+				print(error)
 				throw APIError.unknown
 			}
 		}
@@ -433,7 +434,6 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func fetchTeamSummaries() async throws -> [TeamSummary] {
-		throw APIError.notConnectedToInternet
 		return TestData.teamSummaries
 	}
 	
@@ -482,7 +482,6 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func fetchUncompletedEvents() async throws -> [Event] {
-		throw APIError.unknown
 		return TestData.events.filter({!$0.completed})
 	}
 	

@@ -30,9 +30,9 @@ final class CreatePlaceViewModel: ObservableObject {
 				_ = try await api.createNewTeamPlace(name: placeName, teamId: teamSelection)
 			}
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

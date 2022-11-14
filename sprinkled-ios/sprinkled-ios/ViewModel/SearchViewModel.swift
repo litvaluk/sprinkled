@@ -38,9 +38,9 @@ final class SearchViewModel: ObservableObject {
 		do {
 			plants = try await api.fetchPlants()
 			updateFilteredPlants()
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

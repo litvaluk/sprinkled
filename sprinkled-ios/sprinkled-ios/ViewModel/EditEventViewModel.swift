@@ -30,9 +30,9 @@ final class EditEventViewModel: ObservableObject {
 		do {
 			_ = try await api.editEvent(eventId: eventId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

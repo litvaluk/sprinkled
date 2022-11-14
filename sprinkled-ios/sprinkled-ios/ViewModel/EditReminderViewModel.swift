@@ -35,9 +35,9 @@ final class EditReminderViewModel: ObservableObject {
 		do {
 			_ = try await api.editReminder(reminderId: reminderId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date, period: period)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true

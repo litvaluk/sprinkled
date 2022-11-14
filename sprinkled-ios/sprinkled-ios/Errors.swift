@@ -2,7 +2,7 @@ struct IdentifierForVendorNotFound: Error {}
 struct InvalidPushToken: Error {}
 
 enum APIError: Error {
-	case notConnectedToInternet
+	case connectionFailed
 	case cancelled
 	case invalidURL
 	case expiredRefreshToken

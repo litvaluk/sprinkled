@@ -31,9 +31,9 @@ final class TeamViewModel: ObservableObject {
 		defer { loading = false }
 		do {
 			teamMembers = try await api.fetchTeamMembers(teamId: teamId)
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -44,9 +44,9 @@ final class TeamViewModel: ObservableObject {
 		do {
 			try await api.removeTeamMember(teamId: teamId, memberId: memberId)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -59,9 +59,9 @@ final class TeamViewModel: ObservableObject {
 		do {
 			try await api.deleteTeam(teamId: teamId)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -74,9 +74,9 @@ final class TeamViewModel: ObservableObject {
 		do {
 			try await api.renameTeam(teamId: teamId, newName: renameTeamModalValue)
 			return true
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -88,9 +88,9 @@ final class TeamViewModel: ObservableObject {
 	func giveAdminRights(userId: Int) async {
 		do {
 			try await api.giveAdminRights(teamId: teamId, userId: userId)
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
@@ -101,9 +101,9 @@ final class TeamViewModel: ObservableObject {
 	func removeAdminRights(userId: Int) async {
 		do {
 			try await api.removeAdminRights(teamId: teamId, userId: userId)
-		} catch APIError.expiredRefreshToken {
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
-		} catch APIError.notConnectedToInternet {
+		} catch APIError.connectionFailed {
 			errorPopupsState.showConnectionError = true
 		} catch {
 			errorPopupsState.showGenericError = true
