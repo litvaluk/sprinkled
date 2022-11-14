@@ -385,11 +385,9 @@ final class API : APIProtocol {
 		//		if let body = request.httpBody {
 		//			print("BODY:", String(data: body, encoding: .utf8)!)
 		//		}
+		var (data, response): (Data, URLResponse)
 		do {
-			let (data, response) = try await URLSession.shared.data(for: request)
-			print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
-			//		print(String(data: data, encoding: .utf8)!)
-			return (data, response)
+			(data, response) = try await URLSession.shared.data(for: request)
 		} catch {
 			guard let errorCode = (error as? URLError)?.code else {
 				throw APIError.unknown
@@ -405,6 +403,19 @@ final class API : APIProtocol {
 			}
 		}
 		
+		print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
+		//		print(String(data: data, encoding: .utf8)!)
+		
+		guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+			throw APIError.unknown
+		}
+		
+		if (statusCode == 400 || statusCode == 403) {
+			let errorResponse = try JSONDecoder.app.decode(ErrorResponse.self, from: data)
+			throw APIError.errorResponse(descriptions: errorResponse.descriptions)
+		}
+		
+		return (data, response)
 	}
 	
 	private func isTokenValid(_ token: String?) -> Bool {

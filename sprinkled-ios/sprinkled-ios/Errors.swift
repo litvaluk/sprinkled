@@ -6,6 +6,7 @@ enum APIError: Error {
 	case cancelled
 	case invalidURL
 	case expiredRefreshToken
+	case errorResponse(descriptions: [String])
 	case unknown
 }
 

@@ -50,6 +50,7 @@
 		8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */; };
 		8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */; };
 		8F92BAEC2922B4940092BF55 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92BAEB2922B4940092BF55 /* TabBarView.swift */; };
+		8F9DE0542922F25700A4FABB /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9DE0532922F25700A4FABB /* ErrorResponse.swift */; };
 		8FA07B23290BDC570019C142 /* PictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B22290BDC570019C142 /* PictureView.swift */; };
 		8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B24290BE4C80019C142 /* PictureViewState.swift */; };
 		8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA07B26290D0A340019C142 /* AddEventViewModel.swift */; };
@@ -139,6 +140,7 @@
 		8F8F5A5D2902BDE5009D6DC9 /* TeamSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSummary.swift; sourceTree = "<group>"; };
 		8F8F5A5F2902EFC9009D6DC9 /* CreateTeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTeamView.swift; sourceTree = "<group>"; };
 		8F92BAEB2922B4940092BF55 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		8F9DE0532922F25700A4FABB /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
 		8FA07B22290BDC570019C142 /* PictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureView.swift; sourceTree = "<group>"; };
 		8FA07B24290BE4C80019C142 /* PictureViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureViewState.swift; sourceTree = "<group>"; };
 		8FA07B26290D0A340019C142 /* AddEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewModel.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 			children = (
 				8FFD7547290AD3DB005237A9 /* Action.swift */,
 				8FA563A828F0240800C54AF2 /* AuthResponse.swift */,
+				8F9DE0532922F25700A4FABB /* ErrorResponse.swift */,
 				8FFD7545290AC005005237A9 /* Event.swift */,
 				8FFD7543290ABF27005237A9 /* Picture.swift */,
 				8F095E9729040E4800DBCECA /* Place.swift */,
@@ -506,6 +509,7 @@
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */,
 				8FB0BC5C292287AD00D4C210 /* GenericErrorPopupView.swift in Sources */,
+				8F9DE0542922F25700A4FABB /* ErrorResponse.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
 				8F92BAEC2922B4940092BF55 /* TabBarView.swift in Sources */,
 				8FE3447C2916A9AF00247333 /* Utils.swift in Sources */,

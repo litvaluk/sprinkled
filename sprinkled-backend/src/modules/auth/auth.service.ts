@@ -31,7 +31,7 @@ export class AuthService {
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ForbiddenException('Username or email already taken');
+          throw new ForbiddenException(['Username or email already taken.']);
         }
       } else {
         throw new InternalServerErrorException();
@@ -54,12 +54,12 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new ForbiddenException('Invalid username or password');
+      throw new ForbiddenException(['Invalid username or password.']);
     }
 
     const passwordValid = await argon2.verify(user.password, loginDto.password);
     if (!passwordValid) {
-      throw new ForbiddenException('Invalid username or password');
+      throw new ForbiddenException(['Invalid username or password.']);
     }
 
     let deviceId = await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);

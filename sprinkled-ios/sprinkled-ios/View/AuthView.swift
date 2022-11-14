@@ -36,11 +36,12 @@ struct AuthView: View {
 			
 			if !viewModel.errorMessage.isEmpty {
 				Text("\(viewModel.errorMessage)")
+					.multilineTextAlignment(.center)
 					.foregroundColor(.red)
 			}
 			Spacer()
 			if (!viewModel.isSignInViewDisplayed) {
-				Text("By tapping \"Sign Up\" you agree to our [Terms](https://lukaslitvan.cz) & [Policies](https://lukaslitvan.cz)")
+				Text("By tapping \"Sign Up\" you agree to our [Terms](https://www.app-privacy-policy.com/live.php?token=FXGpbchnontnrC3F8bavORQQ7JkvBhSd) & [Policies](https://www.app-privacy-policy.com/live.php?token=rEB8U813U5IEGO8B9WvQ740GVj0PyZ6z)")
 					.frame(width: 250)
 					.font(.callout)
 					.multilineTextAlignment(.center)
@@ -64,7 +65,6 @@ struct AuthView: View {
 				}
 				.buttonStyle(.borderedProminent)
 				.cornerRadius(10)
-//				.disabled(viewModel.isProcessing || viewModel.isSignInViewDisplayed ? viewModel.signInUsername.isEmpty || viewModel.signInPassword.isEmpty : viewModel.signUpUsername.isEmpty || viewModel.signUpEmail.isEmpty || viewModel.signUpPassword.isEmpty || viewModel.signUpPasswordConfirmation.isEmpty)
 			}
 			HStack {
 				Text(viewModel.isSignInViewDisplayed ? "Don't have an account?" : "Already have an account?")

@@ -32,6 +32,10 @@ final class AuthViewModel: ObservableObject {
 				throw InvalidPushToken()
 			}
 			try await self.api.signIn(signInUsername, signInPassword, deviceId, pushToken)
+		} catch APIError.errorResponse(let descriptions) {
+			errorMessage = descriptions.joined(separator: "\n")
+		} catch APIError.connectionFailed {
+			errorMessage = "No internet connection."
 		} catch {
 			errorMessage = "Something went wrong."
 		}
@@ -58,6 +62,10 @@ final class AuthViewModel: ObservableObject {
 				throw InvalidPushToken()
 			}
 			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId, pushToken)
+		} catch APIError.errorResponse(let descriptions) {
+			errorMessage = descriptions.joined(separator: "\n")
+		} catch APIError.connectionFailed {
+			errorMessage = "No internet connection."
 		} catch {
 			errorMessage = "Something went wrong."
 		}
@@ -65,5 +73,6 @@ final class AuthViewModel: ObservableObject {
 	
 	func toggleSignIn() {
 		isSignInViewDisplayed = !isSignInViewDisplayed
+		errorMessage = ""
 	}
 }
