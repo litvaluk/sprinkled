@@ -7,16 +7,24 @@ final class TaskViewModel: ObservableObject {
 	@Published var uncompletedEventsMap: OrderedDictionary<String, [Event]>? = nil
 	@Published var navigationPath = NavigationPath()
 	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
+		self.errorPopupsState = errorPopupsState
+	}
+	
 	@MainActor
 	func fetchUncompletedEvents() async {
 		var uncompletedEvents: [Event]
 		do {
 			uncompletedEvents = try await api.fetchUncompletedEvents()
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			return
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 			return
 		} catch {
-			print("❌ Error while fetching plants.")
+			errorPopupsState.showGenericError = true
 			return
 		}
 		uncompletedEvents = uncompletedEvents.filter { $0.date > .now }

@@ -6,24 +6,28 @@ final class CreateTeamViewModel: ObservableObject {
 	
 	@Published var teamName = ""
 	@Published var isProcessing = false
-	@Published var errorMessage = ""
+	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
+		self.errorPopupsState = errorPopupsState
+	}
 	
 	@MainActor
 	func createNewTeam() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
-		
 		do {
 			_ = try await api.createNewTeam(name: teamName)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
-			return false
+			return true
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			errorMessage = "Something went wrong."
-			return false
+			errorPopupsState.showGenericError = true
 		}
-		
-		return true
+		return false
 	}
 	
 }

@@ -8,18 +8,24 @@ final class MyPlantsViewModel: ObservableObject {
 	@Published var loading = false
 	@Published var navigationPath = NavigationPath()
 	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
+		self.errorPopupsState = errorPopupsState
+	}
+	
 	@MainActor
 	func fetchTeamSummaries() async {
 		loading = true
 		defer { loading = false }
-		
 		do {
 			teamSummaries = try await api.fetchTeamSummaries()
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching team summaries.")
-			teamSummaries = []
+			errorPopupsState.showGenericError = true
 		}
 	}
 }

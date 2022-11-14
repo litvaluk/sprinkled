@@ -15,9 +15,12 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
 	
 	let plantEntryId: Int
+	
+	private let errorPopupsState: ErrorPopupsState
 
-	init(plantEntryId: Int) {
+	init(plantEntryId: Int, errorPopupsState: ErrorPopupsState) {
 		self.plantEntryId = plantEntryId
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
@@ -26,10 +29,12 @@ final class PlantEntryViewModel: ObservableObject {
 		defer { loading = false }
 		do {
 			plantEntry = try await api.fetchPlantEntry(plantEntryId: plantEntryId)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
+			errorPopupsState.showGenericError = true
 		}
 	}
 	
@@ -41,10 +46,12 @@ final class PlantEntryViewModel: ObservableObject {
 		do {
 			try await api.deleteReminder(reminderId: reminderToDelete)
 			return true
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while removing reminder.")
+			errorPopupsState.showGenericError = true
 		}
 		return false
 	}
@@ -57,10 +64,12 @@ final class PlantEntryViewModel: ObservableObject {
 		do {
 			try await api.deleteEvent(eventId: eventToDelete)
 			return true
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while removing event.")
+			errorPopupsState.showGenericError = true
 		}
 		return false
 	}
@@ -72,6 +81,7 @@ final class PlantEntryViewModel: ObservableObject {
 			_ = try await api.createPicture(plantEntryId: plantEntryId, pictureUrl: url)
 		} catch {
 			print("❌ Error while uploading image to Firebase Storage.")
+			errorPopupsState.showGenericError = true
 		}
 	}
 }

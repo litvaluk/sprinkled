@@ -4,17 +4,19 @@ import SwiftUI
 final class CreatePlaceViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 	
-	let teamSummaries: [TeamSummary]
-	
-	init(teamSummaries: [TeamSummary], teamSelection: Int) {
-		self.teamSummaries = teamSummaries
-		self.teamSelection = teamSelection
-	}
-	
 	@Published var placeName = ""
 	@Published var teamSelection: Int
 	@Published var isProcessing = false
-	@Published var errorMessage = ""
+	
+	let teamSummaries: [TeamSummary]
+	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(teamSummaries: [TeamSummary], teamSelection: Int, errorPopupsState: ErrorPopupsState) {
+		self.teamSummaries = teamSummaries
+		self.teamSelection = teamSelection
+		self.errorPopupsState = errorPopupsState
+	}
 	
 	@MainActor
 	func createNewPlace() async -> Bool {
@@ -27,15 +29,16 @@ final class CreatePlaceViewModel: ObservableObject {
 			} else {
 				_ = try await api.createNewTeamPlace(name: placeName, teamId: teamSelection)
 			}
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
-			return false
+			return true
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			errorMessage = "Something went wrong."
-			return false
+			errorPopupsState.showGenericError = true
 		}
 		
-		return true
+		return false
 	}
 	
 }

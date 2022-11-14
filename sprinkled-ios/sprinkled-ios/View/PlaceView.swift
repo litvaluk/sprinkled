@@ -3,6 +3,7 @@ import Kingfisher
 
 struct PlaceView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	@StateObject var viewModel: PlaceViewModel
 	
 	var body: some View {
@@ -157,13 +158,13 @@ struct PlaceView: View {
 			.cornerRadius(10)
 		}
 		.navigationDestination(for: TeamSummaryPlantEntry.self) { plantEntry in
-			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: plantEntry.id))
+			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: plantEntry.id, errorPopupsState: errorPopupsState))
 		}
 	}
 }
 
 struct PlaceView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal"))
+		PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", errorPopupsState: ErrorPopupsState()))
 	}
 }

@@ -12,10 +12,13 @@ final class AddMemberViewModel: ObservableObject {
 	let teamName: String
 	var teamMemberIds: [Int]
 	
-	init(teamId: Int, teamName: String, teamMemberIds: [Int]) {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(teamId: Int, teamName: String, teamMemberIds: [Int], errorPopupsState: ErrorPopupsState) {
 		self.teamId = teamId
 		self.teamName = teamName
 		self.teamMemberIds = teamMemberIds
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
@@ -42,13 +45,14 @@ final class AddMemberViewModel: ObservableObject {
 			users = users.filter({ user in
 				!teamMemberIds.contains(user.id)
 			})
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+			updateFilteredUsers()
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
-			users = []
+			errorPopupsState.showGenericError = true
 		}
-		updateFilteredUsers()
 	}
 	
 	@MainActor
@@ -56,11 +60,12 @@ final class AddMemberViewModel: ObservableObject {
 		do {
 			try await api.addTeamMember(teamId: teamId, userId: userId)
 			teamMemberIds.append(userId)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
-			users = []
+			errorPopupsState.showGenericError = true
 		}
 	}
 }

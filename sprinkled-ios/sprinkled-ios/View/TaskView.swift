@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TaskView: View {
 	@StateObject var vm: TaskViewModel
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	
 	var body: some View {
 		NavigationStack(path: $vm.navigationPath) {
@@ -64,7 +65,7 @@ struct TaskView: View {
 				}
 			}
 			.navigationDestination(for: Event.PlantEntryIdAndName.self) { plantEntryIdAndName in
-				AddEventView(vm: AddEventViewModel(plantEntryId: plantEntryIdAndName.id, plantEntryName: plantEntryIdAndName.name))
+				AddEventView(vm: AddEventViewModel(plantEntryId: plantEntryIdAndName.id, plantEntryName: plantEntryIdAndName.name, errorPopupsState: errorPopupsState))
 			}
 			.navigationTitle("Tasks")
 			.navigationBarTitleDisplayMode(.large)
@@ -114,6 +115,6 @@ struct TaskListItem: View {
 
 struct TaskView_Previews: PreviewProvider {
 	static var previews: some View {
-		TaskView(vm: TaskViewModel())
+		TaskView(vm: TaskViewModel(errorPopupsState: ErrorPopupsState()))
 	}
 }

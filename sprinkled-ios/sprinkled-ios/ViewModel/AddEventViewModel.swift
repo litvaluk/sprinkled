@@ -7,15 +7,17 @@ final class AddEventViewModel: ObservableObject {
 	@Published var date = Date().zeroSeconds()
 	
 	@Published var isProcessing = false
-	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
 	let actions = TestData.actions
 	
-	init(plantEntryId: Int, plantEntryName: String) {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(plantEntryId: Int, plantEntryName: String, errorPopupsState: ErrorPopupsState) {
 		self.plantEntryId = plantEntryId
 		self.plantEntryName = plantEntryName
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
@@ -25,14 +27,15 @@ final class AddEventViewModel: ObservableObject {
 		
 		do {
 			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
-			return false
+			return true
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			errorMessage = "Something went wrong."
-			return false
+			errorPopupsState.showGenericError = true
 		}
 		
-		return true
+		return false
 	}
 }

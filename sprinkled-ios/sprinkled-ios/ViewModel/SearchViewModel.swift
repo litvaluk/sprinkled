@@ -10,6 +10,12 @@ final class SearchViewModel: ObservableObject {
 	@Published var loading = false
 	@Published var path: [Plant] = []
 	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
+		self.errorPopupsState = errorPopupsState
+	}
+	
 	@MainActor
 	func updateFilteredPlants() {
 		if (searchText.isEmpty) {
@@ -31,12 +37,13 @@ final class SearchViewModel: ObservableObject {
 		defer { loading = false }
 		do {
 			plants = try await api.fetchPlants()
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+			updateFilteredPlants()
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
-			plants = []
+			errorPopupsState.showGenericError = true
 		}
-		updateFilteredPlants()
 	}
 }

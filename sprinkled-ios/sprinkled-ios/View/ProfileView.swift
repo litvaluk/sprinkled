@@ -50,6 +50,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProfileView(vm: ProfileViewModel())
+		ProfileView(vm: ProfileViewModel(errorPopupsState: ErrorPopupsState()))
 	}
 }

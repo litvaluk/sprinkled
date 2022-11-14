@@ -137,10 +137,10 @@ struct PictureView: View {
 struct PictureView_Previews: PreviewProvider {
 	static var previews: some View {
 		ZStack {
-			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1))
+			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1, errorPopupsState: ErrorPopupsState()))
 			PictureView()
 				.zIndex(1)
 		}
-		.environmentObject(PictureViewState())
+		.environmentObject(PictureViewState(errorPopupsState: ErrorPopupsState()))
 	}
 }

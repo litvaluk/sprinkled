@@ -6,6 +6,7 @@ enum TeamMenuAction: Hashable, Equatable {
 
 struct TeamView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	@StateObject var vm: TeamViewModel
 	
 	var body: some View {
@@ -119,7 +120,7 @@ struct TeamView: View {
 		.navigationDestination(for: TeamMenuAction.self) { action in
 			switch(action) {
 			case .addMember:
-				AddMemberView(vm: AddMemberViewModel(teamId: vm.teamId, teamName: vm.teamName, teamMemberIds: vm.teamMembers.map{$0.id}))
+				AddMemberView(vm: AddMemberViewModel(teamId: vm.teamId, teamName: vm.teamName, teamMemberIds: vm.teamMembers.map{$0.id}, errorPopupsState: errorPopupsState))
 			}
 		}
 		.modal(title: "Are you sure?", showModal: $vm.showDeleteTeamModal) {
@@ -227,6 +228,6 @@ struct TeamView: View {
 
 struct TeamView_Previews: PreviewProvider {
 	static var previews: some View {
-		TeamView(vm: TeamViewModel(teamId: 1, teamName: "Team 1"))
+		TeamView(vm: TeamViewModel(teamId: 1, teamName: "Team 1", errorPopupsState: ErrorPopupsState()))
 	}
 }

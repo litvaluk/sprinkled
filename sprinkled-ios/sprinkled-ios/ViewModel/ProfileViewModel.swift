@@ -13,13 +13,16 @@ final class ProfileViewModel: ObservableObject {
 	@Published var reminderNotificationsEnabled: Bool
 	@Published var eventNotificationsEnabled: Bool
 	
-	init() {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
 		@Inject var notificationManager: NotificationManagerProtocol
 		@Inject var api: APIProtocol
 		self.notificationManager = notificationManager
 		self.api = api
 		reminderNotificationsEnabled = notificationManager.reminderNotificationsEnabled()
 		eventNotificationsEnabled = notificationManager.eventNotificationsEnabled()
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	func logout() {
@@ -41,6 +44,7 @@ final class ProfileViewModel: ObservableObject {
 			}
 		} catch {
 			print("❌ Error while toggling reminder notifications.")
+			errorPopupsState.showGenericError = true
 		}
 	}
 	
@@ -54,6 +58,7 @@ final class ProfileViewModel: ObservableObject {
 			}
 		} catch {
 			print("❌ Error while toggling event notifications.")
+			errorPopupsState.showGenericError = true
 		}
 	}
 }

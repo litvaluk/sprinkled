@@ -2,7 +2,7 @@ import SwiftUI
 
 final class AddReminderViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
-
+	
 	@Published var actionSelection = "water"
 	@Published var date = Date().zeroSeconds()
 	@Published var repeating = false
@@ -10,33 +10,33 @@ final class AddReminderViewModel: ObservableObject {
 	@Published var periodPickerOpen = false
 	
 	@Published var isProcessing = false
-	@Published var errorMessage = ""
-	
 	
 	let plantEntryId: Int
 	let plantEntryName: String
 	let actions = TestData.actions
 	
-	init(plantEntryId: Int, plantEntryName: String) {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(plantEntryId: Int, plantEntryName: String, errorPopupsState: ErrorPopupsState) {
 		self.plantEntryId = plantEntryId
 		self.plantEntryName = plantEntryName
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
 	func addNewReminder() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
-		
 		do {
 			_ = try await api.addReminder(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date, period: repeating ? period : 0)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
-			return false
+			return true
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			errorMessage = "Something went wrong."
-			return false
+			errorPopupsState.showGenericError = true
 		}
-		
-		return true
+		return false
 	}
 }

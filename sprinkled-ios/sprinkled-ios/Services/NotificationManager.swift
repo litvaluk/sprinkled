@@ -37,7 +37,7 @@ final class NotificationManager: NotificationManagerProtocol {
 			try await api.enableReminderNotifications(deviceId: deviceId)
 			UserDefaults.standard.set(true, forKey: reminderNotificationsKey)
 		} catch {
-			throw APIError()
+			throw APIError.unknown
 		}
 	}
 	
@@ -49,7 +49,7 @@ final class NotificationManager: NotificationManagerProtocol {
 			try await api.disableReminderNotifications(deviceId: deviceId)
 			UserDefaults.standard.set(false, forKey: reminderNotificationsKey)
 		} catch {
-			throw APIError()
+			throw APIError.unknown
 		}
 	}
 	
@@ -66,7 +66,7 @@ final class NotificationManager: NotificationManagerProtocol {
 			try await api.enableEventNotifications(deviceId: deviceId)
 			UserDefaults.standard.set(true, forKey: eventNotificationsKey)
 		} catch {
-			throw APIError()
+			throw APIError.unknown
 		}
 	}
 	
@@ -78,7 +78,7 @@ final class NotificationManager: NotificationManagerProtocol {
 			try await api.disableEventNotifications(deviceId: deviceId)
 			UserDefaults.standard.set(false, forKey: eventNotificationsKey)
 		} catch {
-			throw APIError()
+			throw APIError.unknown
 		}
 	}
 	

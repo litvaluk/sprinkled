@@ -53,10 +53,6 @@ struct AddReminderView: View {
 			
 			SprinkledListDatePicker(title: vm.repeating ? "Starting date" : "Date", selection: $vm.date, displayedComponents: .date)
 			SprinkledListDatePicker(title: vm.repeating ? "Starting time" : "Time", selection: $vm.date, displayedComponents: .hourAndMinute)
-			if !vm.errorMessage.isEmpty {
-				Text("\(vm.errorMessage)")
-					.foregroundColor(.red)
-			}
 			Spacer()
 			if (vm.isProcessing) {
 				ProgressView()
@@ -85,6 +81,6 @@ struct AddReminderView: View {
 
 struct AddReminderView_Previews: PreviewProvider {
 	static var previews: some View {
-		AddReminderView(vm: AddReminderViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1"))
+		AddReminderView(vm: AddReminderViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1", errorPopupsState: ErrorPopupsState()))
 	}
 }

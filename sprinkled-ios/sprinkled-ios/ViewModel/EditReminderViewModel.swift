@@ -9,14 +9,15 @@ final class EditReminderViewModel: ObservableObject {
 	@Published var period: Int
 	@Published var periodPickerOpen = false
 	@Published var isProcessing = false
-	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
 	let reminderId: Int
 	let actions = TestData.actions
 	
-	init(plantEntryId: Int, plantEntryName: String, reminder: Reminder) {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(plantEntryId: Int, plantEntryName: String, reminder: Reminder, errorPopupsState: ErrorPopupsState) {
 		self.plantEntryId = plantEntryId
 		self.plantEntryName = plantEntryName
 		self.actionSelection = reminder.action.type
@@ -24,23 +25,23 @@ final class EditReminderViewModel: ObservableObject {
 		self.period = reminder.period
 		self.repeating = reminder.period > 0
 		self.reminderId = reminder.id
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
 	func editReminder() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
-		
 		do {
 			_ = try await api.editReminder(reminderId: reminderId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date, period: period)
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
-			return false
+			return true
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			errorMessage = "Something went wrong."
-			return false
+			errorPopupsState.showGenericError = true
 		}
-		
-		return true
+		return false
 	}
 }

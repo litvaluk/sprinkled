@@ -10,9 +10,12 @@ final class PlaceViewModel: ObservableObject {
 	@Published var showRenamePlaceModal = false
 	@Published var renamePlaceModalValue = ""
 	
-	init(place: TeamSummaryPlace, teamName: String) {
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(place: TeamSummaryPlace, teamName: String, errorPopupsState: ErrorPopupsState) {
 		self.place = place
 		self.teamName = teamName
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	@MainActor
@@ -20,10 +23,12 @@ final class PlaceViewModel: ObservableObject {
 		do {
 			try await api.deletePlace(placeId: place.id)
 			return true
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
+			errorPopupsState.showGenericError = true
 		}
 		return false
 	}
@@ -33,10 +38,12 @@ final class PlaceViewModel: ObservableObject {
 		do {
 			try await api.renamePlace(placeId: place.id, newName: renamePlaceModalValue)
 			return true
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		} catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while fetching plants.")
+			errorPopupsState.showGenericError = true
 		}
 		return false
 	}

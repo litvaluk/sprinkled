@@ -10,6 +10,7 @@ enum MyPlantsMenuAction: Hashable, Equatable {
 struct MyPlantsView: View {
 	@StateObject var viewModel: MyPlantsViewModel
 	@EnvironmentObject var tabBarState: TabBarState
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	
 	var body: some View {
 		NavigationStack(path: $viewModel.navigationPath) {
@@ -51,19 +52,19 @@ struct MyPlantsView: View {
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
-				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal"))
+				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal", errorPopupsState: errorPopupsState))
 			}
 			.navigationDestination(for: TeamSummary.self) { team in
-				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name))
+				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name, errorPopupsState: errorPopupsState))
 			}
 			.navigationDestination(for: MyPlantsMenuAction.self) { action in
 				switch (action) {
 				case .createNewTeam:
-					CreateTeamView(viewModel: CreateTeamViewModel())
+					CreateTeamView(viewModel: CreateTeamViewModel(errorPopupsState: errorPopupsState))
 				case .createNewPlace(let teamId):
-					CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId))
+					CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
 				case .addPlantEntry:
-					SearchView(viewModel: SearchViewModel())
+					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState))
 				}
 			}
 			.onChange(of: viewModel.navigationPath) { newNavigationPath in
@@ -244,7 +245,7 @@ struct GridItemView: View {
 
 struct MyPlantsView_Previews: PreviewProvider {
 	static var previews: some View {
-		MyPlantsView(viewModel: MyPlantsViewModel())
+		MyPlantsView(viewModel: MyPlantsViewModel(errorPopupsState: ErrorPopupsState()))
 			.environmentObject(TabBarState())
 	}
 }

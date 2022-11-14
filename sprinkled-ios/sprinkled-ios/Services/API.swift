@@ -33,7 +33,6 @@ protocol APIProtocol {
 	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture
 	func deletePicture(pictureId: Int) async throws -> Void
-	func refreshToken() async -> Void
 }
 
 final class API : APIProtocol {
@@ -252,7 +251,7 @@ final class API : APIProtocol {
 		try await makeAuthenticatedRequest(path: "pictures/\(pictureId)", method: "DELETE")
 	}
 	
-	func refreshToken() async {
+	func refreshToken() async throws {
 		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
 		var request = URLRequest(url: url)
@@ -260,23 +259,17 @@ final class API : APIProtocol {
 		let headers = request.allHTTPHeaderFields ?? [:]
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		request.allHTTPHeaderFields = headers.merging(["Authorization": "Bearer \(refreshToken)"], uniquingKeysWith: { $1 })
-
+		
 		
 		let (data, response): (Data, URLResponse)
 		
 		do {
 			(data, response) = try await performDataRequest(for: request)
+		} catch APIError.cancelled {
+			print("🚫 cancelled call to refresh token")
+			return
 		} catch {
-			guard let errorCode = (error as? URLError)?.code else {
-				return
-			}
-			switch (errorCode) {
-			case .cancelled:
-				print("🚫 cancelled call to refresh token")
-				return
-			default:
-				fatalError("your message here")
-			}
+			throw error
 		}
 		
 		if ((response as? HTTPURLResponse)?.statusCode == 401) {
@@ -308,12 +301,12 @@ final class API : APIProtocol {
 		body: Data? = nil
 	) async throws -> Response {
 		if (!isTokenValid(UserDefaults.standard.string(forKey: "accessToken"))) {
-			await refreshToken()
+			try await refreshToken()
 		}
 		
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		if (refreshToken.isEmpty) {
-			throw ExpiredRefreshToken()
+			throw APIError.expiredRefreshToken
 		}
 
 		var request = try prepareAuthenticatedRequest(path: path, query: query, method: method, body: body)
@@ -332,12 +325,12 @@ final class API : APIProtocol {
 		body: Data? = nil
 	) async throws {
 		if (!isTokenValid(UserDefaults.standard.string(forKey: "accessToken"))) {
-			await refreshToken()
+			try await refreshToken()
 		}
 		
 		let refreshToken = UserDefaults.standard.string(forKey: "refreshToken") ?? ""
 		if (refreshToken.isEmpty) {
-			throw ExpiredRefreshToken()
+			throw APIError.expiredRefreshToken
 		}
 
 		var request = try prepareAuthenticatedRequest(path: path, query: query, method: method, body: body)
@@ -361,7 +354,7 @@ final class API : APIProtocol {
 			components?.queryItems = query
 		}
 		
-		guard let url = components?.url else { throw InvalidURL() }
+		guard let url = components?.url else { throw APIError.invalidURL }
 		
 		var request = URLRequest(url: url)
 		request.httpBody = body
@@ -373,7 +366,7 @@ final class API : APIProtocol {
 		
 		return request
 	}
-
+	
 	private func prepareAuthenticatedRequest(
 		path: String,
 		query: [URLQueryItem] = [],
@@ -389,15 +382,30 @@ final class API : APIProtocol {
 	
 	private func performDataRequest(for request: URLRequest) async throws -> (Data, URLResponse) {
 		print("⬆️", request.url!.absoluteString, "[", request.httpMethod ?? "GET", "]")
-//		if let body = request.httpBody {
-//			print("BODY:", String(data: body, encoding: .utf8)!)
-//		}
-		let (data, response) = try await URLSession.shared.data(for: request)
-		print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
-//		print(String(data: data, encoding: .utf8)!)
-		return (data, response)
+		//		if let body = request.httpBody {
+		//			print("BODY:", String(data: body, encoding: .utf8)!)
+		//		}
+		do {
+			let (data, response) = try await URLSession.shared.data(for: request)
+			print("⬇️", request.url!.absoluteString, "[", (response as? HTTPURLResponse)?.statusCode ?? 0, "]")
+			//		print(String(data: data, encoding: .utf8)!)
+			return (data, response)
+		} catch {
+			guard let errorCode = (error as? URLError)?.code else {
+				throw APIError.unknown
+			}
+			switch (errorCode) {
+			case .cancelled:
+				throw APIError.cancelled
+			case .notConnectedToInternet:
+				throw APIError.notConnectedToInternet
+			default:
+				throw APIError.unknown
+			}
+		}
+		
 	}
-
+	
 	private func isTokenValid(_ token: String?) -> Bool {
 		guard let token else {
 			return false
@@ -424,11 +432,8 @@ final class TestAPI : APIProtocol {
 		return TestData.plants
 	}
 	
-	func refreshToken() async {
-		return
-	}
-	
 	func fetchTeamSummaries() async throws -> [TeamSummary] {
+		throw APIError.notConnectedToInternet
 		return TestData.teamSummaries
 	}
 	
@@ -477,6 +482,7 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func fetchUncompletedEvents() async throws -> [Event] {
+		throw APIError.unknown
 		return TestData.events.filter({!$0.completed})
 	}
 	

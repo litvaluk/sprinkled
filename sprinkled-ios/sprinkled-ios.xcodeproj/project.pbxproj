@@ -35,6 +35,9 @@
 		8F6937652920FA8C0061A93E /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6937642920FA8C0061A93E /* ImagePicker.swift */; };
 		8F693768292129AC0061A93E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8F693767292129AC0061A93E /* FirebaseStorage */; };
 		8F69376A29212B3E0061A93E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69376929212B3D0061A93E /* StorageManager.swift */; };
+		8F69376D29224E5F0061A93E /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 8F69376C29224E5F0061A93E /* PopupView */; };
+		8F69376F292255290061A93E /* ErrorPopupsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69376E292255280061A93E /* ErrorPopupsState.swift */; };
+		8F69377429225FA10061A93E /* ConnectionErrorPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69377329225FA10061A93E /* ConnectionErrorPopupView.swift */; };
 		8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */; };
 		8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23D628F7FBBF0079F0FC /* Plant.swift */; };
 		8F6B23DD28F81A640079F0FC /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23DC28F81A640079F0FC /* TestData.swift */; };
@@ -60,6 +63,7 @@
 		8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563A828F0240800C54AF2 /* AuthResponse.swift */; };
 		8FA563B128F04AAA00C54AF2 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B028F04AAA00C54AF2 /* Reminder.swift */; };
 		8FA563B328F0677800C54AF2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA563B228F0677800C54AF2 /* Errors.swift */; };
+		8FB0BC5C292287AD00D4C210 /* GenericErrorPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0BC5B292287AD00D4C210 /* GenericErrorPopupView.swift */; };
 		8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */; };
 		8FB43FF0290EBF36009202F4 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8FB43FEF290EBF36009202F4 /* Collections */; };
 		8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FF12912C6E9009202F4 /* UIElements.swift */; };
@@ -121,6 +125,8 @@
 		8F693761292036440061A93E /* EditEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventViewModel.swift; sourceTree = "<group>"; };
 		8F6937642920FA8C0061A93E /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		8F69376929212B3D0061A93E /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		8F69376E292255280061A93E /* ErrorPopupsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPopupsState.swift; sourceTree = "<group>"; };
+		8F69377329225FA10061A93E /* ConnectionErrorPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionErrorPopupView.swift; sourceTree = "<group>"; };
 		8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8F6B23D628F7FBBF0079F0FC /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		8F6B23DC28F81A640079F0FC /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
@@ -145,6 +151,7 @@
 		8FA563A828F0240800C54AF2 /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		8FA563B028F04AAA00C54AF2 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		8FA563B228F0677800C54AF2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		8FB0BC5B292287AD00D4C210 /* GenericErrorPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericErrorPopupView.swift; sourceTree = "<group>"; };
 		8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8FB43FF12912C6E9009202F4 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
 		8FE3447B2916A9AF00247333 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -168,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F69376D29224E5F0061A93E /* PopupView in Frameworks */,
 				8FFD75422909621E005237A9 /* Shimmer in Frameworks */,
 				8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */,
 				8FB43FF0290EBF36009202F4 /* Collections in Frameworks */,
@@ -241,6 +249,7 @@
 		8F24E75928EEDC8D008D5AEE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8F69377229225E9C0061A93E /* ErrorPopups */,
 				8FA07B28290D0B8C0019C142 /* AddEventView.swift */,
 				8FE3447D2918086E00247333 /* AddMemberView.swift */,
 				8FA07B2C290D48CB0019C142 /* AddReminderView.swift */,
@@ -298,10 +307,20 @@
 		8F6937632920F9480061A93E /* States */ = {
 			isa = PBXGroup;
 			children = (
+				8F69376E292255280061A93E /* ErrorPopupsState.swift */,
 				8FA07B24290BE4C80019C142 /* PictureViewState.swift */,
 				8F17B9C828FAD73D00B4308C /* TabBarState.swift */,
 			);
 			path = States;
+			sourceTree = "<group>";
+		};
+		8F69377229225E9C0061A93E /* ErrorPopups */ = {
+			isa = PBXGroup;
+			children = (
+				8F69377329225FA10061A93E /* ConnectionErrorPopupView.swift */,
+				8FB0BC5B292287AD00D4C210 /* GenericErrorPopupView.swift */,
+			);
+			path = ErrorPopups;
 			sourceTree = "<group>";
 		};
 		8FA3C84628F2DF8300F1D070 /* Services */ = {
@@ -356,6 +375,7 @@
 				8FFD75412909621E005237A9 /* Shimmer */,
 				8FB43FEF290EBF36009202F4 /* Collections */,
 				8F693767292129AC0061A93E /* FirebaseStorage */,
+				8F69376C29224E5F0061A93E /* PopupView */,
 			);
 			productName = "sprinkled-ios";
 			productReference = 8F24E74528EECB86008D5AEE /* sprinkled-ios.app */;
@@ -413,6 +433,7 @@
 				8FFD75402909621E005237A9 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 				8FB43FEE290EBF36009202F4 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				8F693766292129AB0061A93E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8F69376B29224E5E0061A93E /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 8F24E74628EECB86008D5AEE /* Products */;
 			projectDirPath = "";
@@ -451,6 +472,7 @@
 			files = (
 				8FE3448029180A6800247333 /* AddMemberViewModel.swift in Sources */,
 				8F095E962904066800DBCECA /* Styles.swift in Sources */,
+				8F69377429225FA10061A93E /* ConnectionErrorPopupView.swift in Sources */,
 				8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */,
 				8FFD7548290AD3DB005237A9 /* Action.swift in Sources */,
 				8FFD7546290AC005005237A9 /* Event.swift in Sources */,
@@ -480,6 +502,7 @@
 				8FA07B29290D0B8C0019C142 /* AddEventView.swift in Sources */,
 				8F24E76228EEDD13008D5AEE /* TaskView.swift in Sources */,
 				8FFD753F29095851005237A9 /* PlantEntry.swift in Sources */,
+				8FB0BC5C292287AD00D4C210 /* GenericErrorPopupView.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
 				8FE3447C2916A9AF00247333 /* Utils.swift in Sources */,
 				8F69375E291FF3EF0061A93E /* EditReminderView.swift in Sources */,
@@ -502,6 +525,7 @@
 				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */,
+				8F69376F292255290061A93E /* ErrorPopupsState.swift in Sources */,
 				8F69376A29212B3E0061A93E /* StorageManager.swift in Sources */,
 				8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */,
 				8F095E902903DEE300DBCECA /* CreateTeamViewModel.swift in Sources */,
@@ -658,7 +682,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = LZFDNCMC92;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "sprinkled-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sprinkled;
@@ -696,7 +719,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = LZFDNCMC92;
-				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "sprinkled-ios/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sprinkled;
@@ -806,6 +828,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		8F69376B29224E5E0061A93E /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		8F6B23DE28F8268F0079F0FC /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -845,6 +875,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8F693766292129AB0061A93E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		8F69376C29224E5F0061A93E /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F69376B29224E5E0061A93E /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 		8F6B23DF28F8268F0079F0FC /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

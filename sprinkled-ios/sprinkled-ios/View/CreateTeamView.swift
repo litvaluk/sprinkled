@@ -10,10 +10,6 @@ struct CreateTeamView: View {
 				.textFieldStyle(SprinkledTextFieldStyle())
 				.autocorrectionDisabled()
 				.textInputAutocapitalization(.never)
-			if !viewModel.errorMessage.isEmpty {
-				Text("\(viewModel.errorMessage)")
-					.foregroundColor(.red)
-			}
 			Spacer()
 			if (viewModel.isProcessing) {
 				ProgressView()
@@ -41,6 +37,6 @@ struct CreateTeamView: View {
 
 struct CreateTeamView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateTeamView(viewModel: CreateTeamViewModel())
+        CreateTeamView(viewModel: CreateTeamViewModel(errorPopupsState: ErrorPopupsState()))
     }
 }

@@ -15,10 +15,6 @@ struct AddEventView: View {
 			SprinkledListMenuPicker(title: "Action", options: vm.actions.map{$0.type}, selection: $vm.actionSelection)
 			SprinkledListDatePicker(title: "Date", selection: $vm.date, displayedComponents: .date)
 			SprinkledListDatePicker(title: "Time", selection: $vm.date, displayedComponents: .hourAndMinute)
-			if !vm.errorMessage.isEmpty {
-				Text("\(vm.errorMessage)")
-					.foregroundColor(.red)
-			}
 			Spacer()
 			if (vm.isProcessing) {
 				ProgressView()
@@ -48,6 +44,6 @@ struct AddEventView: View {
 
 struct AddEventView_Previews: PreviewProvider {
     static var previews: some View {
-		AddEventView(vm: AddEventViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1"))
+		AddEventView(vm: AddEventViewModel(plantEntryId: 1, plantEntryName: "Plant entry 1", errorPopupsState: ErrorPopupsState()))
     }
 }

@@ -8,6 +8,16 @@ extension Color {
 	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
 	static let sprinkledGray = Color("SprinkledGray")
 	static let sprinkledRed = Color("SprinkledRed")
+	
+	init(hex: String) {
+		let scanner = Scanner(string: hex)
+		var rgbValue: UInt64 = 0
+		scanner.scanHexInt64(&rgbValue)
+		let r = (rgbValue & 0xff0000) >> 16
+		let g = (rgbValue & 0xff00) >> 8
+		let b = rgbValue & 0xff
+		self.init(red: Double(r) / 0xff, green: Double(g) / 0xff, blue: Double(b) / 0xff)
+	}
 }
 
 // remove navigation bar back button text
@@ -182,14 +192,22 @@ extension Binding where Value == Bool {
 	/// Creates a binding by mapping an optional value to a `Bool` that is
 	/// `true` when the value is non-`nil` and `false` when the value is `nil`.
 	///
-	/// Setting the value of the produce binding does nothing and logs a message
+	/// When the value of the produced binding is set to `false` the value
+	/// of `bindingToOptional`'s `wrappedValue` is set to `nil`.
+	///
+	/// Setting the value of the produce binding to `true` does nothing and
+	/// logs a message.
 	///
 	/// - parameter bindingToOptional: A `Binding` to an optional value, used to calculate the `wrappedValue`.
 	public init<Wrapped>(mappedTo bindingToOptional: Binding<Wrapped?>) {
 		self.init(
 			get: { bindingToOptional.wrappedValue != nil },
-			set: { _ in
-				print("Attempted to set the value of the produce binding. Setting the value of the produce binding does nothing.")
+			set: { newValue in
+				if (!newValue) {
+					bindingToOptional.wrappedValue = nil
+				} else {
+					print("Attempted to set the value of the produce binding to 'true'. Setting the value of the produce binding to 'true' does nothing.")
+				}
 			}
 		)
 	}

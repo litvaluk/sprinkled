@@ -12,6 +12,12 @@ class PictureViewState: ObservableObject {
 	
 	var onDelete: () -> Void = {}
 	
+	private let errorPopupsState: ErrorPopupsState
+	
+	init(errorPopupsState: ErrorPopupsState) {
+		self.errorPopupsState = errorPopupsState
+	}
+	
 	func reset() {
 		withAnimation(.easeInOut(duration: 0.2)) {
 			pictures = []
@@ -44,10 +50,13 @@ class PictureViewState: ObservableObject {
 				selection = pictures[index - 1].id
 				pictures.remove(at: index)
 			}
-		} catch is ExpiredRefreshToken {
-			print("⌛️ Refresh token expired.")
+		} catch APIError.expiredRefreshToken {
+			// nothing
+		}
+		catch APIError.notConnectedToInternet {
+			errorPopupsState.showConnectionError = true
 		} catch {
-			print("❌ Error while deleting picture.")
+			errorPopupsState.showGenericError = true
 		}
 	}
 }

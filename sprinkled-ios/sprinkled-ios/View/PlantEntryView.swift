@@ -160,6 +160,7 @@ struct PlantEntryView: View {
 
 struct PlantEntryHeaderView: View {
 	@StateObject var vm: PlantEntryViewModel
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	
 	var body: some View {
 		ZStack(alignment: .bottomLeading) {
@@ -232,9 +233,9 @@ struct PlantEntryHeaderView: View {
 			.navigationDestination(for: PlantEntryMenuAction.self) { action in
 				switch (action) {
 				case PlantEntryMenuAction.addEvent(let plantEntry):
-					AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
+					AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
 				case PlantEntryMenuAction.addReminder(let plantEntry):
-					AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name))
+					AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
 				}
 			}
 		}
@@ -246,6 +247,7 @@ struct PlantEntryContent: View {
 	@Namespace var namespace
 	@StateObject var vm: PlantEntryViewModel
 	@EnvironmentObject var pictureViewState: PictureViewState
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	
 	var body: some View {
 		HStack() {
@@ -303,7 +305,7 @@ struct PlantEntryContent: View {
 			.navigationDestination(for: PlantEntryEventMenuAction.self) { action in
 				switch(action) {
 				case .edit(let plantEntry, let event):
-					EditEventView(vm: EditEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, event: event))
+					EditEventView(vm: EditEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, event: event, errorPopupsState: errorPopupsState))
 				}
 			}
 		case .reminders:
@@ -336,7 +338,7 @@ struct PlantEntryContent: View {
 			.navigationDestination(for: PlantEntryReminderMenuAction.self) { action in
 				switch(action) {
 				case .edit(let plantEntry, let reminder):
-					EditReminderView(vm: EditReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, reminder: reminder))
+					EditReminderView(vm: EditReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, reminder: reminder, errorPopupsState: errorPopupsState))
 				}
 			}
 		case .gallery:
@@ -461,8 +463,8 @@ struct GalleryItem: View {
 struct PlantEntryView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationStack {
-			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1))
-				.environmentObject(PictureViewState())
+			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: 1, errorPopupsState: ErrorPopupsState()))
+				.environmentObject(PictureViewState(errorPopupsState: ErrorPopupsState()))
 		}
 	}
 }

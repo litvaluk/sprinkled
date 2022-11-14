@@ -12,7 +12,7 @@ final class StorageManager: StorageManagerProtocol {
 		let storageRef = storage.reference().child("images/\(UUID()).jpg")
 		let data = image.jpegData(compressionQuality: 0.2)
 		guard let data else {
-			throw UIImageToJpegDataConversionError()
+			throw StorageManagerError.conversionError
 		}
 		let metadata = StorageMetadata()
 		metadata.contentType = "image/jpg"

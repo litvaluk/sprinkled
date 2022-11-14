@@ -36,10 +36,6 @@ struct CreatePlaceView: View {
 				.background(.thinMaterial)
 				.cornerRadius(10)
 			}
-			if !viewModel.errorMessage.isEmpty {
-				Text("\(viewModel.errorMessage)")
-					.foregroundColor(.red)
-			}
 			Spacer()
 			if (viewModel.isProcessing) {
 				ProgressView()
@@ -67,6 +63,6 @@ struct CreatePlaceView: View {
 
 struct CreatePlaceView_Previews: PreviewProvider {
 	static var previews: some View {
-		CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: TestData.teamSummaries, teamSelection: 0))
+		CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: TestData.teamSummaries, teamSelection: 0, errorPopupsState: ErrorPopupsState()))
 	}
 }

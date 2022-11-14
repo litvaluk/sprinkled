@@ -90,6 +90,6 @@ struct AddButton: View {
 
 struct AddMemberView_Previews: PreviewProvider {
     static var previews: some View {
-		AddMemberView(vm: AddMemberViewModel(teamId: 1, teamName: "Team 1", teamMemberIds: TestData.teamMembers.map{$0.id}))
+		AddMemberView(vm: AddMemberViewModel(teamId: 1, teamName: "Team 1", teamMemberIds: TestData.teamMembers.map{$0.id}, errorPopupsState: ErrorPopupsState()))
     }
 }
