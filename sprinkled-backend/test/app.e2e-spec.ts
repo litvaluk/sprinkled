@@ -45,7 +45,7 @@ describe('Sprinkled', () => {
         const dto: CreateUserDto = {
           username: 'newUser',
           email: 'newUser@gmail.com',
-          password: 'password',
+          password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
           pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
@@ -66,7 +66,7 @@ describe('Sprinkled', () => {
         const dto: CreateUserDto = {
           username: 'newUser',
           email: 'newUser@gmail.com',
-          password: 'password',
+          password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
           pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
@@ -75,14 +75,14 @@ describe('Sprinkled', () => {
           .post('http://localhost:3001/auth/register')
           .withJson(dto)
           .expectStatus(403)
-          .expectJsonLike({ message: 'Username or email already taken' });
+          .expectJsonLike({ message: ['Username or email already taken.'] });
       });
 
       it('should not register a new user with an existing email', () => {
         const dto: CreateUserDto = {
           username: 'newUser2',
           email: 'newUser@gmail.com',
-          password: 'password',
+          password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
           pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
@@ -91,7 +91,7 @@ describe('Sprinkled', () => {
           .post('http://localhost:3001/auth/register')
           .withJson(dto)
           .expectStatus(403)
-          .expectJsonLike({ message: 'Username or email already taken' });
+          .expectJsonLike({ message: ['Username or email already taken.'] });
       });
 
       it('should not register a new user with short password', () => {
@@ -107,7 +107,7 @@ describe('Sprinkled', () => {
           .post('http://localhost:3001/auth/register')
           .withJson(dto)
           .expectStatus(400)
-          .expectJsonLike({ message: ['password must be longer than or equal to 8 characters'] });
+          .expectJsonLike({ message: ['Password must be at least 8 characters long and contain at least one letter and one number.'] });
       });
     });
 
@@ -115,7 +115,7 @@ describe('Sprinkled', () => {
       it('should login a user', () => {
         const dto: LoginDto = {
           username: 'newUser',
-          password: 'password',
+          password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
           pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
@@ -144,13 +144,13 @@ describe('Sprinkled', () => {
           .post('http://localhost:3001/auth/login')
           .withJson(dto)
           .expectStatus(403)
-          .expectJsonLike({ message: 'Invalid username or password' });
+          .expectJsonLike({ message: ['Invalid username or password.'] });
       });
 
       it('should not login a nonexistent user', () => {
         const dto: LoginDto = {
           username: 'non_existing_user',
-          password: 'password',
+          password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
           pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
@@ -159,7 +159,7 @@ describe('Sprinkled', () => {
           .post('http://localhost:3001/auth/login')
           .withJson(dto)
           .expectStatus(403)
-          .expectJsonLike({ message: 'Invalid username or password' });
+          .expectJsonLike({ message: ['Invalid username or password.'] });
       });
     });
 
