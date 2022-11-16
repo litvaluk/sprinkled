@@ -3,13 +3,16 @@ import Kingfisher
 
 struct PlantDetailView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-	@StateObject var viewModel: PlantDetailViewModel
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
+	@StateObject var vm: PlantDetailViewModel
 	
 	var body: some View {
 		ZStack(alignment: .topLeading) {
 			ScrollView {
 				VStack {
-					PlantHeaderView(commonName: viewModel.plant.commonName, latinName: viewModel.plant.latinName, pictureUrl: viewModel.plant.pictureUrl)
+					PlantHeaderView(commonName: vm.plant.commonName, latinName: vm.plant.latinName, pictureUrl: vm.plant.pictureUrl) {
+						vm.addPlantEntryPresented = true
+					}
 					HStack {
 						InfoBoxView(icon: Image("Difficulty"), title: "Difficulty", value: "Easy")
 						InfoBoxView(icon: Image("Water"), title: "Water", value: "Moderate")
@@ -17,29 +20,33 @@ struct PlantDetailView: View {
 					.padding([.top], 2)
 					.padding([.leading, .trailing], 10)
 					HStack {
-						if (viewModel.unitSystem == "Imperial") {
-							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(Utils.calculateFahrenheit(Double(viewModel.plant.minTemp)).rounded().toInt()!) + " °F - " + String(Utils.calculateFahrenheit(Double(viewModel.plant.maxTemp)).rounded().toInt()!) + " °F")
+						if (vm.unitSystem == "Imperial") {
+							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(Utils.calculateFahrenheit(Double(vm.plant.minTemp)).rounded().toInt()!) + " °F - " + String(Utils.calculateFahrenheit(Double(vm.plant.maxTemp)).rounded().toInt()!) + " °F")
 						} else {
-							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(viewModel.plant.minTemp) + " °C - " + String(viewModel.plant.maxTemp) + " °C")
+							InfoBoxView(icon: Image("Temperature"), title: "Temperature", value: String(vm.plant.minTemp) + " °C - " + String(vm.plant.maxTemp) + " °C")
 						}
-						InfoBoxView(icon: Image("Fullsun"), title: "Light", value: viewModel.plant.light)
+						InfoBoxView(icon: Image("Fullsun"), title: "Light", value: vm.plant.light)
 					}
 					.padding([.leading, .trailing], 10)
 					HStack {
-						if (viewModel.unitSystem == "Imperial") {
-							InfoBoxView(icon: Image("Height"), title: "Height", value: Utils.calculateFeetAndInches(viewModel.plant.minHeight).toString() + " - " + Utils.calculateFeetAndInches(viewModel.plant.maxHeight).toString())
-							InfoBoxView(icon: Image("Spread"), title: "Spread", value: Utils.calculateFeetAndInches(viewModel.plant.minSpread).toString() + " - " + Utils.calculateFeetAndInches(viewModel.plant.maxSpread).toString())
+						if (vm.unitSystem == "Imperial") {
+							InfoBoxView(icon: Image("Height"), title: "Height", value: Utils.calculateFeetAndInches(vm.plant.minHeight).toString() + " - " + Utils.calculateFeetAndInches(vm.plant.maxHeight).toString())
+							InfoBoxView(icon: Image("Spread"), title: "Spread", value: Utils.calculateFeetAndInches(vm.plant.minSpread).toString() + " - " + Utils.calculateFeetAndInches(vm.plant.maxSpread).toString())
 						} else {
-							InfoBoxView(icon: Image("Height"), title: "Height", value: viewModel.plant.minHeight.toString() + " - " + viewModel.plant.maxHeight.toString() + " m")
-							InfoBoxView(icon: Image("Spread"), title: "Spread", value: viewModel.plant.minSpread.toString() + " - " + viewModel.plant.maxSpread.toString() + " m")
+							InfoBoxView(icon: Image("Height"), title: "Height", value: vm.plant.minHeight.toString() + " - " + vm.plant.maxHeight.toString() + " m")
+							InfoBoxView(icon: Image("Spread"), title: "Spread", value: vm.plant.minSpread.toString() + " - " + vm.plant.maxSpread.toString() + " m")
 						}
 					}
 					.padding([.leading, .trailing], 10)
-					DescriptionBoxView(text: viewModel.plant.description)
+					DescriptionBoxView(text: vm.plant.description)
 				}
 			}
 			.toolbar(.hidden)
 			.ignoresSafeArea(.all, edges: [.top])
+		}
+		.fullScreenCover(isPresented: $vm.addPlantEntryPresented) {
+			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: vm.plant, errorPopupsState: errorPopupsState))
+				.ignoresSafeArea(.keyboard, edges: .bottom)
 		}
 		.overlay(alignment: .topLeading) {
 			Button {
@@ -61,11 +68,13 @@ struct PlantHeaderView: View {
 	let commonName: String
 	let latinName: String
 	let pictureUrl: String
+	let addPlantEntryButtonAction: () -> Void
 	
-	init(commonName: String, latinName: String, pictureUrl: String) {
+	init(commonName: String, latinName: String, pictureUrl: String, addPlantEntryButtonAction: @escaping () -> Void) {
 		self.commonName = commonName
 		self.latinName = latinName
 		self.pictureUrl = pictureUrl
+		self.addPlantEntryButtonAction = addPlantEntryButtonAction
 	}
 	
 	var body: some View {
@@ -99,7 +108,9 @@ struct PlantHeaderView: View {
 					.font(.title3)
 			}
 			Spacer()
-			Button {} label: {
+			Button {
+				addPlantEntryButtonAction()
+			} label: {
 				ZStack {
 					RoundedRectangle(cornerRadius: 15)
 						.frame(width: 90, height: 60)
@@ -180,6 +191,6 @@ struct InfoBoxView: View {
 
 struct PlantDetailView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlantDetailView(viewModel: PlantDetailViewModel(plant: TestData.plants[0]))
+		PlantDetailView(vm: PlantDetailViewModel(plant: TestData.plants[0]))
 	}
 }

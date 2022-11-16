@@ -21,15 +21,19 @@ struct RootView: View {
 					TaskView(vm: TaskViewModel(errorPopupsState: errorPopupsState))
 						.padding(.bottom, 47)
 						.tag(0)
+						.ignoresSafeArea(.keyboard, edges: .bottom)
 					MyPlantsView(viewModel: MyPlantsViewModel(errorPopupsState: errorPopupsState))
 						.padding(.bottom, 47)
 						.tag(1)
+						.ignoresSafeArea(.keyboard, edges: .bottom)
 					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState))
 						.padding(.bottom, 47)
 						.tag(2)
+						.ignoresSafeArea(.keyboard, edges: .bottom)
 					ProfileView(vm: ProfileViewModel(errorPopupsState: errorPopupsState))
 						.padding(.bottom, 47)
 						.tag(3)
+						.ignoresSafeArea(.keyboard, edges: .bottom)
 				}
 				.environmentObject(tabBarState)
 				TabBarView()
@@ -37,6 +41,7 @@ struct RootView: View {
 				PictureView()
 					.zIndex(1)
 			}
+			.ignoresSafeArea(.keyboard, edges: .bottom)
 			.popup(isPresented: $errorPopupsState.showConnectionError, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 5) {
 				ConnectionErrorPopupView()
 			}

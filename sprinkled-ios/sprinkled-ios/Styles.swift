@@ -5,7 +5,7 @@ struct SprinkledTextFieldStyle: TextFieldStyle {
 	func _body(configuration: TextField<Self._Label>) -> some View {
 		configuration
 			.padding(15)
-			.background(.ultraThinMaterial)
+			.background(.thinMaterial)
 			.cornerRadius(10)
 			.focused($textFieldFocused)
 			.onTapGesture {

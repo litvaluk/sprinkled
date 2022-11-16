@@ -87,7 +87,7 @@ struct SearchView: View {
 								.padding([.leading, .trailing], 16)
 							}
 							.navigationDestination(for: Plant.self) { plant in
-								PlantDetailView(viewModel: PlantDetailViewModel(plant: plant))
+								PlantDetailView(vm: PlantDetailViewModel(plant: plant))
 									.onChange(of: tabBarState.tappedSameCount) { tappedSameCount in
 										if (tappedSameCount > 0 && !viewModel.path.isEmpty) {
 											viewModel.path = []

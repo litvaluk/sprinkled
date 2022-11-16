@@ -11,8 +11,8 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var eventToDelete: Int? = nil
 	@Published var image = UIImage()
 	@Published var showImagePickerChoiceSheet = false
-	@Published var showImagePicker = false
-	@Published var imagePickerSourceType: UIImagePickerController.SourceType = .photoLibrary
+	@Published var showPhotoLibraryImagePicker = false
+	@Published var showCameraImagePicker = false
 	
 	let plantEntryId: Int
 	

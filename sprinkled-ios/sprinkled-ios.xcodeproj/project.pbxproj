@@ -72,6 +72,8 @@
 		8FE3447C2916A9AF00247333 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447B2916A9AF00247333 /* Utils.swift */; };
 		8FE3447E2918086E00247333 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447D2918086E00247333 /* AddMemberView.swift */; };
 		8FE3448029180A6800247333 /* AddMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447F29180A6800247333 /* AddMemberViewModel.swift */; };
+		8FEB7FBF2924FA2F0078EFF2 /* AddPlantEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEB7FBE2924FA2F0078EFF2 /* AddPlantEntryView.swift */; };
+		8FEB7FC12924FADD0078EFF2 /* AddPlantEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEB7FC02924FADD0078EFF2 /* AddPlantEntryViewModel.swift */; };
 		8FFD753329053DEB005237A9 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753229053DEB005237A9 /* PlaceViewModel.swift */; };
 		8FFD7535290583FA005237A9 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD7534290583FA005237A9 /* TeamView.swift */; };
 		8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD753629058446005237A9 /* TeamViewModel.swift */; };
@@ -161,6 +163,8 @@
 		8FE3447B2916A9AF00247333 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8FE3447D2918086E00247333 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		8FE3447F29180A6800247333 /* AddMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberViewModel.swift; sourceTree = "<group>"; };
+		8FEB7FBE2924FA2F0078EFF2 /* AddPlantEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlantEntryView.swift; sourceTree = "<group>"; };
+		8FEB7FC02924FADD0078EFF2 /* AddPlantEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlantEntryViewModel.swift; sourceTree = "<group>"; };
 		8FFD753229053DEB005237A9 /* PlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 		8FFD7534290583FA005237A9 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		8FFD753629058446005237A9 /* TeamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamViewModel.swift; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 				8F69377229225E9C0061A93E /* ErrorPopups */,
 				8FA07B28290D0B8C0019C142 /* AddEventView.swift */,
 				8FE3447D2918086E00247333 /* AddMemberView.swift */,
+				8FEB7FBE2924FA2F0078EFF2 /* AddPlantEntryView.swift */,
 				8FA07B2C290D48CB0019C142 /* AddReminderView.swift */,
 				8F24E76528EEF0B3008D5AEE /* AuthView.swift */,
 				8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */,
@@ -282,6 +287,7 @@
 			children = (
 				8FA07B26290D0A340019C142 /* AddEventViewModel.swift */,
 				8FE3447F29180A6800247333 /* AddMemberViewModel.swift */,
+				8FEB7FC02924FADD0078EFF2 /* AddPlantEntryViewModel.swift */,
 				8FA07B2A290D469C0019C142 /* AddReminderViewModel.swift */,
 				8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */,
 				8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */,
@@ -501,6 +507,7 @@
 				8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */,
 				8FA07B2B290D469D0019C142 /* AddReminderViewModel.swift in Sources */,
 				8F693762292036440061A93E /* EditEventViewModel.swift in Sources */,
+				8FEB7FC12924FADD0078EFF2 /* AddPlantEntryViewModel.swift in Sources */,
 				8F6B23D528F7FB350079F0FC /* SearchViewModel.swift in Sources */,
 				8FA563A928F0240800C54AF2 /* AuthResponse.swift in Sources */,
 				8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */,
@@ -511,6 +518,7 @@
 				8FB0BC5C292287AD00D4C210 /* GenericErrorPopupView.swift in Sources */,
 				8F9DE0542922F25700A4FABB /* ErrorResponse.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
+				8FEB7FBF2924FA2F0078EFF2 /* AddPlantEntryView.swift in Sources */,
 				8F92BAEC2922B4940092BF55 /* TabBarView.swift in Sources */,
 				8FE3447C2916A9AF00247333 /* Utils.swift in Sources */,
 				8F69375E291FF3EF0061A93E /* EditReminderView.swift in Sources */,

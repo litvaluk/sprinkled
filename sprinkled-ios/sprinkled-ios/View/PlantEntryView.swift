@@ -114,9 +114,8 @@ struct PlantEntryView: View {
 			VStack(spacing: 10) {
 				Button {
 					vm.showImagePickerChoiceSheet = false
-					vm.imagePickerSourceType = .camera
 					DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-						vm.showImagePicker = true
+						vm.showCameraImagePicker = true
 					}
 				} label: {
 					Text("Camera")
@@ -126,9 +125,8 @@ struct PlantEntryView: View {
 				.cornerRadius(10)
 				Button {
 					vm.showImagePickerChoiceSheet = false
-					vm.imagePickerSourceType = .photoLibrary
 					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-						vm.showImagePicker = true
+						vm.showPhotoLibraryImagePicker = true
 					}
 				} label: {
 					Text("Photo library")
@@ -141,8 +139,12 @@ struct PlantEntryView: View {
 			.presentationDetents([.height(150)])
 			.presentationDragIndicator(.visible)
 		}
-		.fullScreenCover(isPresented: $vm.showImagePicker) {
-			ImagePicker(sourceType: vm.imagePickerSourceType, selectedImage: $vm.image)
+		.sheet(isPresented: $vm.showPhotoLibraryImagePicker) {
+			ImagePicker(sourceType: .photoLibrary, selectedImage: $vm.image)
+				.ignoresSafeArea()
+		}
+		.fullScreenCover(isPresented: $vm.showCameraImagePicker) {
+			ImagePicker(sourceType: .camera, selectedImage: $vm.image)
 				.ignoresSafeArea()
 		}
 		.onChange(of: vm.image) { image in

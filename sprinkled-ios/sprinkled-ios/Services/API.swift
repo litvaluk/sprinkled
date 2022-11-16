@@ -33,6 +33,7 @@ protocol APIProtocol {
 	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture
 	func deletePicture(pictureId: Int) async throws -> Void
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void
 }
 
 final class API : APIProtocol {
@@ -251,7 +252,20 @@ final class API : APIProtocol {
 		try await makeAuthenticatedRequest(path: "pictures/\(pictureId)", method: "DELETE")
 	}
 	
-	func refreshToken() async throws {
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void {
+		var body = [
+			"name": name,
+			"placeId": placeId,
+			"plantId": plantId
+		] as [String : Any]
+		if let headerPictureUrl {
+			body["headerPictureUrl"] = headerPictureUrl.absoluteString
+		}
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "plant-entries", method: "POST", body: bodyData)
+	}
+	
+	private func refreshToken() async throws {
 		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
 		var request = URLRequest(url: url)
@@ -553,6 +567,10 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func deletePicture(pictureId: Int) async throws -> Void {
+		return
+	}
+	
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void {
 		return
 	}
 }

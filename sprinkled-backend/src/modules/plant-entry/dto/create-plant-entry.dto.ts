@@ -1,8 +1,8 @@
-import { IsInt, IsPositive, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsInt, IsOptional, IsPositive, IsString, IsUrl, MaxLength, MinLength } from 'class-validator';
 
 export class CreatePlantEntryDto {
   @IsString()
-  @MinLength(3)
+  @MinLength(3, { message: 'Name must be at least 3 characters long.' })
   @MaxLength(20)
   name: string;
 
@@ -13,4 +13,8 @@ export class CreatePlantEntryDto {
   @IsInt()
   @IsPositive()
   plantId: number;
+
+  @IsUrl()
+  @IsOptional()
+  headerPictureUrl: string;
 }

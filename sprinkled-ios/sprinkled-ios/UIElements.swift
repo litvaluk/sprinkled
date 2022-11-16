@@ -57,29 +57,51 @@ struct SprinkledListToggle: View {
 struct SprinkledListMenuPicker: View {
 	let title: String
 	let options: [String]
-	let selection: Binding<String>
+	let selection: Binding<String?>
+	
+	init(title: String, options: [String], selection: Binding<String?>) {
+		self.title = title
+		self.options = options
+		self.selection = selection
+	}
+	
+	init(title: String, options: [String], selection: Binding<String>) {
+		self.init(title: title, options: options, selection: Binding<String?>(selection))
+	}
 	
 	var body: some View {
 		Menu {
 			Picker(title, selection: selection) {
 				ForEach(options, id: \.self) { option in
-					Text(option).tag(option)
+					Text(option).tag(option as String?)
 				}
 			}
 		} label: {
 			SprinkledListItem(title: title) {
-				Text(selection.wrappedValue)
-					.foregroundColor(.gray)
-				Image(systemName: "chevron.up.chevron.down")
-					.resizable()
-					.scaledToFit()
-					.frame(width: 10, height: 10)
-					.fontWeight(.semibold)
-					.foregroundColor(.gray)
-					.padding(.leading, 4)
-					.padding(.trailing, 10)
+				if (options.isEmpty) {
+					Text("Nothing to select")
+						.padding(.trailing, 10)
+						.foregroundColor(.gray)
+				} else {
+					if let unwrappedSelection = selection.wrappedValue {
+						Text(unwrappedSelection)
+							.foregroundColor(.gray)
+					} else {
+						ProgressView()
+							.padding(.trailing, 1)
+					}
+					Image(systemName: "chevron.up.chevron.down")
+						.resizable()
+						.scaledToFit()
+						.frame(width: 10, height: 10)
+						.fontWeight(.semibold)
+						.foregroundColor(.gray)
+						.padding(.leading, 4)
+						.padding(.trailing, 10)
+				}
 			}
 		}
+		.disabled(selection.wrappedValue == nil)
 	}
 }
 
@@ -107,6 +129,7 @@ struct SprinkledListNavigationLink<Value: Hashable>: View {
 					.fontWeight(.semibold)
 					.foregroundColor(.gray)
 					.padding(.leading, 4)
+					.padding(.trailing, 8)
 			}
 		}
 	}
@@ -123,6 +146,32 @@ struct SprinkledListDatePicker: View {
 				.datePickerStyle(.compact)
 				.labelsHidden()
 				.padding(.trailing, 8)
+		}
+	}
+}
+
+struct SprinkledButton: View {
+	let text: String
+	let action: () -> Void
+	
+	init(text: String, action: @escaping () -> Void) {
+		self.text = text
+		self.action = action
+	}
+	
+	var body: some View {
+		Button(role: .destructive) {
+			action()
+		} label: {
+			HStack {
+				Spacer()
+				Text(text)
+					.foregroundColor(.white)
+					.padding(15)
+				Spacer()
+			}
+			.background(Color.sprinkledGreen)
+			.cornerRadius(10)
 		}
 	}
 }
