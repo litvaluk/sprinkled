@@ -6,6 +6,7 @@ final class EditEventViewModel: ObservableObject {
 	@Published var actionSelection: String
 	@Published var date: Date
 	@Published var isProcessing = false
+	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
@@ -27,6 +28,12 @@ final class EditEventViewModel: ObservableObject {
 	func editEvent() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
+		
+		if (date > Date()) {
+			errorMessage = "Unable to add event with a future date."
+			return false
+		}
+		
 		do {
 			_ = try await api.editEvent(eventId: eventId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
 			return true

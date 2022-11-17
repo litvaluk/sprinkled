@@ -5,8 +5,8 @@ final class AddEventViewModel: ObservableObject {
 
 	@Published var actionSelection = "water"
 	@Published var date = Date().zeroSeconds()
-	
 	@Published var isProcessing = false
+	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
@@ -24,6 +24,11 @@ final class AddEventViewModel: ObservableObject {
 	func addNewEvent() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
+		
+		if (date > Date()) {
+			errorMessage = "Unable to add event with a future date."
+			return false
+		}
 		
 		do {
 			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)

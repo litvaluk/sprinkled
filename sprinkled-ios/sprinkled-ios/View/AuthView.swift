@@ -34,7 +34,7 @@ struct AuthView: View {
 					.textFieldStyle(SprinkledTextFieldStyle())
 			}
 			
-			if !viewModel.errorMessage.isEmpty {
+			if (!viewModel.errorMessage.isEmpty) {
 				Text("\(viewModel.errorMessage)")
 					.multilineTextAlignment(.center)
 					.foregroundColor(.red)

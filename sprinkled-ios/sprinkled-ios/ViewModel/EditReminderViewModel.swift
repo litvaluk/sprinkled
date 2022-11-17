@@ -9,6 +9,7 @@ final class EditReminderViewModel: ObservableObject {
 	@Published var period: Int
 	@Published var periodPickerOpen = false
 	@Published var isProcessing = false
+	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
@@ -32,6 +33,12 @@ final class EditReminderViewModel: ObservableObject {
 	func editReminder() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
+		
+		if (date <= Date()) {
+			errorMessage = "Unable to add reminder with a past date."
+			return false
+		}
+		
 		do {
 			_ = try await api.editReminder(reminderId: reminderId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date, period: period)
 			return true
