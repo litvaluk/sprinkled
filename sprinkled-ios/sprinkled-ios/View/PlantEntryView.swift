@@ -282,7 +282,7 @@ struct PlantEntryContent: View {
 			VStack (spacing: 8) {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.events) { event in
-						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", date: event.date) {
+						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", action: event.action.type, date: event.date) {
 							NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
 								Text("Edit")
 								Image(systemName: "slider.horizontal.3")
@@ -297,7 +297,7 @@ struct PlantEntryContent: View {
 					}
 				} else {
 					ForEach(0..<3) { _ in
-						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder) {
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), action: nil, date: .placeholder) {
 							EmptyView()
 						}
 						.redactedShimmering()
@@ -315,7 +315,7 @@ struct PlantEntryContent: View {
 				if let plantEntry = vm.plantEntry {
 					ForEach(plantEntry.reminders) { reminder in
 						let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
-						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, date: reminder.date) {
+						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, action: reminder.action.type, date: reminder.date) {
 							NavigationLink(value: PlantEntryReminderMenuAction.edit(plantEntry, reminder)) {
 								Text("Edit")
 								Image(systemName: "slider.horizontal.3")
@@ -330,7 +330,7 @@ struct PlantEntryContent: View {
 					}
 				} else {
 					ForEach(0..<3) { _ in
-						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), date: .placeholder) {
+						PlantEntryListItem(title: .placeholder(8), subtitle: .placeholder(6), action: nil, date: .placeholder) {
 							EmptyView()
 						}
 						.redactedShimmering()
@@ -371,12 +371,14 @@ struct PlantEntryContent: View {
 struct PlantEntryListItem<Content: View>: View {
 	let title: String
 	let subtitle: String
+	let action: String?
 	let date: Date
 	let content: () -> Content
 	
-	init(title: String, subtitle: String, date: Date, @ViewBuilder content: @escaping () -> Content) {
+	init(title: String, subtitle: String, action: String?, date: Date, @ViewBuilder content: @escaping () -> Content) {
 		self.title = title
 		self.subtitle = subtitle
+		self.action = action
 		self.date = date
 		self.content = content
 	}
@@ -385,9 +387,18 @@ struct PlantEntryListItem<Content: View>: View {
 		ZStack {
 			Color.sprinkledGray
 			HStack {
-				RoundedRectangle(cornerRadius: 7)
-					.foregroundColor(.gray)
+				Color.sprinkledDarkerGray
+					.aspectRatio(1, contentMode: .fit)
 					.frame(width: 50, height: 50)
+					.cornerRadius(7)
+					.overlay {
+						if let action {
+							Image("\(action)ActionIcon")
+								.resizable()
+								.scaledToFit()
+								.padding(5)
+						}
+					}
 					.padding(5)
 				VStack(alignment: .leading) {
 					Text(title)

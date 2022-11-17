@@ -215,9 +215,13 @@ struct TestData {
 	]
 	
 	static let actions = [
-		Action(id: 1, type: "water"),
-		Action(id: 2, type: "prune"),
-		Action(id: 3, type: "mist")
+		Action(id: 1, type: "Water"),
+		Action(id: 2, type: "Mist"),
+		Action(id: 3, type: "Fertilize"),
+		Action(id: 4, type: "Harvest"),
+		Action(id: 5, type: "Cut"),
+		Action(id: 6, type: "Sow"),
+		Action(id: 7, type: "Repot")
 	]
 
 	static let events = [

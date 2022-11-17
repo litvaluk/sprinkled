@@ -258,19 +258,43 @@ async function createPictures() {
 async function createActions() {
   await prisma.action.create({
     data: {
-      type: 'water',
+      type: 'Water',
     },
   });
 
   await prisma.action.create({
     data: {
-      type: 'prune',
+      type: 'Mist',
     },
   });
 
   await prisma.action.create({
     data: {
-      type: 'repot',
+      type: 'Cut',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'Repot',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'Fertilize',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'Sow',
+    },
+  });
+
+  await prisma.action.create({
+    data: {
+      type: 'Harvest',
     },
   });
 }

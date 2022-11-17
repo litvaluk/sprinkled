@@ -7,6 +7,7 @@ extension Color {
 	static let sprinkledPaleGreen = Color("SprinkledPaleGreen")
 	static let sprinkledPaleWhite = Color("SprinkledPaleWhite")
 	static let sprinkledGray = Color("SprinkledGray")
+	static let sprinkledDarkerGray = Color("SprinkledDarkerGray")
 	static let sprinkledRed = Color("SprinkledRed")
 	static let sprinkledTabBarColor = Color("SprinkledTabBarColor")
 	
