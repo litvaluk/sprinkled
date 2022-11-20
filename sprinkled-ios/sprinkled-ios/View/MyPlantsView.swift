@@ -43,7 +43,7 @@ struct MyPlantsView: View {
 							Text("Add plant entry")
 						}
 					} label: {
-						Image(systemName: "plus.circle.fill")
+						Image(systemName: "plus.app.fill")
 							.resizable()
 							.scaledToFit()
 							.frame(width: 25, height: 25)
@@ -91,22 +91,34 @@ struct TeamCardsView: View {
 	
 	var body: some View {
 		VStack(alignment: .leading, spacing: 5) {
-			HStack{
-				Text(teamSummary?.name ?? .placeholder(10))
-					.font(.title2)
-					.fontWeight(.medium)
-				Spacer()
+			HStack {
 				if let teamSummary {
 					if (teamSummary.id != 0) {
 						NavigationLink(value: teamSummary) {
-							Image(systemName: "ellipsis")
+							Text(teamSummary.name)
+								.font(.title2)
+								.foregroundColor(.primary)
+								.fontWeight(.medium)
+							Image(systemName: "chevron.right")
 								.resizable()
 								.scaledToFit()
-								.frame(width: 20)
-								.foregroundColor(.primary)
+								.fontWeight(.semibold)
+								.frame(width: 14, height: 14)
+								.foregroundColor(.sprinkledGreen)
 						}
+					} else {
+						Text(teamSummary.name)
+							.font(.title2)
+							.foregroundColor(.primary)
+							.fontWeight(.medium)
 					}
+				} else {
+					Text(String.placeholder(10))
+						.font(.title2)
+						.foregroundColor(.primary)
+						.fontWeight(.medium)
 				}
+				Spacer()
 			}
 			ScrollView(.horizontal, showsIndicators: false) {
 				if let teamSummary {

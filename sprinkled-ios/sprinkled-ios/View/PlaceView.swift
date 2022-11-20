@@ -85,10 +85,10 @@ struct PlaceView: View {
 						Text("Delete place")
 					}
 				} label: {
-					Image(systemName: "ellipsis")
+					Image("GearIcon")
 						.resizable()
 						.scaledToFit()
-						.frame(width: 25, height: 25)
+						.frame(width: 30, height: 30)
 						.foregroundColor(.primary)
 				}
 			}
@@ -165,6 +165,8 @@ struct PlaceView: View {
 
 struct PlaceView_Previews: PreviewProvider {
 	static var previews: some View {
-		PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", errorPopupsState: ErrorPopupsState()))
+		NavigationStack {
+			PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", errorPopupsState: ErrorPopupsState()))
+		}
 	}
 }

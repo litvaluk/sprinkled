@@ -451,8 +451,35 @@ struct PlantEntryListItem<Content: View>: View {
 				Menu {
 					content()
 				} label: {
-					Image(systemName: "ellipsis")
+					Image(systemName: "ellipsis.circle")
+						.resizable()
+						.scaledToFit()
+						.frame(width: 18, height: 18)
 						.padding(.trailing, 10)
+//					ZStack(alignment: .center) {
+//						RoundedRectangle(cornerRadius: 5)
+//							.foregroundColor(.sprinkledGreen)
+//							.frame(width: 20, height: 20)
+//							.overlay {
+//								HStack {
+//									Spacer()
+//									Image(systemName: "ellipsis")
+//										.resizable()
+//										.scaledToFit()
+//										.foregroundColor(.white)
+//										.fontWeight(.bold)
+//										.frame(width: 12, height: 12)
+//
+//									Spacer()
+//								}
+//							}
+//							.padding(.trailing, 10)
+//					}
+//					Image("GearIcon")
+//						.resizable()
+//						.scaledToFit()
+//						.frame(width: 20, height: 20)
+//						.padding(.trailing, 10)
 				}
 			}
 		}

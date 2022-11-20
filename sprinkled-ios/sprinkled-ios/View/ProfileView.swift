@@ -6,10 +6,6 @@ struct ProfileView: View {
 	var body: some View {
 		NavigationStack {
 			VStack(spacing: 20) {
-				SprinkledListSection(headerText: "Credentials") {
-					SprinkledListNavigationLink(title: "Change username", value: "placeholder")
-					SprinkledListNavigationLink(title: "Change password", value: "placeholder")
-				}
 				SprinkledListSection(headerText: "Notifications") {
 					SprinkledListToggle(title: "Reminder notifications", isOn: $vm.reminderNotificationsEnabled)
 						.onChange(of: vm.reminderNotificationsEnabled) { _ in

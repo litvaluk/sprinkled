@@ -23,12 +23,12 @@ extension Color {
 }
 
 // remove navigation bar back button text
-extension UINavigationController {
-	open override func viewWillLayoutSubviews() {
-		super.viewWillLayoutSubviews()
-		navigationBar.topItem?.backButtonDisplayMode = .minimal
-	}
-}
+//extension UINavigationController {
+//	open override func viewWillLayoutSubviews() {
+//		super.viewWillLayoutSubviews()
+//		navigationBar.topItem?.backButtonDisplayMode = .minimal
+//	}
+//}
 
 // JSONDecoder with correct date format
 extension JSONDecoder {

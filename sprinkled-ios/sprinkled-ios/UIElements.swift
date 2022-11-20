@@ -13,7 +13,7 @@ struct SprinkledListSection<Content: View>: View {
 		VStack(spacing: 7) {
 			HStack {
 				Text(headerText)
-					.font(.subheadline)
+					.font(.headline)
 					.foregroundColor(.secondary)
 					.fontWeight(.semibold)
 				Spacer()
