@@ -245,6 +245,7 @@ struct TestData {
 	]
 	
 	static let plantEntries = [
-		PlantEntry(id: 1, name: "Plant entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", events: events, reminders: reminders, pictures: pictures)
+		PlantEntry(id: 1, name: "Plant entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", events: events, reminders: reminders, pictures: pictures),
+		PlantEntry(id: 2, name: "Plant entry 2", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: "https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg", events: [], reminders: [], pictures: [])
 	]
 }

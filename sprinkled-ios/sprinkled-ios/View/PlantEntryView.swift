@@ -281,17 +281,23 @@ struct PlantEntryContent: View {
 		case .history:
 			VStack (spacing: 8) {
 				if let plantEntry = vm.plantEntry {
-					ForEach(plantEntry.events) { event in
-						PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", action: event.action.type, date: event.date) {
-							NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
-								Text("Edit")
-								Image(systemName: "slider.horizontal.3")
-							}
-							Button {
-								vm.eventToDelete = event.id
-							} label: {
-								Text("Delete")
-								Image(systemName: "trash")
+					if (plantEntry.events.isEmpty) {
+						Text("No events yet")
+							.foregroundColor(.secondary)
+							.padding(50)
+					} else {
+						ForEach(plantEntry.events) { event in
+							PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", action: event.action.type, date: event.date) {
+								NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
+									Text("Edit")
+									Image(systemName: "slider.horizontal.3")
+								}
+								Button {
+									vm.eventToDelete = event.id
+								} label: {
+									Text("Delete")
+									Image(systemName: "trash")
+								}
 							}
 						}
 					}
@@ -313,18 +319,24 @@ struct PlantEntryContent: View {
 		case .reminders:
 			VStack (spacing: 8) {
 				if let plantEntry = vm.plantEntry {
-					ForEach(plantEntry.reminders) { reminder in
-						let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
-						PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, action: reminder.action.type, date: reminder.date) {
-							NavigationLink(value: PlantEntryReminderMenuAction.edit(plantEntry, reminder)) {
-								Text("Edit")
-								Image(systemName: "slider.horizontal.3")
-							}
-							Button {
-								vm.reminderToDelete = reminder.id
-							} label: {
-								Text("Delete")
-								Image(systemName: "trash")
+					if (plantEntry.reminders.isEmpty) {
+						Text("No reminders yet")
+							.foregroundColor(.secondary)
+							.padding(50)
+					} else {
+						ForEach(plantEntry.reminders) { reminder in
+							let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
+							PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, action: reminder.action.type, date: reminder.date) {
+								NavigationLink(value: PlantEntryReminderMenuAction.edit(plantEntry, reminder)) {
+									Text("Edit")
+									Image(systemName: "slider.horizontal.3")
+								}
+								Button {
+									vm.reminderToDelete = reminder.id
+								} label: {
+									Text("Delete")
+									Image(systemName: "trash")
+								}
 							}
 						}
 					}
@@ -344,22 +356,43 @@ struct PlantEntryContent: View {
 				}
 			}
 		case .gallery:
-			LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-				if let plantEntry = vm.plantEntry {
-					ForEach(plantEntry.pictures) { picture in
-						Button {
-							pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures, onDelete: {
-								Task {
-									await vm.fetchPlantEntry()
-								}
-							})
-						} label: {
-							GalleryItem(user: "\(picture.userId)", date: picture.createdAt, pictureUrl: picture.url)
+			if let plantEntry = vm.plantEntry {
+				if (plantEntry.pictures.isEmpty) {
+					Text("No photos yet")
+						.foregroundColor(.secondary)
+						.padding(50)
+				} else {
+					LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
+						ForEach(plantEntry.pictures) { picture in
+							Button {
+								pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures, onDelete: {
+									Task {
+										await vm.fetchPlantEntry()
+									}
+								})
+							} label: {
+								Color.clear
+									.aspectRatio(1, contentMode: .fill)
+									.clipped()
+									.overlay {
+										if let pictureUrl = picture.url {
+											KFImage(URL(string: pictureUrl)!)
+												.resizable()
+												.scaledToFill()
+										}
+									}
+									.cornerRadius(10)
+							}
 						}
 					}
-				} else {
+				}
+			} else {
+				LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
 					ForEach(0..<5) { i in
-						GalleryItem(user: .placeholder(6), date: .placeholder)
+						Color.sprinkledGray
+							.aspectRatio(1, contentMode: .fill)
+							.clipped()
+							.cornerRadius(10)
 							.redactedShimmering()
 					}
 				}
@@ -422,52 +455,6 @@ struct PlantEntryListItem<Content: View>: View {
 						.padding(.trailing, 10)
 				}
 			}
-		}
-		.cornerRadius(10)
-	}
-}
-
-struct GalleryItem: View {
-	let user: String
-	let date: Date
-	let pictureUrl: String?
-	
-	init(user: String, date: Date, pictureUrl: String? = nil) {
-		self.user = user
-		self.date = date
-		self.pictureUrl = pictureUrl
-	}
-	
-	var body: some View {
-		ZStack {
-			Color.clear
-				.aspectRatio(1, contentMode: .fill)
-				.clipped()
-				.overlay {
-					if let pictureUrl {
-						KFImage(URL(string: pictureUrl)!)
-							.resizable()
-							.scaledToFill()
-					}
-				}
-			VStack {
-				Spacer()
-				HStack {
-					VStack(alignment: .leading) {
-						Text(user)
-							.font(.caption2)
-							.foregroundColor(.black)
-						Text(date.toString(.MMMdy))
-							.font(.caption2)
-							.foregroundColor(.black)
-						Text(date.toString(.HHmm))
-							.font(.caption2)
-							.foregroundColor(.black)
-					}
-					Spacer()
-				}
-			}
-			.padding(6)
 		}
 		.cornerRadius(10)
 	}
