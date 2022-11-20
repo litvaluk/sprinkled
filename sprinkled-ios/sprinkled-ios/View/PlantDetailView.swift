@@ -45,8 +45,15 @@ struct PlantDetailView: View {
 			.ignoresSafeArea(.all, edges: [.top])
 		}
 		.fullScreenCover(isPresented: $vm.addPlantEntryPresented) {
-			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: vm.plant, errorPopupsState: errorPopupsState))
+			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: vm.plant, errorPopupsState: errorPopupsState, setupPlanPresented: $vm.setupPlanPresented, lastCreatedPlantEntryId: $vm.lastCreatedPlantEntryId))
 				.ignoresSafeArea(.keyboard, edges: .bottom)
+		}
+		.fullScreenCover(isPresented: $vm.setupPlanPresented) {
+			Button {
+				vm.setupPlanPresented = false
+			} label: {
+				Text("Last created plant entry id: \(vm.lastCreatedPlantEntryId ?? 0)") // MARK: TODO
+			}
 		}
 		.overlay(alignment: .topLeading) {
 			Button {

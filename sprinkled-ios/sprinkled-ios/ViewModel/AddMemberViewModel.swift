@@ -56,10 +56,11 @@ final class AddMemberViewModel: ObservableObject {
 	}
 	
 	@MainActor
-	func addTeamMember(userId: Int) async {
+	func addTeamMember(userId: Int) async -> Bool {
 		do {
 			try await api.addTeamMember(teamId: teamId, userId: userId)
 			teamMemberIds.append(userId)
+			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
 		} catch APIError.connectionFailed {
@@ -67,5 +68,6 @@ final class AddMemberViewModel: ObservableObject {
 		} catch {
 			errorPopupsState.showGenericError = true
 		}
+		return false
 	}
 }

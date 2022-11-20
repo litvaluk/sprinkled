@@ -77,4 +77,13 @@ export class EventController {
   async deleteEvent(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     await this.eventService.remove(id);
   }
+
+  @Post(':id/complete')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async completeEvent(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
+    @UserId() userId: number,
+  ) {
+    await this.eventService.complete(id, userId);
+  }
 }

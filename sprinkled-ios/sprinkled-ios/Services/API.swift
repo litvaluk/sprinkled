@@ -34,6 +34,7 @@ protocol APIProtocol {
 	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture
 	func deletePicture(pictureId: Int) async throws -> Void
 	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void
+	func completeEvent(eventId: Int) async throws -> Void
 }
 
 final class API : APIProtocol {
@@ -263,6 +264,10 @@ final class API : APIProtocol {
 		}
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		try await makeAuthenticatedRequest(path: "plant-entries", method: "POST", body: bodyData)
+	}
+	
+	func completeEvent(eventId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "events/\(eventId)/complete", method: "POST")
 	}
 	
 	private func refreshToken() async throws {
@@ -571,6 +576,10 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void {
+		return
+	}
+	
+	func completeEvent(eventId: Int) async throws -> Void {
 		return
 	}
 }

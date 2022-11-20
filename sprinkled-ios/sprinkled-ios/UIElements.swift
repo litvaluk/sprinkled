@@ -175,3 +175,63 @@ struct SprinkledButton: View {
 		}
 	}
 }
+
+struct SprinkledListActionButton: View {
+	let title: String
+	let completedTitle: String
+	let textPadding: CGFloat
+	let action: () async -> Bool
+	@State var isProcessing = false
+	@State var completed: Bool? = nil
+	
+	init(title: String, completedTitle: String, textPadding: CGFloat = 6, action: @escaping () async -> Bool) {
+		self.title = title
+		self.completedTitle = completedTitle
+		self.textPadding = textPadding
+		self.action = action
+	}
+	
+	var body: some View {
+		if let completed {
+			if (completed) {
+				Text(completedTitle)
+					.font(.footnote)
+					.fontWeight(.medium)
+					.foregroundColor(.secondary)
+					.padding(.trailing)
+			} else {
+				Text("Failed")
+					.font(.footnote)
+					.fontWeight(.medium)
+					.foregroundColor(.secondary)
+					.padding(.trailing)
+			}
+		} else if (isProcessing) {
+			ProgressView()
+				.padding(.trailing)
+		} else {
+			Button {
+				isProcessing = true
+				Task {
+					if (await action()) {
+						completed = true
+					} else {
+						completed = false
+					}
+				}
+			} label: {
+				ZStack {
+					Text(title)
+						.font(.subheadline)
+						.foregroundColor(.white)
+						.padding(textPadding)
+						.background {
+							Color.sprinkledGreen
+								.cornerRadius(8)
+						}
+				}
+				.padding(.trailing, 9)
+			}
+		}
+	}
+}

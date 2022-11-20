@@ -22,4 +22,14 @@ class Utils {
 			return feet != 0 ? String(feet) + "'" + String(inches) + "\"" : String(inches) + "\""
 		}
 	}
+	
+	static let actions = [
+		Action(id: 1, type: "Water"),
+		Action(id: 2, type: "Mist"),
+		Action(id: 3, type: "Fertilize"),
+		Action(id: 4, type: "Harvest"),
+		Action(id: 5, type: "Cut"),
+		Action(id: 6, type: "Sow"),
+		Action(id: 7, type: "Repot")
+	]
 }

@@ -3,14 +3,14 @@ import SwiftUI
 final class AddEventViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 
-	@Published var actionSelection = "water"
+	@Published var actionSelection = "Water"
 	@Published var date = Date().zeroSeconds()
 	@Published var isProcessing = false
 	@Published var errorMessage = ""
 	
 	let plantEntryId: Int
 	let plantEntryName: String
-	let actions = TestData.actions
+	let actions = Utils.actions
 	
 	private let errorPopupsState: ErrorPopupsState
 	

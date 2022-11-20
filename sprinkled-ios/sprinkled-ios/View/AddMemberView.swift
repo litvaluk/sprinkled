@@ -29,15 +29,15 @@ struct AddMemberView: View {
 				if (vm.loading && vm.users.isEmpty) {
 					ForEach(0..<5) { _ in
 						SprinkledListItem(title: .placeholder(8)) {
-							AddButton() {}
+							SprinkledListActionButton(title: .placeholder(8), completedTitle: .placeholder(8)) {true}
 						}
 						.redactedShimmering()
 					}
 				} else {
 					ForEach(vm.filteredUsers) { user in
 						SprinkledListItem(title: user.username) {
-							AddButton() {
-								await vm.addTeamMember(userId: user.id)
+							SprinkledListActionButton(title: "Add", completedTitle: "Added") {
+								return await vm.addTeamMember(userId: user.id)
 							}
 						}
 					}
@@ -53,39 +53,6 @@ struct AddMemberView: View {
 		.padding(.bottom)
 		.navigationTitle("Add member")
     }
-}
-
-struct AddButton: View {
-	let action: () async -> Void
-	@State var adding = false
-	@State var added = false
-	
-	var body: some View {
-		if (added) {
-			Text("Added")
-				.font(.subheadline)
-				.fontWeight(.medium)
-				.foregroundColor(.secondary)
-		} else if (adding) {
-			ProgressView()
-		} else {
-			Button {
-				adding = true
-				Task {
-					await action()
-					added = true
-				}
-			} label: {
-				Image(systemName: "plus.circle.fill")
-					.resizable()
-					.scaledToFit()
-					.frame(width: 20, height: 20)
-					.fontWeight(.semibold)
-					.foregroundColor(.primary)
-					.padding(.trailing)
-			}
-		}
-	}
 }
 
 struct AddMemberView_Previews: PreviewProvider {

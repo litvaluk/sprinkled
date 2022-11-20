@@ -85,6 +85,9 @@ struct AddPlantEntryView: View {
 							Task {
 								if (await vm.createPlantEntry()) {
 									presentationMode.wrappedValue.dismiss()
+									DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+										vm.setupPlanPresented.wrappedValue = true
+									}
 								}
 							}
 						}
@@ -96,7 +99,7 @@ struct AddPlantEntryView: View {
 					VStack(spacing: 10) {
 						Button {
 							vm.showImagePickerChoiceSheet = false
-							DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 								vm.showCameraImagePicker = true
 							}
 						} label: {
@@ -141,6 +144,6 @@ struct AddPlantEntryView: View {
 
 struct AddPlantEntryView_Previews: PreviewProvider {
     static var previews: some View {
-			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: TestData.plants[0], errorPopupsState: ErrorPopupsState()))
+		AddPlantEntryView(vm: AddPlantEntryViewModel(plant: TestData.plants[0], errorPopupsState: ErrorPopupsState(), setupPlanPresented: .constant(false), lastCreatedPlantEntryId: .constant(nil)))
     }
 }

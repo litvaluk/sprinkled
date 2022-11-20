@@ -32,6 +32,20 @@ final class TaskViewModel: ObservableObject {
 		uncompletedEventsMap = OrderedDictionary.init(grouping: uncompletedEvents) { event in
 			event.date.toString(.MMMd)
 		}
-		
+	}
+	
+	@MainActor
+	func completeEvent(eventId: Int) async -> Bool {
+		do {
+			try await api.completeEvent(eventId: eventId)
+			return true
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
+			// nothing
+		} catch APIError.connectionFailed {
+			errorPopupsState.showConnectionError = true
+		} catch {
+			errorPopupsState.showGenericError = true
+		}
+		return false
 	}
 }

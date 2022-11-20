@@ -18,11 +18,15 @@ final class AddPlantEntryViewModel: ObservableObject {
 	@Published var errorMessage = ""
 	
 	let plant: Plant
+	var setupPlanPresented: Binding<Bool>
+	var lastCreatedPlantEntryId: Binding<Int?>
 	private let errorPopupsState: ErrorPopupsState
 	
-	init(plant: Plant, errorPopupsState: ErrorPopupsState) {
+	init(plant: Plant, errorPopupsState: ErrorPopupsState, setupPlanPresented: Binding<Bool>, lastCreatedPlantEntryId: Binding<Int?>) {
 		self.plant = plant
 		self.errorPopupsState = errorPopupsState
+		self.setupPlanPresented = setupPlanPresented
+		self.lastCreatedPlantEntryId = lastCreatedPlantEntryId
 	}
 	
 	@MainActor
@@ -77,6 +81,7 @@ final class AddPlantEntryViewModel: ObservableObject {
 			} else {
 				try await api.addPlantEntry(name: name, headerPictureUrl: nil, placeId: selectedPlace.id, plantId: plant.id)
 			}
+			lastCreatedPlantEntryId.wrappedValue = 1 // MARK: TODO
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

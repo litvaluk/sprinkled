@@ -3,7 +3,7 @@ import SwiftUI
 final class AddReminderViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 	
-	@Published var actionSelection = "water"
+	@Published var actionSelection = "Water"
 	@Published var date = Date().zeroSeconds()
 	@Published var repeating = false
 	@Published var period = 1
@@ -13,7 +13,7 @@ final class AddReminderViewModel: ObservableObject {
 	
 	let plantEntryId: Int
 	let plantEntryName: String
-	let actions = TestData.actions
+	let actions = Utils.actions
 	
 	private let errorPopupsState: ErrorPopupsState
 	

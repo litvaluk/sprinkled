@@ -143,4 +143,17 @@ export class EventService {
       },
     });
   }
+
+  async complete(id: number, userId: number) {
+    await this.prisma.event.update({
+      where: {
+        id: id,
+      },
+      data: {
+        date: new Date(),
+        completed: true,
+        userId: userId,
+      },
+    });
+  }
 }
