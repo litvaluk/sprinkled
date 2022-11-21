@@ -6,10 +6,11 @@ struct AuthView: View {
 	var body: some View {
 		VStack (spacing: 8) {
 			if (!viewModel.isKeyboardPresented || viewModel.isSignInViewDisplayed) {
-				Text("Sprinkled")
-					.font(.system(size: 48))
-					.fontWeight(.medium)
-					.padding()
+				Image("SprinkledLogoText")
+					.resizable()
+					.scaledToFit()
+					.padding(.vertical, 16)
+					.padding(.horizontal, 70)
 			}
 			if (viewModel.isSignInViewDisplayed) {
 				TextField("Username", text: $viewModel.signInUsername)
