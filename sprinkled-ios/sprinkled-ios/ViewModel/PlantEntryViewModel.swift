@@ -40,7 +40,7 @@ final class PlantEntryViewModel: ObservableObject {
 	
 	func deleteReminder() async -> Bool {
 		guard let reminderToDelete else {
-			print("eventToDelete is nil")
+			print("reminderToDelete is nil")
 			return false
 		}
 		do {

@@ -199,7 +199,7 @@ struct PlantEntryHeaderView: View {
 					.foregroundColor(.primary)
 					.font(.title)
 					.redactedShimmering(if: vm.plantEntry == nil)
-				Text(vm.plantEntry?.name ?? .placeholder(10))
+				Text(vm.plantEntry?.plant.commonName ?? .placeholder(10))
 					.foregroundColor(.primary)
 					.font(.title3)
 					.redactedShimmering(if: vm.plantEntry == nil)
@@ -456,30 +456,6 @@ struct PlantEntryListItem<Content: View>: View {
 						.scaledToFit()
 						.frame(width: 18, height: 18)
 						.padding(.trailing, 10)
-//					ZStack(alignment: .center) {
-//						RoundedRectangle(cornerRadius: 5)
-//							.foregroundColor(.sprinkledGreen)
-//							.frame(width: 20, height: 20)
-//							.overlay {
-//								HStack {
-//									Spacer()
-//									Image(systemName: "ellipsis")
-//										.resizable()
-//										.scaledToFit()
-//										.foregroundColor(.white)
-//										.fontWeight(.bold)
-//										.frame(width: 12, height: 12)
-//
-//									Spacer()
-//								}
-//							}
-//							.padding(.trailing, 10)
-//					}
-//					Image("GearIcon")
-//						.resizable()
-//						.scaledToFit()
-//						.frame(width: 20, height: 20)
-//						.padding(.trailing, 10)
 				}
 			}
 		}

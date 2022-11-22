@@ -26,6 +26,11 @@ export class PlantEntryService {
         id: id,
       },
       include: {
+        plant: {
+          select: {
+            commonName: true,
+          },
+        },
         events: {
           where: {
             completed: true,

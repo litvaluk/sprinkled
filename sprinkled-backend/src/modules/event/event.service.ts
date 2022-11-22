@@ -155,5 +155,25 @@ export class EventService {
         userId: userId,
       },
     });
+    await this._removeLinkedReminderIfNeeded(id);
+  }
+
+  private async _removeLinkedReminderIfNeeded(eventId: number) {
+    let reminder = await this.prisma.reminder.findFirst({
+      where: {
+        events: {
+          some: {
+            id: eventId,
+          },
+        },
+      },
+    });
+    if (reminder && reminder.period === 0) {
+      await this.prisma.reminder.delete({
+        where: {
+          id: reminder.id,
+        },
+      });
+    }
   }
 }

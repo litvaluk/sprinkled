@@ -16,7 +16,7 @@ struct TaskView: View {
 					} else {
 						LazyVStack(spacing: 7) {
 							ForEach(Array(uncompletedEventsMap), id: \.key) { dayAndMonths, event in
-								Section {
+								SprinkledListSection(headerText: dayAndMonths) {
 									VStack(spacing: 7) {
 										ForEach(event, id: \.id) { event in
 											TaskListItem(title: event.action.type.capitalizedFirstLetter(), subtitle: "\(event.plantEntry.name)", action: event.action.type, date: event.date, redacted: false, complete: {
@@ -25,14 +25,6 @@ struct TaskView: View {
 										}
 									}
 									.padding(.bottom)
-								} header: {
-									HStack {
-										Text(dayAndMonths)
-											.font(.subheadline)
-											.foregroundColor(.secondary)
-											.fontWeight(.semibold)
-										Spacer()
-									}
 								}
 							}
 						}

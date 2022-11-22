@@ -85,11 +85,11 @@ struct PlaceView: View {
 						Text("Delete place")
 					}
 				} label: {
-					Image("GearIcon")
+					Image(systemName: "ellipsis.circle")
 						.resizable()
 						.scaledToFit()
-						.frame(width: 30, height: 30)
-						.foregroundColor(.primary)
+						.frame(width: 25, height: 25)
+						.foregroundColor(.sprinkledGreen)
 				}
 			}
 		}

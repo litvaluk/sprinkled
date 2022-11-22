@@ -26,10 +26,10 @@ class Utils {
 	static let actions = [
 		Action(id: 1, type: "Water"),
 		Action(id: 2, type: "Mist"),
-		Action(id: 3, type: "Fertilize"),
-		Action(id: 4, type: "Harvest"),
-		Action(id: 5, type: "Cut"),
+		Action(id: 3, type: "Cut"),
+		Action(id: 4, type: "Repot"),
+		Action(id: 5, type: "Fertilize"),
 		Action(id: 6, type: "Sow"),
-		Action(id: 7, type: "Repot")
+		Action(id: 7, type: "Harvest")
 	]
 }

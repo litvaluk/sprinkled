@@ -28,7 +28,6 @@ final class TaskViewModel: ObservableObject {
 			errorPopupsState.showGenericError = true
 			return
 		}
-		uncompletedEvents = uncompletedEvents.filter { $0.date > .now }
 		uncompletedEventsMap = OrderedDictionary.init(grouping: uncompletedEvents) { event in
 			event.date.toString(.MMMd)
 		}

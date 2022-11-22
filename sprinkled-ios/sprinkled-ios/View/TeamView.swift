@@ -69,11 +69,11 @@ struct TeamView: View {
 										}
 									}
 								} label: {
-									Image(systemName: "ellipsis")
+									Image(systemName: "ellipsis.circle")
 										.resizable()
 										.scaledToFit()
 										.frame(width: 20)
-										.foregroundColor(.primary)
+										.foregroundColor(.sprinkledGreen)
 								}
 							}
 						}
@@ -108,11 +108,11 @@ struct TeamView: View {
 							Text("Delete team")
 						}
 					} label: {
-						Image(systemName: "ellipsis")
+						Image(systemName: "ellipsis.circle")
 							.resizable()
 							.scaledToFit()
 							.frame(width: 25, height: 25)
-							.foregroundColor(.primary)
+							.foregroundColor(.sprinkledGreen)
 					}
 				}
 			}

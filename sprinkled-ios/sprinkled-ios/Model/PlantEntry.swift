@@ -7,8 +7,13 @@ struct PlantEntry: Codable, Identifiable, Hashable, Equatable {
 	let creatorId: Int
 	let placeId: Int
 	let plantId: Int
+	let plant: PlantForPlantEntry
 	let headerPictureUrl: String?
 	let events: [Event]
 	let reminders: [Reminder]
 	let pictures: [Picture]
+	
+	struct PlantForPlantEntry: Codable, Hashable, Equatable {
+		let commonName: String
+	}
 }
