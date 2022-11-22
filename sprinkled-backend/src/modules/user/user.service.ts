@@ -20,9 +20,6 @@ export class UserService {
       },
     });
 
-    let deviceId = await this.addDeviceIfNeeded(createUserDto.deviceId, createdUser.id);
-    await this.addPushTokenIfNeeded(createUserDto.pushToken, deviceId);
-
     return createdUser;
   }
 
@@ -140,26 +137,5 @@ export class UserService {
     }
 
     return device.id;
-  }
-
-  async addPushTokenIfNeeded(pushToken: string, deviceId: number) {
-    const pushTokenExists = await this.prisma.pushToken.findFirst({
-      where: {
-        token: pushToken,
-      },
-    });
-
-    if (!pushTokenExists) {
-      await this.prisma.pushToken.create({
-        data: {
-          token: pushToken,
-          device: {
-            connect: {
-              id: deviceId,
-            },
-          },
-        },
-      });
-    }
   }
 }

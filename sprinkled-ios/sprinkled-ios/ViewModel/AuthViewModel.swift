@@ -28,10 +28,7 @@ final class AuthViewModel: ObservableObject {
 			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
 				throw IdentifierForVendorNotFound()
 			}
-			guard !pushToken.isEmpty else {
-				throw InvalidPushToken()
-			}
-			try await self.api.signIn(signInUsername, signInPassword, deviceId, pushToken)
+			try await self.api.signIn(signInUsername, signInPassword, deviceId)
 		} catch APIError.errorResponse(let descriptions) {
 			errorMessage = descriptions.joined(separator: "\n")
 		} catch APIError.connectionFailed {
@@ -58,10 +55,7 @@ final class AuthViewModel: ObservableObject {
 			guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
 				throw IdentifierForVendorNotFound()
 			}
-			guard !pushToken.isEmpty else {
-				throw InvalidPushToken()
-			}
-			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId, pushToken)
+			try await self.api.signUp(signUpUsername, signUpEmail, signUpPassword, deviceId)
 		} catch APIError.errorResponse(let descriptions) {
 			errorMessage = descriptions.joined(separator: "\n")
 		} catch APIError.connectionFailed {

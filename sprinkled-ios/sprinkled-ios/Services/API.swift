@@ -2,8 +2,8 @@ import Foundation
 import JWTDecode
 
 protocol APIProtocol {
-	func signIn(_ username: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws -> Void
-	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws -> Void
+	func signIn(_ username: String, _ password: String, _ deviceId: String) async throws -> Void
+	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
 	func fetchTeamSummaries() async throws -> [TeamSummary]
 	func createNewTeam(name: String) async throws -> Team
@@ -35,17 +35,17 @@ protocol APIProtocol {
 	func deletePicture(pictureId: Int) async throws -> Void
 	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void
 	func completeEvent(eventId: Int) async throws -> Void
+	func addPushToken(pushToken: String, deviceId: String) async throws -> Void
 }
 
 final class API : APIProtocol {
 	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "https://sprinkled-app.herokuapp.com"
 	
-	func signIn(_ username: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws {
+	func signIn(_ username: String, _ password: String, _ deviceId: String) async throws {
 		let body = [
 			"username": username,
 			"password": password,
-			"deviceId": deviceId,
-			"pushToken": pushToken
+			"deviceId": deviceId
 		]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		let response: AuthResponse = try await makeRequest(path: "auth/login", method: "POST", body: bodyData)
@@ -53,13 +53,12 @@ final class API : APIProtocol {
 		UserDefaults.standard.set(response.refreshToken, forKey: "refreshToken")
 	}
 	
-	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws {
+	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String) async throws {
 		let body = [
 			"username": username,
 			"email": email,
 			"password": password,
-			"deviceId": deviceId,
-			"pushToken": pushToken
+			"deviceId": deviceId
 		]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		let response: AuthResponse = try await makeRequest(path: "auth/register", method: "POST", body: bodyData)
@@ -270,6 +269,15 @@ final class API : APIProtocol {
 		try await makeAuthenticatedRequest(path: "events/\(eventId)/complete", method: "POST")
 	}
 	
+	func addPushToken(pushToken: String, deviceId: String) async throws -> Void {
+		let body = [
+			"pushToken": pushToken,
+			"deviceId": deviceId
+		] as [String : Any]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "notifications/addPushToken", method: "POST", body: bodyData)
+	}
+		
 	private func refreshToken() async throws {
 		print("🔑", "Refreshing access token")
 		let url = URL(string: "\(baseUrl)/auth/refresh")!
@@ -451,11 +459,11 @@ final class API : APIProtocol {
 }
 
 final class TestAPI : APIProtocol {
-	func signIn(_ username: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws {
+	func signIn(_ username: String, _ password: String, _ deviceId: String) async throws {
 		return
 	}
 	
-	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String, _ pushToken: String) async throws {
+	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String) async throws {
 		return
 	}
 	
@@ -580,6 +588,10 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func completeEvent(eventId: Int) async throws -> Void {
+		return
+	}
+	
+	func addPushToken(pushToken: String, deviceId: String) async throws -> Void {
 		return
 	}
 }

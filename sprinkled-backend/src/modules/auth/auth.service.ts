@@ -62,8 +62,7 @@ export class AuthService {
       throw new ForbiddenException(['Invalid username or password.']);
     }
 
-    let deviceId = await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
-    await this.userService.addPushTokenIfNeeded(loginDto.pushToken, deviceId);
+    await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
 
     const tokens = await this._generateTokens(user.id, user.username);
     await this.userService.updateTokens(user.id, tokens.accessToken, tokens.refreshToken);

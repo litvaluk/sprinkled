@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsString, IsUUID } from 'class-validator';
 
 export class LoginDto {
   @IsString()
@@ -9,8 +9,4 @@ export class LoginDto {
 
   @IsUUID()
   deviceId: string;
-
-  @IsString()
-  @IsNotEmpty()
-  pushToken: string;
 }

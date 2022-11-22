@@ -42,6 +42,27 @@ export class NotificationService {
     await this._sendNotificationToUsers(usersToBeNotified, title, body, NotificationType.EVENT);
   }
 
+  async addPushTokenIfNeeded(pushToken: string, deviceId: string) {
+    const pushTokenExists = await this.prisma.pushToken.findFirst({
+      where: {
+        token: pushToken,
+      },
+    });
+
+    if (!pushTokenExists) {
+      await this.prisma.pushToken.create({
+        data: {
+          token: pushToken,
+          device: {
+            connect: {
+              deviceId: deviceId,
+            },
+          },
+        },
+      });
+    }
+  }
+
   async enableReminderNotifications(deviceId: string) {
     await this.prisma.device.update({
       where: {

@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAccessTokenGuard } from '../auth/guard';
+import { AddPushTokenDto } from '../user/dto/add-push-token.dto';
 import { ToggleNotificationsDto } from './dto';
 import { NotificationService } from './notification.service';
 
@@ -10,6 +11,11 @@ import { NotificationService } from './notification.service';
 @ApiTags('notifications')
 export class NotificationController {
   constructor(private notificationService: NotificationService) {}
+
+  @Post('addPushToken')
+  async addPushToken(@Body() addPushTokenDto: AddPushTokenDto) {
+    this.notificationService.addPushTokenIfNeeded(addPushTokenDto.pushToken, addPushTokenDto.deviceId);
+  }
 
   @Post('enable-reminder-notifications')
   @HttpCode(HttpStatus.NO_CONTENT)
