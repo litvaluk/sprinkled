@@ -47,7 +47,6 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -68,7 +67,6 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -84,7 +82,6 @@ describe('Sprinkled', () => {
           email: 'newUser@gmail.com',
           password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -100,7 +97,6 @@ describe('Sprinkled', () => {
           email: 'newUser2@gmail.com',
           password: 'pwd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -117,7 +113,6 @@ describe('Sprinkled', () => {
           username: 'newUser',
           password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -137,7 +132,6 @@ describe('Sprinkled', () => {
           username: 'newUser',
           password: 'wrong_password',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -152,7 +146,6 @@ describe('Sprinkled', () => {
           username: 'non_existing_user',
           password: 'passw0rd',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         };
         return pactum
           .spec()
@@ -226,7 +219,6 @@ describe('Sprinkled', () => {
           username: 'user',
           password: 'password',
           deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-          pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
         })
         .stores('accessTokenUser', 'accessToken');
     });
@@ -321,7 +313,6 @@ describe('Sprinkled', () => {
             username: 'userToBeDeleted',
             password: 'password',
             deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-            pushToken: 'a3e5a635bd77a25b3d0e70d946b7d64b6f9177c32c216618219fdbf13d7b2a31',
           })
           .stores('accessTokenUserToBeDeleted', 'accessToken');
       });
