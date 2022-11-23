@@ -29,17 +29,17 @@ export class NotificationService {
       await this._sendNotificationToUsers(
         usersLinkedToEvent,
         'Sprinkled',
-        'It is time to ' + event.action.type + '.',
+        'It is time to ' + event.action.type.toLowerCase() + ' the ' + event.plantEntry.name + '.',
         NotificationType.REMINDER,
       );
       await this._markEventAsReminded(event.id);
     }
   }
 
-  async sendEventNotification(eventId: number, triggeredByUserId: number, title: string, body: string) {
+  async sendEventNotification(eventId: number, triggeredByUserId: number, body: string) {
     let usersLinkedToEvent = await this._getUsersLinkedToEvent(eventId);
     let usersToBeNotified = usersLinkedToEvent.filter((user) => user.id !== triggeredByUserId);
-    await this._sendNotificationToUsers(usersToBeNotified, title, body, NotificationType.EVENT);
+    await this._sendNotificationToUsers(usersToBeNotified, 'Sprinkled', body, NotificationType.EVENT);
   }
 
   async addPushTokenIfNeeded(pushToken: string, deviceId: string) {
@@ -130,7 +130,7 @@ export class NotificationService {
     } else if (notificationType === NotificationType.EVENT) {
       notificationsEnabledConstraint = {
         device: {
-          reminderNotificationsEnabled: true,
+          eventNotfificationsEnabled: true,
         },
       };
     } else {
@@ -158,7 +158,16 @@ export class NotificationService {
         reminded: false,
       },
       include: {
-        action: true,
+        action: {
+          select: {
+            type: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

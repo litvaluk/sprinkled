@@ -7,7 +7,7 @@ import { CreateEventDto, UpdateEventDto } from './dto';
 export class EventService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createEventDto: CreateEventDto, userId: number): Promise<Event> {
+  async create(createEventDto: CreateEventDto, userId: number) {
     return await this.prisma.event.create({
       data: {
         ...createEventDto,
@@ -145,7 +145,7 @@ export class EventService {
   }
 
   async complete(id: number, userId: number) {
-    await this.prisma.event.update({
+    let updated = await this.prisma.event.update({
       where: {
         id: id,
       },
@@ -154,8 +154,21 @@ export class EventService {
         completed: true,
         userId: userId,
       },
+      include: {
+        action: {
+          select: {
+            type: true,
+          },
+        },
+        plantEntry: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     await this._removeLinkedReminderIfNeeded(id);
+    return updated;
   }
 
   private async _removeLinkedReminderIfNeeded(eventId: number) {

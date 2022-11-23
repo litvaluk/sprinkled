@@ -33,6 +33,16 @@ export class EventController {
     private readonly notificationService: NotificationService,
   ) {}
 
+  private actionTypePastTenses = new Map<string, string>([
+    ['Water', 'watered'],
+    ['Mist', 'misted'],
+    ['Cut', 'cut'],
+    ['Repot', 'repotted'],
+    ['Fertilize', 'fertilized'],
+    ['Sow', 'sowed'],
+    ['Harvest', 'harvested'],
+  ]);
+
   @Post()
   async createEvent(@Body() createEventDto: CreateEventDto, @UserId() userId: number): Promise<Event> {
     let newEvent = await this.eventService.create(createEventDto, userId);
@@ -40,8 +50,13 @@ export class EventController {
     await this.notificationService.sendEventNotification(
       newEvent.id,
       user.id,
-      'Sprinkled',
-      'User ' + user.username + ' has just added a new event.',
+      'User ' +
+        user.username +
+        'has just added a new ' +
+        newEvent.action.type.toLowerCase() +
+        ' event to the' +
+        newEvent.plantEntry.name +
+        '.',
     );
     return newEvent;
   }
@@ -84,6 +99,12 @@ export class EventController {
     @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
     @UserId() userId: number,
   ) {
-    await this.eventService.complete(id, userId);
+    let event = await this.eventService.complete(id, userId);
+    let user = await this.userService.findOneSafe(userId);
+    await this.notificationService.sendEventNotification(
+      id,
+      userId,
+      'User ' + user.username + ' has just ' + this.actionTypePastTenses.get(event.action.type) + ' the ' + event.plantEntry.name + '.',
+    );
   }
 }
