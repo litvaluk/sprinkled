@@ -300,8 +300,10 @@ final class API : APIProtocol {
 		}
 		
 		if ((response as? HTTPURLResponse)?.statusCode == 401) {
-			UserDefaults.standard.set("", forKey: "accessToken")
-			UserDefaults.standard.set("", forKey: "refreshToken")
+			if (refreshToken == UserDefaults.standard.string(forKey: "refreshToken")) {
+				UserDefaults.standard.set("", forKey: "accessToken")
+				UserDefaults.standard.set("", forKey: "refreshToken")
+			}
 			return
 		}
 		
