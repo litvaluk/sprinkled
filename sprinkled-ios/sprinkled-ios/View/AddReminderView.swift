@@ -12,7 +12,7 @@ struct AddReminderView: View {
 					.font(.title2)
 				Spacer()
 			}
-			SprinkledListMenuPicker(title: "For action", options: vm.actions.map{$0.type}, selection: $vm.actionSelection)
+			SprinkledListMenuPicker(title: "For action", options: Utils.actions.map{$0.type}, selection: $vm.actionSelection)
 			SprinkledListToggle(title: "Repeating", isOn: $vm.repeating.animation(.easeInOut(duration: 0.2)))
 			if(vm.repeating) {
 				VStack(spacing: 0) {

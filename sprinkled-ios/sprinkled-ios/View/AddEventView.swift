@@ -12,7 +12,7 @@ struct AddEventView: View {
 					.font(.title2)
 				Spacer()
 			}
-			SprinkledListMenuPicker(title: "Action", options: vm.actions.map{$0.type}, selection: $vm.actionSelection)
+			SprinkledListMenuPicker(title: "Action", options: Utils.actions.map{$0.type}, selection: $vm.actionSelection)
 			SprinkledListDatePicker(title: "Date", selection: $vm.date, displayedComponents: .date)
 			SprinkledListDatePicker(title: "Time", selection: $vm.date, displayedComponents: .hourAndMinute)
 			if (!vm.errorMessage.isEmpty) {

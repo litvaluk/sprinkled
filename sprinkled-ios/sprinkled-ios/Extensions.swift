@@ -87,6 +87,11 @@ extension Date {
 		Date(timeIntervalSince1970: 0)
 	}
 	
+	var startOfNextDay: Date {
+		let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: self)!
+		return Calendar.current.startOfDay(for: tomorrow)
+	}
+	
 	func encodeToStringForTransfer() -> String {
 		self.ISO8601Format(.iso8601(timeZone: .gmt, includingFractionalSeconds: true)) + "Z"
 	}

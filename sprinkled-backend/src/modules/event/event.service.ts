@@ -167,11 +167,11 @@ export class EventService {
         },
       },
     });
-    await this._removeLinkedReminderIfNeeded(id);
+    await this._removeReminderOrCreateNewEvent(id);
     return updated;
   }
 
-  private async _removeLinkedReminderIfNeeded(eventId: number) {
+  private async _removeReminderOrCreateNewEvent(eventId: number) {
     let reminder = await this.prisma.reminder.findFirst({
       where: {
         events: {
@@ -187,6 +187,31 @@ export class EventService {
           id: reminder.id,
         },
       });
+    } else if (reminder) {
+      let lastEvent = await this.prisma.event.findFirst({
+        where: {
+          reminderId: reminder.id,
+        },
+        orderBy: {
+          date: 'desc',
+        },
+      });
+      await this.prisma.event.create({
+        data: {
+          actionId: lastEvent.actionId,
+          plantEntryId: lastEvent.plantEntryId,
+          reminderId: lastEvent.reminderId,
+          date: this._addDays(lastEvent.date, reminder.period),
+          completed: false,
+          reminded: false,
+        },
+      });
     }
+  }
+
+  private _addDays(date: Date, days: number) {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }

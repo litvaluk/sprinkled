@@ -1,6 +1,6 @@
 import Foundation
 
-struct Event: Codable, Identifiable, Hashable, Equatable {
+struct Event: Codable, Identifiable, Comparable, Hashable, Equatable {
 	let id: Int
 	let date: Date
 	let userId: Int?
@@ -16,5 +16,9 @@ struct Event: Codable, Identifiable, Hashable, Equatable {
 	struct PlantEntryIdAndName: Codable, Identifiable, Hashable, Equatable {
 		let id: Int
 		let name: String
+	}
+	
+	static func < (lhs: Event, rhs: Event) -> Bool {
+		return lhs.date < rhs.date
 	}
 }

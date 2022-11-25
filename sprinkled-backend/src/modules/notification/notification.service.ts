@@ -130,7 +130,7 @@ export class NotificationService {
     } else if (notificationType === NotificationType.EVENT) {
       notificationsEnabledConstraint = {
         device: {
-          eventNotfificationsEnabled: true,
+          eventNotificationsEnabled: true,
         },
       };
     } else {

@@ -114,7 +114,7 @@ struct TaskListItem: View {
 							.padding(.trailing, 9)
 					}
 				}
-				.disabled(redacted)
+				.disabled(redacted || date >= Date().startOfNextDay)
 			}
 		}
 		.cornerRadius(10)

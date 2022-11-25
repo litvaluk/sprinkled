@@ -183,6 +183,7 @@ struct SprinkledListActionButton: View {
 	let action: () async -> Bool
 	@State var isProcessing = false
 	@State var completed: Bool? = nil
+	@Environment(\.isEnabled) private var isEnabled
 	
 	init(title: String, completedTitle: String, textPadding: CGFloat = 6, action: @escaping () async -> Bool) {
 		self.title = title
@@ -226,8 +227,13 @@ struct SprinkledListActionButton: View {
 						.foregroundColor(.white)
 						.padding(textPadding)
 						.background {
-							Color.sprinkledGreen
-								.cornerRadius(8)
+							if (isEnabled) {
+								Color.sprinkledGreen
+									.cornerRadius(8)
+							} else {
+								Color.gray
+									.cornerRadius(8)
+							}
 						}
 				}
 				.padding(.trailing, 9)

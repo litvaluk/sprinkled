@@ -189,13 +189,13 @@ ALTER TABLE "places" ADD CONSTRAINT "places_userId_fkey" FOREIGN KEY ("userId") 
 ALTER TABLE "pictures" ADD CONSTRAINT "pictures_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "pictures" ADD CONSTRAINT "pictures_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pictures" ADD CONSTRAINT "pictures_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_placeId_fkey" FOREIGN KEY ("placeId") REFERENCES "places"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_placeId_fkey" FOREIGN KEY ("placeId") REFERENCES "places"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_plantId_fkey" FOREIGN KEY ("plantId") REFERENCES "plants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -204,7 +204,7 @@ ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_plantId_fkey" FOREIGN 
 ALTER TABLE "events" ADD CONSTRAINT "events_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "events" ADD CONSTRAINT "events_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "events" ADD CONSTRAINT "events_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "events" ADD CONSTRAINT "events_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -216,7 +216,7 @@ ALTER TABLE "events" ADD CONSTRAINT "events_reminderId_fkey" FOREIGN KEY ("remin
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
