@@ -17,7 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+		#if DEBUG
+		let filePath = Bundle.main.path(forResource: "GoogleService-Info-dev", ofType: "plist")!
+		let options = FirebaseOptions(contentsOfFile: filePath)
+		FirebaseApp.configure(options: options!)
+		#else
 		FirebaseApp.configure()
+		#endif
 		@Provider var api = API() as APIProtocol
 		@Provider var notificationManager = NotificationManager() as NotificationManagerProtocol
 		@Provider var storageManager = StorageManager() as StorageManagerProtocol

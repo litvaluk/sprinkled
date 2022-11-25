@@ -27,7 +27,7 @@
 		8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */; };
 		8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76928EEF664008D5AEE /* Extensions.swift */; };
 		8F2FBE18290176CD00614EB4 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */; };
-		8F66E1BD28FD9D950071C879 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */; };
+		8F66E1BD28FD9D950071C879 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F66E1BC28FD9D950071C879 /* GoogleService-Info-dev.plist */; };
 		8F69375C291FF3D30061A93E /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69375B291FF3D30061A93E /* EditEventView.swift */; };
 		8F69375E291FF3EF0061A93E /* EditReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69375D291FF3EF0061A93E /* EditReminderView.swift */; };
 		8F6937602920362B0061A93E /* EditReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69375F2920362B0061A93E /* EditReminderViewModel.swift */; };
@@ -70,6 +70,7 @@
 		8FB43FED290EBEAC009202F4 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */; };
 		8FB43FF0290EBF36009202F4 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8FB43FEF290EBF36009202F4 /* Collections */; };
 		8FB43FF22912C6E9009202F4 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB43FF12912C6E9009202F4 /* UIElements.swift */; };
+		8FCA887B2930F75300A4CDF8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FCA887A2930F75200A4CDF8 /* GoogleService-Info.plist */; };
 		8FE3447C2916A9AF00247333 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447B2916A9AF00247333 /* Utils.swift */; };
 		8FE3447E2918086E00247333 /* AddMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447D2918086E00247333 /* AddMemberView.swift */; };
 		8FE3448029180A6800247333 /* AddMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3447F29180A6800247333 /* AddMemberViewModel.swift */; };
@@ -122,7 +123,7 @@
 		8F24E76928EEF664008D5AEE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8F2FBE15290176CD00614EB4 /* sprinkled-ios-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sprinkled-ios-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
-		8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8F66E1BC28FD9D950071C879 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		8F69375B291FF3D30061A93E /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
 		8F69375D291FF3EF0061A93E /* EditReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReminderView.swift; sourceTree = "<group>"; };
 		8F69375F2920362B0061A93E /* EditReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReminderViewModel.swift; sourceTree = "<group>"; };
@@ -161,6 +162,7 @@
 		8FB0BC5B292287AD00D4C210 /* GenericErrorPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericErrorPopupView.swift; sourceTree = "<group>"; };
 		8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 		8FB43FF12912C6E9009202F4 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
+		8FCA887A2930F75200A4CDF8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8FE3447B2916A9AF00247333 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8FE3447D2918086E00247333 /* AddMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberView.swift; sourceTree = "<group>"; };
 		8FE3447F29180A6800247333 /* AddMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemberViewModel.swift; sourceTree = "<group>"; };
@@ -230,7 +232,8 @@
 				8F6937632920F9480061A93E /* States */,
 				8F24E75928EEDC8D008D5AEE /* View */,
 				8F24E75A28EEDC99008D5AEE /* ViewModel */,
-				8F66E1BC28FD9D950071C879 /* GoogleService-Info.plist */,
+				8F66E1BC28FD9D950071C879 /* GoogleService-Info-dev.plist */,
+				8FCA887A2930F75200A4CDF8 /* GoogleService-Info.plist */,
 				8FA28512292B6C1500DCE542 /* LaunchScreen.storyboard */,
 				8FA38EA528F9A83400C78C2E /* AppDelegate.swift */,
 				8FA563B228F0677800C54AF2 /* Errors.swift */,
@@ -463,10 +466,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FCA887B2930F75300A4CDF8 /* GoogleService-Info.plist in Resources */,
 				8F24E75028EECB8A008D5AEE /* Preview Assets.xcassets in Resources */,
 				8FA28513292B6C1600DCE542 /* LaunchScreen.storyboard in Resources */,
 				8F24E74D28EECB8A008D5AEE /* Assets.xcassets in Resources */,
-				8F66E1BD28FD9D950071C879 /* GoogleService-Info.plist in Resources */,
+				8F66E1BD28FD9D950071C879 /* GoogleService-Info-dev.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -768,7 +772,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LZFDNCMC92;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -789,7 +793,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = LZFDNCMC92;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

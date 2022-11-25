@@ -39,7 +39,11 @@ protocol APIProtocol {
 }
 
 final class API : APIProtocol {
-	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "https://sprinkled-app.herokuapp.com"
+	#if DEBUG
+	let baseUrl = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://localhost:3000"
+	#else
+	let baseUrl = "https://sprinkled-app.herokuapp.com"
+	#endif
 	
 	func signIn(_ username: String, _ password: String, _ deviceId: String) async throws {
 		let body = [

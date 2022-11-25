@@ -11,7 +11,6 @@ final class EditEventViewModel: ObservableObject {
 	let plantEntryId: Int
 	let plantEntryName: String
 	let eventId: Int
-	let actions = TestData.actions
 	
 	private let errorPopupsState: ErrorPopupsState
 	
@@ -35,7 +34,7 @@ final class EditEventViewModel: ObservableObject {
 		}
 		
 		do {
-			_ = try await api.editEvent(eventId: eventId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
+			_ = try await api.editEvent(eventId: eventId, actionId: Utils.actions.first(where: {$0.type == actionSelection})!.id, date: date)
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

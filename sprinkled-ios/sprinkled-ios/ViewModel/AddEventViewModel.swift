@@ -10,7 +10,6 @@ final class AddEventViewModel: ObservableObject {
 	
 	let plantEntryId: Int
 	let plantEntryName: String
-	let actions = Utils.actions
 	
 	private let errorPopupsState: ErrorPopupsState
 	
@@ -31,7 +30,7 @@ final class AddEventViewModel: ObservableObject {
 		}
 		
 		do {
-			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date)
+			_ = try await api.addEvent(plantEntryId: plantEntryId, actionId: Utils.actions.first(where: {$0.type == actionSelection})!.id, date: date)
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

@@ -13,7 +13,6 @@ final class AddReminderViewModel: ObservableObject {
 	
 	let plantEntryId: Int
 	let plantEntryName: String
-	let actions = Utils.actions
 	
 	private let errorPopupsState: ErrorPopupsState
 	
@@ -34,7 +33,7 @@ final class AddReminderViewModel: ObservableObject {
 		}
 		
 		do {
-			_ = try await api.addReminder(plantEntryId: plantEntryId, actionId: actions.first(where: {$0.type == actionSelection})!.id, date: date, period: repeating ? period : 0)
+			_ = try await api.addReminder(plantEntryId: plantEntryId, actionId: Utils.actions.first(where: {$0.type == actionSelection})!.id, date: date, period: repeating ? period : 0)
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
