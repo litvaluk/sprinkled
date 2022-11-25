@@ -30,7 +30,7 @@ struct RootView: View {
 						.padding(.bottom, 45)
 						.tag(2)
 						.ignoresSafeArea(.keyboard, edges: .bottom)
-					ProfileView(vm: ProfileViewModel(errorPopupsState: errorPopupsState))
+					ProfileView(vm: ProfileViewModel(errorPopupsState: errorPopupsState, tabBarState: tabBarState))
 						.padding(.bottom, 45)
 						.tag(3)
 						.ignoresSafeArea(.keyboard, edges: .bottom)

@@ -47,7 +47,7 @@ struct MyPlantsView: View {
 							.resizable()
 							.scaledToFit()
 							.frame(width: 25, height: 25)
-							.foregroundColor(.primary)
+							.foregroundColor(.sprinkledGreen)
 					}
 				}
 			}

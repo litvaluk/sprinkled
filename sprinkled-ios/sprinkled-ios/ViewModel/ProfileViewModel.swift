@@ -14,8 +14,9 @@ final class ProfileViewModel: ObservableObject {
 	@Published var eventNotificationsEnabled: Bool
 	
 	private let errorPopupsState: ErrorPopupsState
+	private let tabBarState: TabBarState
 	
-	init(errorPopupsState: ErrorPopupsState) {
+	init(errorPopupsState: ErrorPopupsState, tabBarState: TabBarState) {
 		@Inject var notificationManager: NotificationManagerProtocol
 		@Inject var api: APIProtocol
 		self.notificationManager = notificationManager
@@ -23,11 +24,13 @@ final class ProfileViewModel: ObservableObject {
 		reminderNotificationsEnabled = notificationManager.reminderNotificationsEnabled()
 		eventNotificationsEnabled = notificationManager.eventNotificationsEnabled()
 		self.errorPopupsState = errorPopupsState
+		self.tabBarState = tabBarState
 	}
 	
 	func logout() {
 		accessToken = ""
 		refreshToken = ""
+		tabBarState.selection = 0
 	}
 	
 	func getAuthenticatedUser() -> String? {
