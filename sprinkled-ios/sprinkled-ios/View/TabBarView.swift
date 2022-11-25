@@ -36,10 +36,11 @@ struct TabBarView: View {
 			Image(tabBarState.selection == tag ? name + "Selected" : name)
 				.resizable()
 				.aspectRatio(contentMode: .fit)
-				.frame(width: 30, height: 30)
+				.frame(width: 26, height: 26)
 				.foregroundColor(tabBarState.selection == tag ? .sprinkledGreen : .primary)
 				.scaleEffect(tabBarState.selection == tag ? 0.9 : 0.86)
-				.padding(.top, 15)
+				.padding(.top, 7)
+				.padding(.bottom, 10)
 				.background {}
 				.frame(maxWidth: .infinity)
 				.contentShape(Rectangle())
@@ -57,7 +58,17 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
 	static var previews: some View {
-		TabBarView()
-			.environmentObject(TabBarState())
+		VStack {
+			Spacer()
+			TabBarView()
+				.environmentObject(TabBarState())
+		}
+		VStack {
+			Spacer()
+			TabBarView()
+				.environmentObject(TabBarState())
+		}
+		.previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
+		.previewDisplayName("TabBar - iPhone SE (3rd generation)")
 	}
 }

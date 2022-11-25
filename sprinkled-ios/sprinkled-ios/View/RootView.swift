@@ -19,19 +19,19 @@ struct RootView: View {
 			ZStack(alignment: .bottom) {
 				TabView(selection: $tabBarState.selection) {
 					TaskView(vm: TaskViewModel(errorPopupsState: errorPopupsState))
-						.padding(.bottom, 47)
+						.padding(.bottom, 45)
 						.tag(0)
 						.ignoresSafeArea(.keyboard, edges: .bottom)
 					MyPlantsView(viewModel: MyPlantsViewModel(errorPopupsState: errorPopupsState))
-						.padding(.bottom, 47)
+						.padding(.bottom, 45)
 						.tag(1)
 						.ignoresSafeArea(.keyboard, edges: .bottom)
 					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState))
-						.padding(.bottom, 47)
+						.padding(.bottom, 45)
 						.tag(2)
 						.ignoresSafeArea(.keyboard, edges: .bottom)
 					ProfileView(vm: ProfileViewModel(errorPopupsState: errorPopupsState))
-						.padding(.bottom, 47)
+						.padding(.bottom, 45)
 						.tag(3)
 						.ignoresSafeArea(.keyboard, edges: .bottom)
 				}
