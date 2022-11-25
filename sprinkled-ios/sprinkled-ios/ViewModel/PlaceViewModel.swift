@@ -10,11 +10,13 @@ final class PlaceViewModel: ObservableObject {
 	@Published var showRenamePlaceModal = false
 	@Published var renamePlaceModalValue = ""
 	
+	var navigationPathBinding: Binding<NavigationPath>
 	private let errorPopupsState: ErrorPopupsState
 	
-	init(place: TeamSummaryPlace, teamName: String, errorPopupsState: ErrorPopupsState) {
+	init(place: TeamSummaryPlace, teamName: String, navigationPathBinding: Binding<NavigationPath>, errorPopupsState: ErrorPopupsState) {
 		self.place = place
 		self.teamName = teamName
+		self.navigationPathBinding = navigationPathBinding
 		self.errorPopupsState = errorPopupsState
 	}
 	

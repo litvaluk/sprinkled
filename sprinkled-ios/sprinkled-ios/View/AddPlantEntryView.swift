@@ -25,7 +25,9 @@ struct AddPlantEntryView: View {
 					}
 					.padding(.top, 4)
 					Button {
-						vm.showImagePickerChoiceSheet = true
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+							vm.showImagePickerChoiceSheet = true
+						}
 					} label: {
 						ZStack(alignment: .bottomTrailing) {
 							Color.clear
@@ -99,7 +101,7 @@ struct AddPlantEntryView: View {
 					VStack(spacing: 10) {
 						Button {
 							vm.showImagePickerChoiceSheet = false
-							DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
 								vm.showCameraImagePicker = true
 							}
 						} label: {
@@ -110,7 +112,7 @@ struct AddPlantEntryView: View {
 						.cornerRadius(10)
 						Button {
 							vm.showImagePickerChoiceSheet = false
-							DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+							DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
 								vm.showPhotoLibraryImagePicker = true
 							}
 						} label: {

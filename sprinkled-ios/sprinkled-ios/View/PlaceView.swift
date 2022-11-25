@@ -1,6 +1,10 @@
 import SwiftUI
 import Kingfisher
 
+enum PlaceAction: Hashable, Equatable {
+	case addPlantEntry
+}
+
 struct PlaceView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 	@EnvironmentObject var errorPopupsState: ErrorPopupsState
@@ -47,7 +51,7 @@ struct PlaceView: View {
 							.cornerRadius(10)
 						}
 					}
-					Button {} label: {
+					NavigationLink(value: PlaceAction.addPlantEntry) {
 						ZStack {
 							RoundedRectangle(cornerRadius: 15)
 								.aspectRatio(1, contentMode: .fill)
@@ -160,13 +164,19 @@ struct PlaceView: View {
 		.navigationDestination(for: TeamSummaryPlantEntry.self) { plantEntry in
 			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: plantEntry.id, errorPopupsState: errorPopupsState))
 		}
+		.navigationDestination(for: PlaceAction.self) { action in
+			switch(action) {
+			case .addPlantEntry:
+				SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: viewModel.navigationPathBinding))
+			}
+		}
 	}
 }
 
 struct PlaceView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationStack {
-			PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", errorPopupsState: ErrorPopupsState()))
+			PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", navigationPathBinding: .constant(NavigationPath()), errorPopupsState: ErrorPopupsState()))
 		}
 	}
 }

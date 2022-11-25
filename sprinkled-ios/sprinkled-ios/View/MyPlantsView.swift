@@ -52,7 +52,7 @@ struct MyPlantsView: View {
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
-				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal", errorPopupsState: errorPopupsState))
+				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal", navigationPathBinding: $viewModel.navigationPath, errorPopupsState: errorPopupsState))
 			}
 			.navigationDestination(for: TeamSummary.self) { team in
 				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name, errorPopupsState: errorPopupsState))
@@ -64,7 +64,7 @@ struct MyPlantsView: View {
 				case .createNewPlace(let teamId):
 					CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
 				case .addPlantEntry:
-					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState))
+					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: $viewModel.navigationPath))
 				}
 			}
 			.onChange(of: viewModel.navigationPath) { newNavigationPath in
