@@ -12,8 +12,6 @@ model User {
   username     String       @unique
   email        String       @unique
   password     String
-  accessToken  String
-  refreshToken String
   teams        Team[]
   pictures     Picture[]
   places       Place[]
@@ -29,6 +27,8 @@ model User {
 model Device {
   id                           Int         @id @default(autoincrement())
   deviceId                     String      @unique
+  accessToken                  String
+  refreshToken                 String
   reminderNotificationsEnabled Boolean     @default(false)
   eventNotificationsEnabled    Boolean     @default(false)
   pushTokens                   PushToken[]

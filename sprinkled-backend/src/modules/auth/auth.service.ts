@@ -15,12 +15,11 @@ export class AuthService {
 
   async register(createUserDto: CreateUserDto) {
     try {
-      // create new user without access and refresh token
       const createdUser = await this.userService.create(createUserDto);
+      const deviceId = await this.userService.addDeviceIfNeeded(createUserDto.deviceId, createdUser.id);
 
-      // generate tokens and update the user
       const tokens = await this._generateTokens(createdUser.id, createdUser.username);
-      await this.userService.updateTokens(createdUser.id, tokens.accessToken, tokens.refreshToken);
+      await this.userService.updateTokens(deviceId, tokens.accessToken, tokens.refreshToken);
 
       return {
         id: createdUser.id,
@@ -62,10 +61,10 @@ export class AuthService {
       throw new ForbiddenException(['Invalid username or password.']);
     }
 
-    await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
+    const deviceId = await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
 
     const tokens = await this._generateTokens(user.id, user.username);
-    await this.userService.updateTokens(user.id, tokens.accessToken, tokens.refreshToken);
+    await this.userService.updateTokens(deviceId, tokens.accessToken, tokens.refreshToken);
     return tokens;
   }
 
@@ -74,19 +73,33 @@ export class AuthService {
       where: {
         id: userId,
       },
+      include: {
+        devices: true,
+      },
     });
 
-    if (!user || !user.refreshToken || !(await argon2.verify(user.refreshToken, refreshToken))) {
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const device = user.devices.find(async (d) => {
+      if (!d.refreshToken) {
+        return false;
+      }
+      return await argon2.verify(d.refreshToken, refreshToken);
+    });
+
+    if (!device) {
       throw new UnauthorizedException();
     }
 
     const tokens = await this._generateTokens(user.id, user.username);
-    await this.userService.updateTokens(user.id, tokens.accessToken, tokens.refreshToken);
+    await this.userService.updateTokens(device.deviceId, tokens.accessToken, tokens.refreshToken);
     return tokens;
   }
 
-  async logout(userId: number) {
-    await this.userService.invalidateTokens(userId);
+  async logout(deviceId: string) {
+    await this.userService.invalidateTokens(deviceId);
   }
 
   private async _generateTokens(userId: number, username: string) {

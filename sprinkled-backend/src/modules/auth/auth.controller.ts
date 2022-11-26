@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { UserId } from '../../decorator';
 import { CreateUserDto } from '../user/dto';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto';
+import { LoginDto, LogoutDto } from './dto';
 import { JwtAccessTokenGuard, JwtRefreshTokenGuard } from './guard';
 
 @Controller('auth')
@@ -45,7 +45,7 @@ export class AuthController {
   @UseGuards(JwtAccessTokenGuard)
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
-  async logout(@UserId() userId: number) {
-    await this.authService.logout(userId);
+  async logout(@Body() logoutDto: LogoutDto, @UserId() userId: number) {
+    await this.authService.logout(logoutDto.deviceId);
   }
 }

@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import * as pactum from 'pactum';
 import { regex } from 'pactum-matchers';
 import { AppModule } from '../src/modules';
-import { LoginDto } from '../src/modules/auth/dto';
+import { LoginDto, LogoutDto } from '../src/modules/auth/dto';
 import { NotificationService } from '../src/modules/notification/notification.service';
 import { CreateUserDto } from '../src/modules/user/dto';
 
@@ -199,10 +199,14 @@ describe('Sprinkled', () => {
       });
 
       it('should not logout a user with invalid access token', () => {
+        const dto: LogoutDto = {
+          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/logout')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
+          .withJson(dto)
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
       });
@@ -352,8 +356,6 @@ async function createUsers() {
       username: 'user',
       email: 'user@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$6q1vWLX+uRCCUC4/saRVJg$iJVMC0DIKUPloYTOq1V2/+gFMb4dTkxb2Doiv8DGHzs', // password
-      accessToken: '',
-      refreshToken: '',
     },
   });
   await prisma.user.create({
@@ -361,8 +363,6 @@ async function createUsers() {
       username: 'userToBeDeleted',
       email: 'userToBeDeleted@gmail.com',
       password: '$argon2id$v=19$m=4096,t=3,p=1$6q1vWLX+uRCCUC4/saRVJg$iJVMC0DIKUPloYTOq1V2/+gFMb4dTkxb2Doiv8DGHzs', // password
-      accessToken: '',
-      refreshToken: '',
     },
   });
 }

@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Device } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -19,7 +20,18 @@ export class JwtAccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
     const accessToken = req.get('Authorization').replace('Bearer', '').trim();
 
     const user = await this.userService.findOne(payload.sub);
-    if (!user || !argon2.verify(user.accessToken, accessToken)) {
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    let device: Device = undefined;
+    for (const d of user.devices) {
+      if (d.accessToken && (await argon2.verify(d.accessToken, accessToken))) {
+        device = d;
+        break;
+      }
+    }
+    if (!device) {
       throw new UnauthorizedException();
     }
 

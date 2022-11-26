@@ -1,5 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { PrismaService } from '../prisma';
 import { CreateUserDto } from './dto';
@@ -8,22 +7,19 @@ import { CreateUserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  // creates user with no tokens
   async create(createUserDto: CreateUserDto) {
     const createdUser = await this.prisma.user.create({
       data: {
         username: createUserDto.username,
         email: createUserDto.email,
         password: await argon2.hash(createUserDto.password),
-        accessToken: '',
-        refreshToken: '',
       },
     });
 
     return createdUser;
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll() {
     return await this.prisma.user.findMany();
   }
 
@@ -41,6 +37,9 @@ export class UserService {
     let user = await this.prisma.user.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        devices: true,
       },
     });
     if (!user) {
@@ -74,13 +73,13 @@ export class UserService {
     });
   }
 
-  async updateTokens(userId: number, accessToken: string, refreshToken: string) {
+  async updateTokens(deviceId: string, accessToken: string, refreshToken: string) {
     const hashedAccessToken = await argon2.hash(accessToken);
     const hashedRefreshToken = await argon2.hash(refreshToken);
 
-    await this.prisma.user.update({
+    await this.prisma.device.update({
       where: {
-        id: userId,
+        deviceId: deviceId,
       },
       data: {
         accessToken: hashedAccessToken,
@@ -89,10 +88,10 @@ export class UserService {
     });
   }
 
-  async invalidateTokens(userId: number) {
-    await this.prisma.user.update({
+  async invalidateTokens(deviceId: string) {
+    await this.prisma.device.update({
       where: {
-        id: userId,
+        deviceId: deviceId,
       },
       data: {
         accessToken: '',
@@ -118,6 +117,8 @@ export class UserService {
               id: userId,
             },
           },
+          accessToken: '',
+          refreshToken: '',
         },
       });
     } else {
@@ -136,6 +137,6 @@ export class UserService {
       });
     }
 
-    return device.id;
+    return device.deviceId;
   }
 }

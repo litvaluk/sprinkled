@@ -4,8 +4,6 @@ CREATE TABLE "users" (
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "accessToken" TEXT NOT NULL,
-    "refreshToken" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -14,6 +12,8 @@ CREATE TABLE "users" (
 CREATE TABLE "devices" (
     "id" SERIAL NOT NULL,
     "deviceId" TEXT NOT NULL,
+    "accessToken" TEXT NOT NULL,
+    "refreshToken" TEXT NOT NULL,
     "reminderNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
     "eventNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
 
