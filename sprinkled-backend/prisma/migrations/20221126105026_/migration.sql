@@ -14,6 +14,7 @@ CREATE TABLE "devices" (
     "deviceId" TEXT NOT NULL,
     "accessToken" TEXT NOT NULL,
     "refreshToken" TEXT NOT NULL,
+    "tokensUpdatedAt" TIMESTAMP(3),
     "reminderNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
     "eventNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
 

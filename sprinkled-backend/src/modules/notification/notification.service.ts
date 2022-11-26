@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { Notification, Provider } from '@parse/node-apn';
 import { User } from '@prisma/client';
+import parse from 'parse-duration';
 import { PrismaService } from '../prisma';
 
 @Injectable()
@@ -120,6 +121,14 @@ export class NotificationService {
       },
     };
 
+    let expiredConstraint = {
+      device: {
+        tokensUpdatedAt: {
+          gte: this._addDays(new Date(), -parse(process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME, 'd')),
+        },
+      },
+    };
+
     let notificationsEnabledConstraint;
     if (notificationType === NotificationType.REMINDER) {
       notificationsEnabledConstraint = {
@@ -139,7 +148,7 @@ export class NotificationService {
 
     let pushTokens = await this.prisma.pushToken.findMany({
       where: {
-        AND: [userConstraint, notificationsEnabledConstraint],
+        AND: [userConstraint, expiredConstraint, notificationsEnabledConstraint],
       },
     });
     for (let pushToken of pushTokens) {
@@ -246,6 +255,12 @@ export class NotificationService {
     };
     notification.sound = 'default';
     return notification;
+  }
+
+  private _addDays(date: Date, days: number) {
+    let result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }
 

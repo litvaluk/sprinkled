@@ -84,6 +84,7 @@ export class UserService {
       data: {
         accessToken: hashedAccessToken,
         refreshToken: hashedRefreshToken,
+        tokensUpdatedAt: new Date(),
       },
     });
   }

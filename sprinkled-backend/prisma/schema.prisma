@@ -29,6 +29,7 @@ model Device {
   deviceId                     String      @unique
   accessToken                  String
   refreshToken                 String
+  tokensUpdatedAt              DateTime?
   reminderNotificationsEnabled Boolean     @default(false)
   eventNotificationsEnabled    Boolean     @default(false)
   pushTokens                   PushToken[]
