@@ -186,11 +186,15 @@ describe('Sprinkled', () => {
     });
 
     describe('Logout', () => {
+      const dto: LogoutDto = {
+        deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+      };
       it('should logout a user', () => {
         return pactum
           .spec()
           .post('http://localhost:3001/auth/logout')
           .withHeaders({ Authorization: 'Bearer $S{accessTokenAuth}' })
+          .withJson(dto)
           .expectStatus(200);
       });
 
@@ -199,14 +203,10 @@ describe('Sprinkled', () => {
       });
 
       it('should not logout a user with invalid access token', () => {
-        const dto: LogoutDto = {
-          deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
-        };
         return pactum
           .spec()
           .post('http://localhost:3001/auth/logout')
           .withHeaders({ Authorization: 'Bearer invalid_access_token' })
-          .withJson(dto)
           .expectStatus(401)
           .expectJsonLike({ message: 'Unauthorized' });
       });
