@@ -17,13 +17,13 @@ struct SprinkledApp: App {
 		}
 		
 		DispatchQueue.main.async {
-		  UIApplication.shared.registerForRemoteNotifications()
+			UIApplication.shared.registerForRemoteNotifications()
 		}
 	}
 	
-    var body: some Scene {
-        WindowGroup {
-            RootView(vm: RootViewModel())
-        }
-    }
+	var body: some Scene {
+		WindowGroup {
+			RootView(vm: RootViewModel())
+		}
+	}
 }

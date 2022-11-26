@@ -13,7 +13,7 @@ struct AddPlantEntryView: View {
 							presentationMode.wrappedValue.dismiss()
 						} label: {
 							Text("Cancel")
-								.font(.body)
+								.font(.title3)
 						}
 						Spacer()
 					}

@@ -18,6 +18,7 @@ final class AuthViewModel: ObservableObject {
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 	@AppStorage("pushToken") var pushToken = ""
+	@AppStorage("showOnboarding") var showOnboarding: Bool = false
 	
 	@MainActor
 	func signInUser() async {
@@ -63,6 +64,8 @@ final class AuthViewModel: ObservableObject {
 		} catch {
 			errorMessage = "Something went wrong."
 		}
+		// MARK: Uncomment when onboarding is done
+		// showOnboarding = true
 	}
 	
 	func toggleSignIn() {

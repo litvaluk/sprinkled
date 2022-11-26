@@ -44,6 +44,8 @@
 		8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8F6B23DF28F8268F0079F0FC /* Kingfisher */; };
 		8F6B23E228F88E280079F0FC /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E128F88E280079F0FC /* PlantDetailView.swift */; };
 		8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */; };
+		8F861A4A2932332100017F06 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A492932332000017F06 /* OnboardingView.swift */; };
+		8F861A4C2932333A00017F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */; };
 		8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */; };
 		8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */; };
 		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
@@ -137,6 +139,8 @@
 		8F6B23DC28F81A640079F0FC /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8F6B23E128F88E280079F0FC /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
+		8F861A492932332000017F06 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlantsViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 				8F69375B291FF3D30061A93E /* EditEventView.swift */,
 				8F69375D291FF3EF0061A93E /* EditReminderView.swift */,
 				8F24E75B28EEDCBD008D5AEE /* MyPlantsView.swift */,
+				8F861A492932332000017F06 /* OnboardingView.swift */,
 				8FA07B22290BDC570019C142 /* PictureView.swift */,
 				8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */,
 				8F6B23E128F88E280079F0FC /* PlantDetailView.swift */,
@@ -307,6 +312,7 @@
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
 				8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */,
 				8FFD753629058446005237A9 /* TeamViewModel.swift */,
+				8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				8F24E76428EEE5A9008D5AEE /* RootViewModel.swift in Sources */,
 				8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
+				8F861A4A2932332100017F06 /* OnboardingView.swift in Sources */,
 				8F095E922903E24A00DBCECA /* Team.swift in Sources */,
 				8FA07B2D290D48CB0019C142 /* AddReminderView.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
@@ -544,6 +551,7 @@
 				8F6937652920FA8C0061A93E /* ImagePicker.swift in Sources */,
 				8F6B23D728F7FBBF0079F0FC /* Plant.swift in Sources */,
 				8FA07B25290BE4C80019C142 /* PictureViewState.swift in Sources */,
+				8F861A4C2932333A00017F06 /* OnboardingViewModel.swift in Sources */,
 				8FFD753729058446005237A9 /* TeamViewModel.swift in Sources */,
 				8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */,
 				8FA07B27290D0A340019C142 /* AddEventViewModel.swift in Sources */,
