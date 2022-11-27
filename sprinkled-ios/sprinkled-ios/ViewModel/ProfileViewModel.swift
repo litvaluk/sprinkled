@@ -28,9 +28,18 @@ final class ProfileViewModel: ObservableObject {
 	}
 	
 	func logout() {
-		accessToken = ""
-		refreshToken = ""
-		tabBarState.selection = 0
+		if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
+			Task {
+				do {
+					try await api.logout(deviceId: deviceId)
+				} catch {
+					// nothing
+				}
+				accessToken = ""
+				refreshToken = ""
+				tabBarState.selection = 0
+			}
+		}
 	}
 	
 	func getAuthenticatedUser() -> String? {

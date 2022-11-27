@@ -4,6 +4,7 @@ import JWTDecode
 protocol APIProtocol {
 	func signIn(_ username: String, _ password: String, _ deviceId: String) async throws -> Void
 	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String) async throws -> Void
+	func logout(deviceId: String) async throws -> Void
 	func fetchPlants() async throws -> [Plant]
 	func fetchTeamSummaries() async throws -> [TeamSummary]
 	func createNewTeam(name: String) async throws -> Team
@@ -68,6 +69,14 @@ final class API : APIProtocol {
 		let response: AuthResponse = try await makeRequest(path: "auth/register", method: "POST", body: bodyData)
 		UserDefaults.standard.set(response.accessToken, forKey: "accessToken")
 		UserDefaults.standard.set(response.refreshToken, forKey: "refreshToken")
+	}
+	
+	func logout(deviceId: String) async throws -> Void {
+		let body = [
+			"deviceId": deviceId
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "auth/logout", method: "POST", body: bodyData)
 	}
 	
 	func fetchPlants() async throws -> [Plant] {
@@ -470,6 +479,10 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func signUp(_ username: String, _ email: String, _ password: String, _ deviceId: String) async throws {
+		return
+	}
+	
+	func logout(deviceId: String) async throws -> Void {
 		return
 	}
 	
