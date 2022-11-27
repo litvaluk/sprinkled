@@ -46,6 +46,8 @@
 		8F6B23E428F88E870079F0FC /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */; };
 		8F861A4A2932332100017F06 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A492932332000017F06 /* OnboardingView.swift */; };
 		8F861A4C2932333A00017F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */; };
+		8F861A4E2933DF3000017F06 /* SetPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4D2933DF3000017F06 /* SetPlanView.swift */; };
+		8F861A502933E1B700017F06 /* SetPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4F2933E1B600017F06 /* SetPlanViewModel.swift */; };
 		8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */; };
 		8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */; };
 		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
@@ -141,6 +143,8 @@
 		8F6B23E328F88E870079F0FC /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
 		8F861A492932332000017F06 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		8F861A4D2933DF3000017F06 /* SetPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlanView.swift; sourceTree = "<group>"; };
+		8F861A4F2933E1B600017F06 /* SetPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlanViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlantsViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 				8F24E75D28EEDCD9008D5AEE /* ProfileView.swift */,
 				8F24E74A28EECB86008D5AEE /* RootView.swift */,
 				8F24E75F28EEDCEA008D5AEE /* SearchView.swift */,
+				8F861A4D2933DF3000017F06 /* SetPlanView.swift */,
 				8F92BAEB2922B4940092BF55 /* TabBarView.swift */,
 				8F24E76128EEDD13008D5AEE /* TaskView.swift */,
 				8FFD7534290583FA005237A9 /* TeamView.swift */,
@@ -310,6 +315,7 @@
 				8FA563A128EF0A0F00C54AF2 /* ProfileViewModel.swift */,
 				8F24E76328EEE5A9008D5AEE /* RootViewModel.swift */,
 				8F6B23D428F7FB350079F0FC /* SearchViewModel.swift */,
+				8F861A4F2933E1B600017F06 /* SetPlanViewModel.swift */,
 				8FB43FEC290EBEAC009202F4 /* TaskViewModel.swift */,
 				8FFD753629058446005237A9 /* TeamViewModel.swift */,
 				8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */,
@@ -513,9 +519,11 @@
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,
 				8FA07B23290BDC570019C142 /* PictureView.swift in Sources */,
 				8F095E9829040E4800DBCECA /* Place.swift in Sources */,
+				8F861A502933E1B700017F06 /* SetPlanViewModel.swift in Sources */,
 				8FE3447E2918086E00247333 /* AddMemberView.swift in Sources */,
 				8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */,
 				8F8F5A602902EFC9009D6DC9 /* CreateTeamView.swift in Sources */,
+				8F861A4E2933DF3000017F06 /* SetPlanView.swift in Sources */,
 				8FA563B328F0677800C54AF2 /* Errors.swift in Sources */,
 				8F8F5A5E2902BDE5009D6DC9 /* TeamSummary.swift in Sources */,
 				8FA07B2B290D469D0019C142 /* AddReminderViewModel.swift in Sources */,

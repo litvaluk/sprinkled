@@ -15,4 +15,20 @@ struct Plant: Codable, Identifiable, Hashable {
 	let minTemp: Int
 	let maxTemp: Int
 	let light: String
+	let plans: [Plan]
+}
+
+struct Plan: Codable, Identifiable, Hashable {
+	let id: Int
+	let name: String
+	let plantId: Int
+	let reminderBlueprints: [ReminderBlueprint]
+}
+
+struct ReminderBlueprint: Codable, Identifiable, Hashable {
+	let id: Int
+	let period: Int
+	let actionId: Int
+	let planId: Int
+	let action: Action
 }

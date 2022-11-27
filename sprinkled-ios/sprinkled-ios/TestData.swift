@@ -18,7 +18,16 @@ struct TestData {
 			maxSpread: 0.6,
 			minTemp: 12,
 			maxTemp: 30,
-			light: "Strong light"
+			light: "Strong light",
+			plans: [
+				Plan(id: 1, name: "Plan 1", plantId: 1, reminderBlueprints: [
+					ReminderBlueprint(id: 1, period: 3, actionId: 1, planId: 1, action: actions[0])
+				]),
+				Plan(id: 2, name: "Plan 2", plantId: 1, reminderBlueprints: [
+					ReminderBlueprint(id: 2, period: 2, actionId: 1, planId: 1, action: actions[0]),
+					ReminderBlueprint(id: 3, period: 6, actionId: 3, planId: 1, action: actions[2])
+				])
+			]
 		),
 		Plant(
 			id: 2,
@@ -35,7 +44,12 @@ struct TestData {
 			maxSpread: 15.0,
 			minTemp: 10,
 			maxTemp: 30,
-			light: "Full sun"
+			light: "Full sun",
+			plans: [
+				Plan(id: 3, name: "Plan 3", plantId: 2, reminderBlueprints: [
+					ReminderBlueprint(id: 4, period: 3, actionId: 1, planId: 3, action: actions[0])
+				]),
+			]
 		),
 		Plant(
 			id: 3,
@@ -51,7 +65,12 @@ struct TestData {
 			maxSpread: 15.0,
 			minTemp: 10,
 			maxTemp: 30,
-			light: "Full sun"
+			light: "Full sun",
+			plans: [
+				Plan(id: 4, name: "Plan 4", plantId: 3, reminderBlueprints: [
+					ReminderBlueprint(id: 5, period: 3, actionId: 1, planId: 4, action: actions[0])
+				]),
+			]
 		),
 		Plant(
 			id: 4,
@@ -69,7 +88,12 @@ struct TestData {
 			maxSpread: 0.6,
 			minTemp: 12,
 			maxTemp: 30,
-			light: "Strong light"
+			light: "Strong light",
+			plans: [
+				Plan(id: 5, name: "Plan 5", plantId: 3, reminderBlueprints: [
+					ReminderBlueprint(id: 6, period: 3, actionId: 1, planId: 5, action: actions[0])
+				]),
+			]
 		),
 		Plant(
 			id: 5,
@@ -86,7 +110,12 @@ struct TestData {
 			maxSpread: 15.0,
 			minTemp: 10,
 			maxTemp: 30,
-			light: "Full sun"
+			light: "Full sun",
+			plans: [
+				Plan(id: 6, name: "Plan 6", plantId: 5, reminderBlueprints: [
+					ReminderBlueprint(id: 6, period: 3, actionId: 1, planId: 6, action: actions[0])
+				]),
+			]
 		),
 		Plant(
 			id: 6,
@@ -102,7 +131,12 @@ struct TestData {
 			maxSpread: 15.0,
 			minTemp: 10,
 			maxTemp: 30,
-			light: "Full sun"
+			light: "Full sun",
+			plans: [
+				Plan(id: 7, name: "Plan 7", plantId: 6, reminderBlueprints: [
+					ReminderBlueprint(id: 7, period: 3, actionId: 1, planId: 7, action: actions[0])
+				]),
+			]
 		),
 		Plant(
 			id: 7,
@@ -120,41 +154,13 @@ struct TestData {
 			maxSpread: 0.6,
 			minTemp: 12,
 			maxTemp: 30,
-			light: "Strong light"
+			light: "Strong light",
+			plans: [
+				Plan(id: 8, name: "Plan 8", plantId: 7, reminderBlueprints: [
+					ReminderBlueprint(id: 8, period: 3, actionId: 1, planId: 8, action: actions[0])
+				]),
+			]
 		),
-		Plant(
-			id: 8,
-			latinName: "Ficus benjamina",
-			commonName: "Weeping Fig",
-			description: "The weeping fig is a popular houseplant that is easy to care for.",
-			pictureUrl:
-				"https://www.thespruce.com/thmb/FkCnwYhQvE6wjH9THATcC6JcMiA=/941x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-ficus-trees-1902757-1-80b8738caf8f42f28a24af94c3d4f314.jpg",
-			difficulty: "Medium",
-			water: "Moderate",
-			minHeight: 22.0,
-			maxHeight: 30.0,
-			minSpread: 10.0,
-			maxSpread: 15.0,
-			minTemp: 10,
-			maxTemp: 30,
-			light: "Full sun"
-		),
-		Plant(
-			id: 9,
-			latinName: "Disocactus ackermannii",
-			commonName: "Orchid Cactus",
-			description: "The orchid cactus is a popular houseplant that is easy to care for.",
-			pictureUrl: "https://i.pinimg.com/originals/6e/1b/7c/6e1b7ca6173870fb9f1ba4bbc7409aa7.jpg",
-			difficulty: "Easy",
-			water: "Moderate",
-			minHeight: 22.0,
-			maxHeight: 30.0,
-			minSpread: 10.0,
-			maxSpread: 15.0,
-			minTemp: 10,
-			maxTemp: 30,
-			light: "Full sun"
-		)
 	]
 	
 	static let teamSummaries = [
@@ -217,11 +223,11 @@ struct TestData {
 	static let actions = [
 		Action(id: 1, type: "Water"),
 		Action(id: 2, type: "Mist"),
-		Action(id: 3, type: "Fertilize"),
-		Action(id: 4, type: "Harvest"),
-		Action(id: 5, type: "Cut"),
+		Action(id: 3, type: "Cut"),
+		Action(id: 4, type: "Repot"),
+		Action(id: 5, type: "Fertilize"),
 		Action(id: 6, type: "Sow"),
-		Action(id: 7, type: "Repot")
+		Action(id: 7, type: "Harvest")
 	]
 
 	static let events = [

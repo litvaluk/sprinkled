@@ -6,7 +6,7 @@ final class PlantDetailViewModel: ObservableObject {
 	
 	@Published var addPlantEntryPresented = false
 	@Published var setupPlanPresented = false
-	@Published var lastCreatedPlantEntryId: Int? = nil
+	@Published var lastCreatedPlantEntry: PlantEntry? = nil
 	
 	let plant: Plant
 	

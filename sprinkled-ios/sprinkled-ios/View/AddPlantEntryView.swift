@@ -146,6 +146,6 @@ struct AddPlantEntryView: View {
 
 struct AddPlantEntryView_Previews: PreviewProvider {
     static var previews: some View {
-		AddPlantEntryView(vm: AddPlantEntryViewModel(plant: TestData.plants[0], errorPopupsState: ErrorPopupsState(), setupPlanPresented: .constant(false), lastCreatedPlantEntryId: .constant(nil)))
+		AddPlantEntryView(vm: AddPlantEntryViewModel(plant: TestData.plants[0], errorPopupsState: ErrorPopupsState(), setupPlanPresented: .constant(false), lastCreatedPlantEntry: .constant(nil)))
     }
 }
