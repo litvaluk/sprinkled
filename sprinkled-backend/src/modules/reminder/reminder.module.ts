@@ -7,5 +7,6 @@ import { ReminderService } from './reminder.service';
   imports: [PrismaModule],
   controllers: [ReminderController],
   providers: [ReminderService],
+  exports: [ReminderService],
 })
 export class ReminderModule {}

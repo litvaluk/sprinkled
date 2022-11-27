@@ -115,6 +115,7 @@ model Plant {
   minSpread    Float
   maxSpread    Float
   plantEntries PlantEntry[]
+  plans        Plan[]
 
   @@map("plants")
 }
@@ -130,17 +131,18 @@ model Event {
   actionId     Int
   completed    Boolean    @default(true)
   reminded     Boolean?
-  Reminder     Reminder?  @relation(fields: [reminderId], references: [id])
+  reminder     Reminder?  @relation(fields: [reminderId], references: [id])
   reminderId   Int?
 
   @@map("events")
 }
 
 model Action {
-  id       Int        @id @default(autoincrement())
-  type     String
-  events   Event[]
-  reminder Reminder[]
+  id                 Int                 @id @default(autoincrement())
+  type               String
+  events             Event[]
+  reminder           Reminder[]
+  reminderBlueprints ReminderBlueprint[]
 
   @@map("actions")
 }
@@ -158,4 +160,25 @@ model Reminder {
   events       Event[]
 
   @@map("reminders")
+}
+
+model ReminderBlueprint {
+  id       Int    @id @default(autoincrement())
+  period   Int
+  action   Action @relation(fields: [actionId], references: [id])
+  actionId Int
+  Plan     Plan   @relation(fields: [planId], references: [id], onDelete: Cascade)
+  planId   Int
+
+  @@map("reminder_blueprints")
+}
+
+model Plan {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  plant              Plant               @relation(fields: [plantId], references: [id])
+  plantId            Int
+  reminderBlueprints ReminderBlueprint[]
+
+  @@map("plans")
 }

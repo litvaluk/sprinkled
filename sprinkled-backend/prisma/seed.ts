@@ -3,19 +3,20 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  await createActions();
   await createPlants();
   await createUsers();
   await createTeams();
   await createPlaces();
   await createPlantEntries();
   await createPictures();
-  await createActions();
   await createEvents();
   await createReminders();
 }
 
 async function createPlants() {
-  await prisma.plant.create({
+  // --------------------------------------- Zamioculcas zamifolia ----------------------------------------------
+  let plant = await prisma.plant.create({
     data: {
       latinName: 'Zamioculcas zamifolia',
       commonName: 'ZZ Plant',
@@ -35,7 +36,61 @@ async function createPlants() {
     },
   });
 
-  await prisma.plant.create({
+  let plan = await prisma.plan.create({
+    data: {
+      name: 'Just watering',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+
+  plan = await prisma.plan.create({
+    data: {
+      name: 'Complete care',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 3,
+      planId: plan.id,
+      period: 90,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 4,
+      planId: plan.id,
+      period: 180,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 5,
+      planId: plan.id,
+      period: 14,
+    },
+  });
+  // --------------------------------------- Ficus benjamina ----------------------------------------------------
+  plant = await prisma.plant.create({
     data: {
       latinName: 'Ficus benjamina',
       commonName: 'Weeping Fig',
@@ -54,7 +109,22 @@ async function createPlants() {
     },
   });
 
-  await prisma.plant.create({
+  plan = await prisma.plan.create({
+    data: {
+      name: 'Just watering',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+  // --------------------------------------- Disocactus ackermannii -----------------------------------------------
+  plant = await prisma.plant.create({
     data: {
       latinName: 'Disocactus ackermannii',
       commonName: 'Orchid Cactus',
@@ -72,7 +142,22 @@ async function createPlants() {
     },
   });
 
-  await prisma.plant.create({
+  plan = await prisma.plan.create({
+    data: {
+      name: 'Just watering',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+  // --------------------------------------- Dracaena marginata -------------------------------------------------
+  plant = await prisma.plant.create({
     data: {
       latinName: 'Dracaena marginata',
       commonName: 'Madagascar dragon tree',
@@ -90,7 +175,22 @@ async function createPlants() {
     },
   });
 
-  await prisma.plant.create({
+  plan = await prisma.plan.create({
+    data: {
+      name: 'Just watering',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+  // --------------------------------------- Fragaria x ananassa --------------------------------------------------
+  plant = await prisma.plant.create({
     data: {
       latinName: 'Fragaria x ananassa',
       commonName: 'Garden strawberry ',
@@ -108,6 +208,22 @@ async function createPlants() {
       light: 'Full sun',
     },
   });
+
+  plan = await prisma.plan.create({
+    data: {
+      name: 'Just watering',
+      plantId: plant.id,
+    },
+  });
+
+  await prisma.reminderBlueprint.create({
+    data: {
+      actionId: 1,
+      planId: plan.id,
+      period: 7,
+    },
+  });
+  // ------------------------------------------------------------------------------------------------------------
 }
 
 async function createUsers() {

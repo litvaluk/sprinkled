@@ -127,6 +127,25 @@ CREATE TABLE "reminders" (
 );
 
 -- CreateTable
+CREATE TABLE "reminder_blueprints" (
+    "id" SERIAL NOT NULL,
+    "period" INTEGER NOT NULL,
+    "actionId" INTEGER NOT NULL,
+    "planId" INTEGER NOT NULL,
+
+    CONSTRAINT "reminder_blueprints_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "plans" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "plantId" INTEGER NOT NULL,
+
+    CONSTRAINT "plans_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_DeviceToUser" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -221,6 +240,15 @@ ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "reminder_blueprints" ADD CONSTRAINT "reminder_blueprints_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "reminder_blueprints" ADD CONSTRAINT "reminder_blueprints_planId_fkey" FOREIGN KEY ("planId") REFERENCES "plans"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "plans" ADD CONSTRAINT "plans_plantId_fkey" FOREIGN KEY ("plantId") REFERENCES "plants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_DeviceToUser" ADD CONSTRAINT "_DeviceToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "devices"("id") ON DELETE CASCADE ON UPDATE CASCADE;

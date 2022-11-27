@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Plant } from '@prisma/client';
 import { PrismaService } from '../prisma';
-import { CreatePlantDto, UpdatePlantDto } from './dto';
+import { CreatePlantDto } from './dto';
 
 @Injectable()
 export class PlantService {
@@ -15,8 +15,20 @@ export class PlantService {
     });
   }
 
-  async findAll(): Promise<Plant[]> {
-    return await this.prisma.plant.findMany();
+  async findAll() {
+    return await this.prisma.plant.findMany({
+      include: {
+        plans: {
+          include: {
+            reminderBlueprints: {
+              include: {
+                action: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number): Promise<Plant> {
@@ -24,24 +36,16 @@ export class PlantService {
       where: {
         id: id,
       },
-    });
-  }
-
-  async update(id: number, updatePlantDto: UpdatePlantDto): Promise<Plant> {
-    return await this.prisma.plant.update({
-      where: {
-        id: id,
-      },
-      data: {
-        ...updatePlantDto,
-      },
-    });
-  }
-
-  async remove(id: number) {
-    await this.prisma.plant.delete({
-      where: {
-        id: id,
+      include: {
+        plans: {
+          include: {
+            reminderBlueprints: {
+              include: {
+                action: true,
+              },
+            },
+          },
+        },
       },
     });
   }

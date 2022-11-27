@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPip
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserId } from '../../decorator';
 import { JwtAccessTokenGuard } from '../auth/guard';
+import { SetPlanDto } from './dto';
 import { CreatePlantEntryDto } from './dto/create-plant-entry.dto';
 import { UpdatePlantEntryDto } from './dto/update-plant-entry.dto';
 import { PlantEntryService } from './plant-entry.service';
@@ -26,6 +27,15 @@ export class PlantEntryController {
   @Get(':id')
   async getPlantEntry(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     return await this.plantEntryService.findOne(id);
+  }
+
+  @Post(':id/setPlan')
+  async setPlan(
+    @Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number,
+    @Body() setPlanDto: SetPlanDto,
+    @UserId() userId: number,
+  ) {
+    return await this.plantEntryService.setPlan(id, userId, setPlanDto);
   }
 
   @Put(':id')
