@@ -13,6 +13,7 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var showImagePickerChoiceSheet = false
 	@Published var showPhotoLibraryImagePicker = false
 	@Published var showCameraImagePicker = false
+	@Published var yOffset: CGFloat = 0
 	
 	let plantEntryId: Int
 	

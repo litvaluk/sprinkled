@@ -7,8 +7,8 @@ struct PlantDetailView: View {
 	@StateObject var vm: PlantDetailViewModel
 	
 	var body: some View {
-		ZStack(alignment: .topLeading) {
-			ScrollView {
+		ScrollView {
+			GeometryReader { gr in
 				VStack {
 					PlantHeaderView(commonName: vm.plant.commonName, latinName: vm.plant.latinName, pictureUrl: vm.plant.pictureUrl) {
 						vm.addPlantEntryPresented = true
@@ -40,10 +40,13 @@ struct PlantDetailView: View {
 					.padding([.leading, .trailing], 10)
 					DescriptionBoxView(text: vm.plant.description)
 				}
+				.onChange(of: gr.frame(in: .global).minY) { minY in
+					vm.yOffset = minY
+				}
 			}
-			.toolbar(.hidden)
-			.ignoresSafeArea(.all, edges: [.top])
 		}
+		.toolbar(.hidden)
+		.ignoresSafeArea(.all, edges: [.top])
 		.fullScreenCover(isPresented: $vm.addPlantEntryPresented) {
 			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: vm.plant, errorPopupsState: errorPopupsState, setupPlanPresented: $vm.setupPlanPresented, lastCreatedPlantEntry: $vm.lastCreatedPlantEntry))
 				.ignoresSafeArea(.keyboard, edges: .bottom)
@@ -55,14 +58,20 @@ struct PlantDetailView: View {
 			Button {
 				self.presentationMode.wrappedValue.dismiss()
 			} label: {
-				Image(systemName: "chevron.left")
-					.resizable()
-					.scaledToFit()
-					.frame(width: 16, height: 19)
-					.fontWeight(.medium)
-					.padding([.top], 12)
-					.padding([.leading], 7)
-			}
+				Circle()
+					   .fill(Color.init(uiColor: .systemBackground))
+					   .frame(width: 35)
+					   .padding([.leading], 7)
+					   .overlay {
+						   Image(systemName: "chevron.left")
+							   .resizable()
+							   .scaledToFit()
+							   .frame(width: 16, height: 19)
+							   .fontWeight(.medium)
+							   .padding(.leading, 4)
+					   }
+			   }
+			   .opacity(vm.yOffset > -110 ? 0.9 : (vm.yOffset+130.0)/20.0)
 		}
 	}
 }
@@ -152,6 +161,7 @@ struct DescriptionBoxView: View {
 					.font(.subheadline)
 					.padding([.leading, .trailing], 20)
 					.padding([.top, .bottom], 10)
+					.fixedSize(horizontal: false, vertical: true)
 			}
 			
 		}

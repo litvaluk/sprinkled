@@ -21,28 +21,39 @@ struct PlantEntryView: View {
 	@StateObject var vm: PlantEntryViewModel
 	
 	var body: some View {
-		ZStack(alignment: .topLeading) {
-			ScrollView {
+		ScrollView {
+			GeometryReader { gr in
 				VStack {
 					PlantEntryHeaderView(vm: vm)
 					PlantEntryContent(vm: vm)
 						.padding(.horizontal)
 				}
+				.onChange(of: gr.frame(in: .global).minY) { minY in
+					vm.yOffset = minY
+				}
 			}
-			.toolbar(.hidden)
-			.ignoresSafeArea(.all, edges: [.top])
 		}
+		.toolbar(.hidden)
+		.ignoresSafeArea(.all, edges: [.top])
 		.overlay(alignment: .topLeading) {
-			Button {
-				self.presentationMode.wrappedValue.dismiss()
-			} label: {
-				Image(systemName: "chevron.left")
-					.resizable()
-					.scaledToFit()
-					.frame(width: 16, height: 19)
-					.fontWeight(.medium)
-					.padding([.top], 12)
-					.padding([.leading], 7)
+			if (vm.yOffset > -130) {
+				Button {
+					self.presentationMode.wrappedValue.dismiss()
+				} label: {
+					Circle()
+						.fill(Color.init(uiColor: .systemBackground))
+						.frame(width: 35)
+						.padding([.leading], 7)
+						.overlay {
+							Image(systemName: "chevron.left")
+								.resizable()
+								.scaledToFit()
+								.frame(width: 16, height: 19)
+								.fontWeight(.medium)
+								.padding(.leading, 4)
+						}
+				}
+				.opacity(vm.yOffset > -110 ? 0.9 : (vm.yOffset+130.0)/20.0)
 			}
 		}
 		.modal(title: "Are you sure?", showModal: $vm.reminderToDelete.mappedToBool()) {
