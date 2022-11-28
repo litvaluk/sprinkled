@@ -2,17 +2,16 @@ import SwiftUI
 
 struct CreatePlaceView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-	@StateObject var viewModel: CreatePlaceViewModel
+	@StateObject var vm: CreatePlaceViewModel
 	
 	var body: some View {
 		VStack {
-			TextField("Name", text: $viewModel.placeName)
+			TextField("Name", text: $vm.placeName)
 				.textFieldStyle(SprinkledTextFieldStyle())
 				.autocorrectionDisabled()
-				.textInputAutocapitalization(.never)
 			Menu {
-				Picker(selection: $viewModel.teamSelection, label: EmptyView()) {
-					ForEach(viewModel.teamSummaries) { teamSummary in
+				Picker(selection: $vm.teamSelection, label: EmptyView()) {
+					ForEach(vm.teamSummaries) { teamSummary in
 						Text(teamSummary.name)
 							.tag(teamSummary.id)
 					}
@@ -22,7 +21,7 @@ struct CreatePlaceView: View {
 					Text("Team")
 						.foregroundColor(.primary)
 					Spacer()
-					Text(viewModel.teamSummaries.first(where: { $0.id == viewModel.teamSelection })!.name)
+					Text(vm.teamSummaries.first(where: { $0.id == vm.teamSelection })!.name)
 						.foregroundColor(.gray)
 					Image(systemName: "chevron.up.chevron.down")
 						.resizable()
@@ -36,15 +35,20 @@ struct CreatePlaceView: View {
 				.background(.thinMaterial)
 				.cornerRadius(10)
 			}
+			if (!vm.errorMessage.isEmpty) {
+				Text("\(vm.errorMessage)")
+					.multilineTextAlignment(.center)
+					.foregroundColor(.red)
+			}
 			Spacer()
-			if (viewModel.isProcessing) {
+			if (vm.isProcessing) {
 				ProgressView()
 					.scaleEffect(1.5)
 					.padding()
 			} else {
 				Button {
 					Task {
-						if (await viewModel.createNewPlace()) {
+						if (await vm.createNewPlace()) {
 							self.presentationMode.wrappedValue.dismiss()
 						}
 					}
@@ -63,6 +67,6 @@ struct CreatePlaceView: View {
 
 struct CreatePlaceView_Previews: PreviewProvider {
 	static var previews: some View {
-		CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: TestData.teamSummaries, teamSelection: 0, errorPopupsState: ErrorPopupsState()))
+		CreatePlaceView(vm: CreatePlaceViewModel(teamSummaries: TestData.teamSummaries, teamSelection: 0, errorPopupsState: ErrorPopupsState()))
 	}
 }

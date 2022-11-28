@@ -6,6 +6,7 @@ final class CreateTeamViewModel: ObservableObject {
 	
 	@Published var teamName = ""
 	@Published var isProcessing = false
+	@Published var errorMessage = ""
 	
 	private let errorPopupsState: ErrorPopupsState
 	
@@ -17,6 +18,12 @@ final class CreateTeamViewModel: ObservableObject {
 	func createNewTeam() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
+		
+		if (teamName.count < 3) {
+			errorMessage = "Name must be at least 3 characters long."
+			return false
+		}
+		
 		do {
 			_ = try await api.createNewTeam(name: teamName)
 			errorPopupsState.presentSuccessPopup(text: "Team created")
@@ -30,5 +37,4 @@ final class CreateTeamViewModel: ObservableObject {
 		}
 		return false
 	}
-	
 }

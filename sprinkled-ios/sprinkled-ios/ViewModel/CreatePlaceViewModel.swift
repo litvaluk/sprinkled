@@ -7,6 +7,7 @@ final class CreatePlaceViewModel: ObservableObject {
 	@Published var placeName = ""
 	@Published var teamSelection: Int
 	@Published var isProcessing = false
+	@Published var errorMessage = ""
 	
 	let teamSummaries: [TeamSummary]
 	
@@ -22,6 +23,11 @@ final class CreatePlaceViewModel: ObservableObject {
 	func createNewPlace() async -> Bool {
 		isProcessing = true
 		defer { isProcessing = false }
+		
+		if (placeName.count < 3) {
+			errorMessage = "Name must be at least 3 characters long."
+			return false
+		}
 		
 		do {
 			if (teamSelection == 0) {

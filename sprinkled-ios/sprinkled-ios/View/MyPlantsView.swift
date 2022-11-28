@@ -60,9 +60,9 @@ struct MyPlantsView: View {
 			.navigationDestination(for: MyPlantsMenuAction.self) { action in
 				switch (action) {
 				case .createNewTeam:
-					CreateTeamView(viewModel: CreateTeamViewModel(errorPopupsState: errorPopupsState))
+					CreateTeamView(vm: CreateTeamViewModel(errorPopupsState: errorPopupsState))
 				case .createNewPlace(let teamId):
-					CreatePlaceView(viewModel: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
+					CreatePlaceView(vm: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
 				case .addPlantEntry:
 					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: $viewModel.navigationPath))
 				}
