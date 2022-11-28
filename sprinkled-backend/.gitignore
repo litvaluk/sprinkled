@@ -37,3 +37,6 @@ lerna-debug.log*
 # Env files
 .env.production
 .env
+
+# Production seed
+prisma/seed-production.ts

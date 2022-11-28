@@ -733,7 +733,7 @@
 				CODE_SIGN_ENTITLEMENTS = "sprinkled-ios/sprinkled-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = LZFDNCMC92;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -770,7 +770,7 @@
 				CODE_SIGN_ENTITLEMENTS = "sprinkled-ios/sprinkled-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"sprinkled-ios/Preview Content\"";
 				DEVELOPMENT_TEAM = LZFDNCMC92;
 				GENERATE_INFOPLIST_FILE = YES;
