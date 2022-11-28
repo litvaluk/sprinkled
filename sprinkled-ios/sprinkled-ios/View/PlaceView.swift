@@ -37,12 +37,15 @@ struct PlaceView: View {
 												.scaledToFill()
 										}
 									}
+									.overlay {
+										LinearGradient(gradient: Gradient(colors: [.clear, .clear, Color.primary]), startPoint: .top, endPoint: .bottom)
+									}
 								VStack {
 									Spacer()
 									HStack(alignment: .bottom) {
 										Text(plantEntry.name)
 											.font(.callout)
-											.foregroundColor(.black)
+											.foregroundColor(Color.init(uiColor: UIColor.systemBackground))
 										Spacer()
 									}
 								}
