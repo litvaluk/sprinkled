@@ -29,6 +29,7 @@ final class CreatePlaceViewModel: ObservableObject {
 			} else {
 				_ = try await api.createNewTeamPlace(name: placeName, teamId: teamSelection)
 			}
+			errorPopupsState.presentSuccessPopup(text: "Place created")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

@@ -25,6 +25,7 @@ final class SetPlanViewModel: ObservableObject {
 		let minute = Calendar.current.component(.minute, from: reminderTime)
 		do {
 			try await api.setPlan(plantEntryId: plantEntryId, planId: planSelection, hour: hour, minute: minute)
+			await errorPopupsState.presentSuccessPopup(text: "Plant entry added")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

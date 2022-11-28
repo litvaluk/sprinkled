@@ -19,6 +19,7 @@ final class CreateTeamViewModel: ObservableObject {
 		defer { isProcessing = false }
 		do {
 			_ = try await api.createNewTeam(name: teamName)
+			errorPopupsState.presentSuccessPopup(text: "Team created")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

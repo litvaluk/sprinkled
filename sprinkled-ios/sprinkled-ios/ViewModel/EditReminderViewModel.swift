@@ -40,6 +40,7 @@ final class EditReminderViewModel: ObservableObject {
 		
 		do {
 			_ = try await api.editReminder(reminderId: reminderId, actionId: Utils.actions.first(where: {$0.type == actionSelection})!.id, date: date, period: period)
+			errorPopupsState.presentSuccessPopup(text: "Reminder edited")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

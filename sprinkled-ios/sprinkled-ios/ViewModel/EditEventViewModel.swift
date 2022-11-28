@@ -35,6 +35,7 @@ final class EditEventViewModel: ObservableObject {
 		
 		do {
 			_ = try await api.editEvent(eventId: eventId, actionId: Utils.actions.first(where: {$0.type == actionSelection})!.id, date: date)
+			errorPopupsState.presentSuccessPopup(text: "Event edited")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

@@ -12,6 +12,7 @@
 		8F095E94290403EB00DBCECA /* CreatePlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */; };
 		8F095E962904066800DBCECA /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F095E952904066800DBCECA /* Styles.swift */; };
 		8F095E9829040E4800DBCECA /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F095E9729040E4800DBCECA /* Place.swift */; };
+		8F1433842934D3D600968218 /* SuccessPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1433832934D3D600968218 /* SuccessPopupView.swift */; };
 		8F17B9C928FAD73D00B4308C /* TabBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9C828FAD73D00B4308C /* TabBarState.swift */; };
 		8F17B9CB28FB564000B4308C /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F17B9CA28FB564000B4308C /* DependencyInjector.swift */; };
 		8F24E74928EECB86008D5AEE /* SprinkledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E74828EECB86008D5AEE /* SprinkledApp.swift */; };
@@ -111,6 +112,7 @@
 		8F095E93290403EB00DBCECA /* CreatePlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewModel.swift; sourceTree = "<group>"; };
 		8F095E952904066800DBCECA /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		8F095E9729040E4800DBCECA /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		8F1433832934D3D600968218 /* SuccessPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPopupView.swift; sourceTree = "<group>"; };
 		8F17B9C828FAD73D00B4308C /* TabBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarState.swift; sourceTree = "<group>"; };
 		8F17B9CA28FB564000B4308C /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		8F24E74528EECB86008D5AEE /* sprinkled-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sprinkled-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,7 +273,7 @@
 		8F24E75928EEDC8D008D5AEE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8F69377229225E9C0061A93E /* ErrorPopups */,
+				8F69377229225E9C0061A93E /* Popups */,
 				8FA07B28290D0B8C0019C142 /* AddEventView.swift */,
 				8FE3447D2918086E00247333 /* AddMemberView.swift */,
 				8FEB7FBE2924FA2F0078EFF2 /* AddPlantEntryView.swift */,
@@ -343,13 +345,22 @@
 			path = States;
 			sourceTree = "<group>";
 		};
-		8F69377229225E9C0061A93E /* ErrorPopups */ = {
+		8F69377229225E9C0061A93E /* Popups */ = {
+			isa = PBXGroup;
+			children = (
+				8F861A532934CFC300017F06 /* Error */,
+				8F1433832934D3D600968218 /* SuccessPopupView.swift */,
+			);
+			path = Popups;
+			sourceTree = "<group>";
+		};
+		8F861A532934CFC300017F06 /* Error */ = {
 			isa = PBXGroup;
 			children = (
 				8F69377329225FA10061A93E /* ConnectionErrorPopupView.swift */,
 				8FB0BC5B292287AD00D4C210 /* GenericErrorPopupView.swift */,
 			);
-			path = ErrorPopups;
+			path = Error;
 			sourceTree = "<group>";
 		};
 		8FA3C84628F2DF8300F1D070 /* Services */ = {
@@ -544,6 +555,7 @@
 				8F9DE0542922F25700A4FABB /* ErrorResponse.swift in Sources */,
 				8FFD754A290AD474005237A9 /* User.swift in Sources */,
 				8FEB7FBF2924FA2F0078EFF2 /* AddPlantEntryView.swift in Sources */,
+				8F1433842934D3D600968218 /* SuccessPopupView.swift in Sources */,
 				8F92BAEC2922B4940092BF55 /* TabBarView.swift in Sources */,
 				8FE3447C2916A9AF00247333 /* Utils.swift in Sources */,
 				8F69375E291FF3EF0061A93E /* EditReminderView.swift in Sources */,

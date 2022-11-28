@@ -45,6 +45,7 @@ final class PlantEntryViewModel: ObservableObject {
 		}
 		do {
 			try await api.deleteReminder(reminderId: reminderToDelete)
+			await errorPopupsState.presentSuccessPopup(text: "Reminder deleted")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
@@ -63,6 +64,7 @@ final class PlantEntryViewModel: ObservableObject {
 		}
 		do {
 			try await api.deleteEvent(eventId: eventToDelete)
+			await errorPopupsState.presentSuccessPopup(text: "Event deleted")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

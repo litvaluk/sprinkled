@@ -58,6 +58,7 @@ final class TeamViewModel: ObservableObject {
 	func deleteTeam() async -> Bool {
 		do {
 			try await api.deleteTeam(teamId: teamId)
+			errorPopupsState.presentSuccessPopup(text: "Team deleted")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
@@ -73,6 +74,7 @@ final class TeamViewModel: ObservableObject {
 	func renameTeam() async -> Bool {
 		do {
 			try await api.renameTeam(teamId: teamId, newName: renameTeamModalValue)
+			errorPopupsState.presentSuccessPopup(text: "Team renamed")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
@@ -88,6 +90,7 @@ final class TeamViewModel: ObservableObject {
 	func giveAdminRights(userId: Int) async {
 		do {
 			try await api.giveAdminRights(teamId: teamId, userId: userId)
+			errorPopupsState.presentSuccessPopup(text: "Admin rights given")
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
 		} catch APIError.connectionFailed {
@@ -101,6 +104,7 @@ final class TeamViewModel: ObservableObject {
 	func removeAdminRights(userId: Int) async {
 		do {
 			try await api.removeAdminRights(teamId: teamId, userId: userId)
+			errorPopupsState.presentSuccessPopup(text: "Admin rights removed")
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
 		} catch APIError.connectionFailed {

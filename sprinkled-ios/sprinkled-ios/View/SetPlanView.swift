@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SetPlanView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	@StateObject var vm: SetPlanViewModel
 	
 	var body: some View {
@@ -10,6 +11,7 @@ struct SetPlanView: View {
 				Spacer()
 				Button {
 					presentationMode.wrappedValue.dismiss()
+					errorPopupsState.presentSuccessPopup(text: "Plant entry added")
 				} label: {
 					Text("Skip")
 						.font(.title3)

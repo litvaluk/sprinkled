@@ -24,6 +24,7 @@ final class PlaceViewModel: ObservableObject {
 	func deletePlace() async -> Bool {
 		do {
 			try await api.deletePlace(placeId: place.id)
+			errorPopupsState.presentSuccessPopup(text: "Place deleted")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing
@@ -39,6 +40,7 @@ final class PlaceViewModel: ObservableObject {
 	func renamePlace() async -> Bool {
 		do {
 			try await api.renamePlace(placeId: place.id, newName: renamePlaceModalValue)
+			errorPopupsState.presentSuccessPopup(text: "Place renamed")
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

@@ -17,6 +17,7 @@ enum PlantEntryEventMenuAction: Hashable, Equatable {
 
 struct PlantEntryView: View {
 	@Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+	@EnvironmentObject var errorPopupsState: ErrorPopupsState
 	@StateObject var vm: PlantEntryViewModel
 	
 	var body: some View {
@@ -151,6 +152,7 @@ struct PlantEntryView: View {
 			Task {
 				vm.selectedSection = .gallery
 				await vm.savePhoto()
+				errorPopupsState.presentSuccessPopup(text: "Photo added")
 				await vm.fetchPlantEntry()
 			}
 		}

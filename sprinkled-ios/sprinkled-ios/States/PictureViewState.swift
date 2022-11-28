@@ -39,6 +39,7 @@ class PictureViewState: ObservableObject {
 	func deleteCurrent() async {
 		do {
 			try await api.deletePicture(pictureId: selection)
+			await errorPopupsState.presentSuccessPopup(text: "Photo deleted")
 			onDelete()
 			let index = pictures.firstIndex(where: {$0.id == selection})!
 			if (pictures.count == 1) {

@@ -43,11 +43,14 @@ struct RootView: View {
 					.zIndex(1)
 			}
 			.ignoresSafeArea(.keyboard, edges: .bottom)
-			.popup(isPresented: $errorPopupsState.showConnectionError, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 5) {
+			.popup(isPresented: $errorPopupsState.showConnectionError, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 3) {
 				ConnectionErrorPopupView()
 			}
-			.popup(isPresented: $errorPopupsState.showGenericError, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 5) {
+			.popup(isPresented: $errorPopupsState.showGenericError, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 3) {
 				GenericErrorPopupView()
+			}
+			.popup(isPresented: $errorPopupsState.showSuccess, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 3) {
+				SuccessPopupView(text: errorPopupsState.successPopupText)
 			}
 			.fullScreenCover(isPresented: $showOnboarding) {
 				OnboardingView(vm: OnboardingViewModel())
