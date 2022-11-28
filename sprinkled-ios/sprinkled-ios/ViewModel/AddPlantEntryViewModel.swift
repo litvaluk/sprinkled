@@ -19,10 +19,10 @@ final class AddPlantEntryViewModel: ObservableObject {
 	
 	let plant: Plant
 	var setupPlanPresented: Binding<Bool>
-	var lastCreatedPlantEntry: Binding<PlantEntry?>
+	var lastCreatedPlantEntry: Binding<CreatePlantEntryResponse?>
 	private let errorPopupsState: ErrorPopupsState
 	
-	init(plant: Plant, errorPopupsState: ErrorPopupsState, setupPlanPresented: Binding<Bool>, lastCreatedPlantEntry: Binding<PlantEntry?>) {
+	init(plant: Plant, errorPopupsState: ErrorPopupsState, setupPlanPresented: Binding<Bool>, lastCreatedPlantEntry: Binding<CreatePlantEntryResponse?>) {
 		self.plant = plant
 		self.errorPopupsState = errorPopupsState
 		self.setupPlanPresented = setupPlanPresented
@@ -77,11 +77,10 @@ final class AddPlantEntryViewModel: ObservableObject {
 			}
 			if (imagePicked) {
 				let url = try await storageManager.uploadImage(image: image)
-				try await api.addPlantEntry(name: name, headerPictureUrl: url, placeId: selectedPlace.id, plantId: plant.id)
+				lastCreatedPlantEntry.wrappedValue = try await api.addPlantEntry(name: name, headerPictureUrl: url, placeId: selectedPlace.id, plantId: plant.id)
 			} else {
-				try await api.addPlantEntry(name: name, headerPictureUrl: nil, placeId: selectedPlace.id, plantId: plant.id)
+				lastCreatedPlantEntry.wrappedValue = try await api.addPlantEntry(name: name, headerPictureUrl: nil, placeId: selectedPlace.id, plantId: plant.id)
 			}
-			lastCreatedPlantEntry.wrappedValue = TestData.plantEntries[0] // MARK: TODO
 			return true
 		} catch APIError.expiredRefreshToken, APIError.cancelled {
 			// nothing

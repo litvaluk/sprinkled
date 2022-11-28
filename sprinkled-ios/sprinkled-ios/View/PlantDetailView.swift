@@ -49,7 +49,7 @@ struct PlantDetailView: View {
 				.ignoresSafeArea(.keyboard, edges: .bottom)
 		}
 		.fullScreenCover(isPresented: $vm.setupPlanPresented) {
-			SetPlanView(vm: SetPlanViewModel(plantEntry: vm.lastCreatedPlantEntry!, plans: vm.plant.plans))
+			SetPlanView(vm: SetPlanViewModel(plantEntryId: vm.lastCreatedPlantEntry!.id, plantEntryName: vm.lastCreatedPlantEntry!.name, plans: vm.plant.plans, errorPopupsState: errorPopupsState))
 		}
 		.overlay(alignment: .topLeading) {
 			Button {

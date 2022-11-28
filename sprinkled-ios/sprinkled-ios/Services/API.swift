@@ -34,9 +34,10 @@ protocol APIProtocol {
 	func editReminder(reminderId: Int, actionId: Int, date: Date, period: Int) async throws -> Reminder
 	func createPicture(plantEntryId: Int, pictureUrl: URL) async throws -> Picture
 	func deletePicture(pictureId: Int) async throws -> Void
-	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> CreatePlantEntryResponse
 	func completeEvent(eventId: Int) async throws -> Void
 	func addPushToken(pushToken: String, deviceId: String) async throws -> Void
+	func setPlan(plantEntryId: Int, planId: Int, hour: Int, minute: Int) async throws -> Void
 }
 
 final class API : APIProtocol {
@@ -265,7 +266,7 @@ final class API : APIProtocol {
 		try await makeAuthenticatedRequest(path: "pictures/\(pictureId)", method: "DELETE")
 	}
 	
-	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void {
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> CreatePlantEntryResponse {
 		var body = [
 			"name": name,
 			"placeId": placeId,
@@ -275,7 +276,7 @@ final class API : APIProtocol {
 			body["headerPictureUrl"] = headerPictureUrl.absoluteString
 		}
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
-		try await makeAuthenticatedRequest(path: "plant-entries", method: "POST", body: bodyData)
+		return try await makeAuthenticatedRequest(path: "plant-entries", method: "POST", body: bodyData)
 	}
 	
 	func completeEvent(eventId: Int) async throws -> Void {
@@ -289,6 +290,16 @@ final class API : APIProtocol {
 		] as [String : Any]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		try await makeAuthenticatedRequest(path: "notifications/addPushToken", method: "POST", body: bodyData)
+	}
+	
+	func setPlan(plantEntryId: Int, planId: Int, hour: Int, minute: Int) async throws -> Void {
+		let body = [
+			"planId": planId,
+			"preferredHour": hour,
+			"preferredMinute": minute
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)/setPlan", method: "POST", body: bodyData)
 	}
 		
 	private func refreshToken() async throws {
@@ -602,8 +613,8 @@ final class TestAPI : APIProtocol {
 		return
 	}
 	
-	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> Void {
-		return
+	func addPlantEntry(name: String, headerPictureUrl: URL?, placeId: Int, plantId: Int) async throws -> CreatePlantEntryResponse {
+		return CreatePlantEntryResponse(id: 1, name: "Plant Entry 1", createdAt: Date(), creatorId: 1, placeId: 1, plantId: 1, headerPictureUrl: nil)
 	}
 	
 	func completeEvent(eventId: Int) async throws -> Void {
@@ -611,6 +622,10 @@ final class TestAPI : APIProtocol {
 	}
 	
 	func addPushToken(pushToken: String, deviceId: String) async throws -> Void {
+		return
+	}
+	
+	func setPlan(plantEntryId: Int, planId: Int, hour: Int, minute: Int) async throws -> Void {
 		return
 	}
 }

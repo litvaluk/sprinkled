@@ -24,7 +24,7 @@ struct SetPlanView: View {
 				}
 				.padding(.top, 4)
 				HStack(spacing: 0) {
-					Text("\(vm.plantEntry.name)")
+					Text("\(vm.plantEntryName)")
 						.font(.title2)
 					Spacer()
 				}
@@ -94,6 +94,6 @@ struct SetPlanView: View {
 
 struct SetPlanView_Previews: PreviewProvider {
 	static var previews: some View {
-		SetPlanView(vm: SetPlanViewModel(plantEntry: TestData.plantEntries[0], plans: TestData.plants[0].plans))
+		SetPlanView(vm: SetPlanViewModel(plantEntryId: TestData.plantEntries[0].id, plantEntryName: TestData.plantEntries[0].name, plans: TestData.plants[0].plans, errorPopupsState: ErrorPopupsState()))
 	}
 }

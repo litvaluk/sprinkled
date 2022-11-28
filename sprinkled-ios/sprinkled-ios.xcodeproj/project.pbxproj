@@ -48,6 +48,7 @@
 		8F861A4C2932333A00017F06 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */; };
 		8F861A4E2933DF3000017F06 /* SetPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4D2933DF3000017F06 /* SetPlanView.swift */; };
 		8F861A502933E1B700017F06 /* SetPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A4F2933E1B600017F06 /* SetPlanViewModel.swift */; };
+		8F861A522934B88600017F06 /* CreatePlantEntryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F861A512934B88500017F06 /* CreatePlantEntryResponse.swift */; };
 		8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */; };
 		8F8F5A5A2902BBF4009D6DC9 /* PlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */; };
 		8F8F5A5C2902BBFE009D6DC9 /* CreatePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */; };
@@ -145,6 +146,7 @@
 		8F861A4B2932333A00017F06 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		8F861A4D2933DF3000017F06 /* SetPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlanView.swift; sourceTree = "<group>"; };
 		8F861A4F2933E1B600017F06 /* SetPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlanViewModel.swift; sourceTree = "<group>"; };
+		8F861A512934B88500017F06 /* CreatePlantEntryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlantEntryResponse.swift; sourceTree = "<group>"; };
 		8F8F5A5729029E2C009D6DC9 /* MyPlantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlantsViewModel.swift; sourceTree = "<group>"; };
 		8F8F5A592902BBF4009D6DC9 /* PlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceView.swift; sourceTree = "<group>"; };
 		8F8F5A5B2902BBFE009D6DC9 /* CreatePlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlaceView.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			children = (
 				8FFD7547290AD3DB005237A9 /* Action.swift */,
 				8FA563A828F0240800C54AF2 /* AuthResponse.swift */,
+				8F861A512934B88500017F06 /* CreatePlantEntryResponse.swift */,
 				8F9DE0532922F25700A4FABB /* ErrorResponse.swift */,
 				8FFD7545290AC005005237A9 /* Event.swift */,
 				8FFD7543290ABF27005237A9 /* Picture.swift */,
@@ -514,6 +517,7 @@
 				8F8F5A5829029E2C009D6DC9 /* MyPlantsViewModel.swift in Sources */,
 				8F24E75E28EEDCD9008D5AEE /* ProfileView.swift in Sources */,
 				8F861A4A2932332100017F06 /* OnboardingView.swift in Sources */,
+				8F861A522934B88600017F06 /* CreatePlantEntryResponse.swift in Sources */,
 				8F095E922903E24A00DBCECA /* Team.swift in Sources */,
 				8FA07B2D290D48CB0019C142 /* AddReminderView.swift in Sources */,
 				8F24E74B28EECB86008D5AEE /* RootView.swift in Sources */,

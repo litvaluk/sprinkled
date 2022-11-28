@@ -1,20 +1,38 @@
 import SwiftUI
 
 final class SetPlanViewModel: ObservableObject {
+	@Inject var api: APIProtocol
+	
 	@Published var planSelection: Int
 	@Published var reminderTime: Date = Date()
 	
-	let plantEntry: PlantEntry
+	private let errorPopupsState: ErrorPopupsState
+	
+	let plantEntryId: Int
+	let plantEntryName: String
 	let plans: [Plan]
 	
-	init(plantEntry: PlantEntry, plans: [Plan]) {
-		self.plantEntry = plantEntry
+	init(plantEntryId: Int, plantEntryName: String, plans: [Plan], errorPopupsState: ErrorPopupsState) {
+		self.plantEntryId = plantEntryId
+		self.plantEntryName = plantEntryName
 		self.plans = plans
 		self.planSelection = plans.first!.id
+		self.errorPopupsState = errorPopupsState
 	}
 	
 	func setPlan() async -> Bool {
-		// MARK: TODO
-		true
+		let hour = Calendar.current.component(.hour, from: reminderTime)
+		let minute = Calendar.current.component(.minute, from: reminderTime)
+		do {
+			try await api.setPlan(plantEntryId: plantEntryId, planId: planSelection, hour: hour, minute: minute)
+			return true
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
+			// nothing
+		} catch APIError.connectionFailed {
+			errorPopupsState.showConnectionError = true
+		} catch {
+			errorPopupsState.showGenericError = true
+		}
+		return false
 	}
 }
