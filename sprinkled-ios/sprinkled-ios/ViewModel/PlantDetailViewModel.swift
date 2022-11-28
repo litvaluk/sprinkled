@@ -7,7 +7,7 @@ final class PlantDetailViewModel: ObservableObject {
 	@Published var addPlantEntryPresented = false
 	@Published var setupPlanPresented = false
 	@Published var lastCreatedPlantEntry: CreatePlantEntryResponse? = nil
-	@Published var yOffset: CGFloat = 0
+	@Published var yOffset: CGFloat = 0w
 	
 	let plant: Plant
 	

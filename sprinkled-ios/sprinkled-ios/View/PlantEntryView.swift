@@ -32,24 +32,114 @@ struct PlantEntryView: View {
 		.ignoresSafeArea(.all, edges: [.top])
 		.overlay(alignment: .topLeading) {
 			if (vm.yOffset > -130) {
-				Button {
-					self.presentationMode.wrappedValue.dismiss()
-				} label: {
-					Circle()
-						.fill(Color.init(uiColor: .systemBackground))
-						.frame(width: 35)
-						.padding([.leading], 7)
-						.overlay {
-							Image(systemName: "chevron.left")
-								.resizable()
-								.scaledToFit()
-								.frame(width: 16, height: 19)
-								.fontWeight(.medium)
-								.padding(.leading, 4)
+				HStack {
+					Button {
+						self.presentationMode.wrappedValue.dismiss()
+					} label: {
+						Circle()
+							.fill(Color.init(uiColor: .systemBackground))
+							.frame(width: 35)
+							.overlay {
+								Image(systemName: "chevron.left")
+									.resizable()
+									.scaledToFit()
+									.frame(width: 16, height: 19)
+									.fontWeight(.medium)
+									.padding(.leading, -2)
+							}
+					}
+					Spacer()
+					Menu {
+						Button {
+							vm.showRenamePlantEntryModal = true
+						} label: {
+							Text("Rename plant entry")
 						}
+						Button {
+							vm.showDeletePlantEntryModal = true
+						} label: {
+							Text("Delete plant entry")
+						}
+					} label: {
+						Circle()
+							.fill(Color.init(uiColor: .systemBackground))
+							.frame(width: 35)
+							.overlay {
+								Image(systemName: "ellipsis")
+									.resizable()
+									.scaledToFit()
+									.frame(width: 20, height: 20)
+									.fontWeight(.medium)
+									.padding(.leading, -0.5)
+							}
+					}
 				}
+				.padding(.horizontal, 7)
 				.opacity(vm.yOffset > -110 ? 0.9 : (vm.yOffset+130.0)/20.0)
 			}
+		}
+		.modal(title: "Are you sure?", showModal: $vm.showDeletePlantEntryModal) {
+			Text("This action will delete all events, reminders and pictures associated with this plant entry.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.deletePlantEntry()) {
+						self.presentationMode.wrappedValue.dismiss()
+					}
+				}
+			} label: {
+				Text("Delete")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.showDeletePlantEntryModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
+		.modal(title: "Choose a new name", showModal: $vm.showRenamePlantEntryModal) {
+			TextField("Name", text: $vm.renamePlantEntryModalValue)
+				.textFieldStyle(SprinkledTextFieldStyle())
+				.autocorrectionDisabled()
+				.textInputAutocapitalization(.never)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.renamePlantEntry()) {
+						withAnimation(.easeOut(duration: 0.07)) {
+							vm.showRenamePlantEntryModal = false
+							vm.renamePlantEntryModalValue = ""
+						}
+						await vm.fetchPlantEntry()
+					}
+				}
+			} label: {
+				Text("Rename")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.showRenamePlantEntryModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
 		}
 		.modal(title: "Are you sure?", showModal: $vm.reminderToDelete.mappedToBool()) {
 			Text("This action will delete the chosen reminder.")

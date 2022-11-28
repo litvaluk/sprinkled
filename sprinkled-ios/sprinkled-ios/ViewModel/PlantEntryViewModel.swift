@@ -13,6 +13,9 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var showImagePickerChoiceSheet = false
 	@Published var showPhotoLibraryImagePicker = false
 	@Published var showCameraImagePicker = false
+	@Published var showDeletePlantEntryModal = false
+	@Published var showRenamePlantEntryModal = false
+	@Published var renamePlantEntryModalValue = ""
 	@Published var yOffset: CGFloat = 0
 	
 	let plantEntryId: Int
@@ -37,6 +40,38 @@ final class PlantEntryViewModel: ObservableObject {
 		} catch {
 			errorPopupsState.showGenericError = true
 		}
+	}
+	
+	@MainActor
+	func deletePlantEntry() async -> Bool {
+		do {
+			try await api.deletePlantEntry(plantEntryId: plantEntryId)
+			errorPopupsState.presentSuccessPopup(text: "Plant entry deleted")
+			return true
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
+			// nothing
+		} catch APIError.connectionFailed {
+			errorPopupsState.showConnectionError = true
+		} catch {
+			errorPopupsState.showGenericError = true
+		}
+		return false
+	}
+	
+	@MainActor
+	func renamePlantEntry() async -> Bool {
+		do {
+			try await api.renamePlantEntry(plantEntryId: plantEntryId, newName: renamePlantEntryModalValue)
+			errorPopupsState.presentSuccessPopup(text: "Plant entry renamed")
+			return true
+		} catch APIError.expiredRefreshToken, APIError.cancelled {
+			// nothing
+		} catch APIError.connectionFailed {
+			errorPopupsState.showConnectionError = true
+		} catch {
+			errorPopupsState.showGenericError = true
+		}
+		return false
 	}
 	
 	func deleteReminder() async -> Bool {

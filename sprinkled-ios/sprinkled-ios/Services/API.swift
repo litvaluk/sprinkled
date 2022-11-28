@@ -38,6 +38,9 @@ protocol APIProtocol {
 	func completeEvent(eventId: Int) async throws -> Void
 	func addPushToken(pushToken: String, deviceId: String) async throws -> Void
 	func setPlan(plantEntryId: Int, planId: Int, hour: Int, minute: Int) async throws -> Void
+	func renamePlantEntry(plantEntryId: Int, newName: String) async throws -> Void
+	func deletePlantEntry(plantEntryId: Int) async throws -> Void
+	func fetchPlace(placeId: Int) async throws -> TeamSummaryPlace
 }
 
 final class API : APIProtocol {
@@ -300,6 +303,22 @@ final class API : APIProtocol {
 		]
 		let bodyData = try JSONSerialization.data(withJSONObject: body)
 		try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)/setPlan", method: "POST", body: bodyData)
+	}
+	
+	func renamePlantEntry(plantEntryId: Int, newName: String) async throws -> Void {
+		let body = [
+			"name": newName
+		]
+		let bodyData = try JSONSerialization.data(withJSONObject: body)
+		try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)", method: "PUT", body: bodyData)
+	}
+	
+	func deletePlantEntry(plantEntryId: Int) async throws -> Void {
+		try await makeAuthenticatedRequest(path: "plant-entries/\(plantEntryId)", method: "DELETE")
+	}
+	
+	func fetchPlace(placeId: Int) async throws -> TeamSummaryPlace {
+		return try await makeAuthenticatedRequest(path: "places/\(placeId)")
 	}
 		
 	private func refreshToken() async throws {
@@ -627,5 +646,17 @@ final class TestAPI : APIProtocol {
 	
 	func setPlan(plantEntryId: Int, planId: Int, hour: Int, minute: Int) async throws -> Void {
 		return
+	}
+	
+	func renamePlantEntry(plantEntryId: Int, newName: String) async throws -> Void {
+		return
+	}
+	
+	func deletePlantEntry(plantEntryId: Int) async throws -> Void {
+		return
+	}
+	
+	func fetchPlace(placeId: Int) async throws -> TeamSummaryPlace {
+		return TestData.teamSummaries[0].places[0]
 	}
 }

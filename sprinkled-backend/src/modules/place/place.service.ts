@@ -28,10 +28,21 @@ export class PlaceService {
     return await this.prisma.place.findMany();
   }
 
-  async findOne(id: number): Promise<Place> {
+  async findOne(id: number) {
     return await this.prisma.place.findUnique({
       where: {
         id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        plantEntries: {
+          select: {
+            id: true,
+            name: true,
+            headerPictureUrl: true,
+          },
+        },
       },
     });
   }

@@ -52,7 +52,7 @@ struct MyPlantsView: View {
 				}
 			}
 			.navigationDestination(for: TeamSummaryPlace.self) { place in
-				PlaceView(viewModel: PlaceViewModel(place: place, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal", navigationPathBinding: $viewModel.navigationPath, errorPopupsState: errorPopupsState))
+				PlaceView(viewModel: PlaceViewModel(placeId: place.id, placeName: place.name, teamName: viewModel.teamSummaries.first(where: {$0.places.contains(place)})?.name ?? "Personal", navigationPathBinding: $viewModel.navigationPath, errorPopupsState: errorPopupsState))
 			}
 			.navigationDestination(for: TeamSummary.self) { team in
 				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name, errorPopupsState: errorPopupsState))

@@ -29,7 +29,7 @@ export class PlaceController {
   }
 
   @Get(':id')
-  async getPlace(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number): Promise<Place> {
+  async getPlace(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.BAD_REQUEST })) id: number) {
     return await this.placeService.findOne(id);
   }
 

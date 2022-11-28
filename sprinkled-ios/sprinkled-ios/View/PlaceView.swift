@@ -20,60 +20,72 @@ struct PlaceView: View {
 					Spacer()
 				}
 				LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-					ForEach(viewModel.place.plantEntries) { plantEntry in
-						NavigationLink(value: plantEntry) {
-							ZStack {
-								Color.clear
-									.aspectRatio(1, contentMode: .fill)
-									.clipped()
-									.overlay {
-										if let unwrappedHeaderPictureUrl = plantEntry.headerPictureUrl {
-											KFImage(URL(string: unwrappedHeaderPictureUrl)!)
-												.resizable()
-												.scaledToFill()
-										} else {
-											Image("GridPlaceholderImage")
-												.resizable()
-												.scaledToFill()
+					if let place = viewModel.place {
+						ForEach(place.plantEntries) { plantEntry in
+							NavigationLink(value: plantEntry) {
+								ZStack {
+									Color.clear
+										.aspectRatio(1, contentMode: .fill)
+										.clipped()
+										.overlay {
+											if let unwrappedHeaderPictureUrl = plantEntry.headerPictureUrl {
+												KFImage(URL(string: unwrappedHeaderPictureUrl)!)
+													.resizable()
+													.scaledToFill()
+											} else {
+												Image("GridPlaceholderImage")
+													.resizable()
+													.scaledToFill()
+											}
+										}
+										.overlay {
+											LinearGradient(gradient: Gradient(colors: [.clear, .clear, Color.primary]), startPoint: .top, endPoint: .bottom)
+										}
+									VStack {
+										Spacer()
+										HStack(alignment: .bottom) {
+											Text(plantEntry.name)
+												.font(.callout)
+												.foregroundColor(Color.init(uiColor: UIColor.systemBackground))
+											Spacer()
 										}
 									}
-									.overlay {
-										LinearGradient(gradient: Gradient(colors: [.clear, .clear, Color.primary]), startPoint: .top, endPoint: .bottom)
-									}
-								VStack {
-									Spacer()
-									HStack(alignment: .bottom) {
-										Text(plantEntry.name)
-											.font(.callout)
-											.foregroundColor(Color.init(uiColor: UIColor.systemBackground))
-										Spacer()
-									}
+									.padding(6)
 								}
-								.padding(6)
+								.cornerRadius(10)
+							}
+						}
+						NavigationLink(value: PlaceAction.addPlantEntry) {
+							ZStack {
+								RoundedRectangle(cornerRadius: 15)
+									.aspectRatio(1, contentMode: .fill)
+									.foregroundColor(.sprinkledGray)
+								Image(systemName: "plus")
+									.resizable()
+									.frame(width: 50, height: 50)
+									.scaledToFit()
+									.foregroundColor(.gray)
+								
 							}
 							.cornerRadius(10)
 						}
-					}
-					NavigationLink(value: PlaceAction.addPlantEntry) {
-						ZStack {
-							RoundedRectangle(cornerRadius: 15)
-								.aspectRatio(1, contentMode: .fill)
-								.foregroundColor(.sprinkledGray)
-							Image(systemName: "plus")
-								.resizable()
-								.frame(width: 50, height: 50)
-								.scaledToFit()
-								.foregroundColor(.gray)
-							
+					} else {
+						ForEach(0..<5) { _ in
+							ZStack {
+								Color.sprinkledDarkerGray
+									.aspectRatio(1, contentMode: .fill)
+									.clipped()
+							}
+							.cornerRadius(10)
+							.redactedShimmering()
 						}
-						.cornerRadius(10)
 					}
 				}
 			}
 		}
 		.padding(.horizontal)
 		.padding(.bottom)
-		.navigationTitle(viewModel.place.name)
+		.navigationTitle(viewModel.placeName)
 		.toolbar {
 			ToolbarItem {
 				Menu {
@@ -141,7 +153,7 @@ struct PlaceView: View {
 					if (await viewModel.renamePlace()) {
 						withAnimation(.easeOut(duration: 0.07)) {
 							viewModel.showRenamePlaceModal = false
-							viewModel.place = TeamSummaryPlace(id: viewModel.place.id, name: viewModel.renamePlaceModalValue, plantEntries: viewModel.place.plantEntries)
+							viewModel.placeName = viewModel.renamePlaceModalValue
 							viewModel.renamePlaceModalValue = ""
 							
 						}
@@ -164,6 +176,13 @@ struct PlaceView: View {
 			.buttonStyle(.borderedProminent)
 			.cornerRadius(10)
 		}
+		.onChange(of: viewModel.navigationPathBinding.wrappedValue) { newNavigationPath in
+			if (newNavigationPath.isEmpty) {
+				Task {
+					await viewModel.fetchPlace()
+				}
+			}
+		}
 		.navigationDestination(for: TeamSummaryPlantEntry.self) { plantEntry in
 			PlantEntryView(vm: PlantEntryViewModel(plantEntryId: plantEntry.id, errorPopupsState: errorPopupsState))
 		}
@@ -173,13 +192,16 @@ struct PlaceView: View {
 				SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: viewModel.navigationPathBinding))
 			}
 		}
+		.task {
+			await viewModel.fetchPlace()
+		}
 	}
 }
 
 struct PlaceView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationStack {
-			PlaceView(viewModel: PlaceViewModel(place: TestData.teamSummaries[0].places[0], teamName: "Personal", navigationPathBinding: .constant(NavigationPath()), errorPopupsState: ErrorPopupsState()))
+			PlaceView(viewModel: PlaceViewModel(placeId: 1, placeName: "Place 1", teamName: "Personal", navigationPathBinding: .constant(NavigationPath()), errorPopupsState: ErrorPopupsState()))
 		}
 	}
 }
