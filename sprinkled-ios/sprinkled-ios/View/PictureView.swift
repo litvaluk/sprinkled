@@ -86,10 +86,10 @@ struct PictureView: View {
 								pictureViewState.showDeleteModal = true
 							}
 						} label: {
-							Image(systemName: "xmark.bin.fill")
+							Image(systemName: "trash.fill")
 								.resizable()
 								.scaledToFit()
-								.frame(width: 25, height: 25)
+								.frame(width: 22, height: 22)
 								.foregroundColor(.white)
 								.fontWeight(.medium)
 								
