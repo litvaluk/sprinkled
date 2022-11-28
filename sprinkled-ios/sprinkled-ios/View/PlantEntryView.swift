@@ -22,15 +22,10 @@ struct PlantEntryView: View {
 	
 	var body: some View {
 		ScrollView {
-			GeometryReader { gr in
-				VStack {
-					PlantEntryHeaderView(vm: vm)
-					PlantEntryContent(vm: vm)
-						.padding(.horizontal)
-				}
-				.onChange(of: gr.frame(in: .global).minY) { minY in
-					vm.yOffset = minY
-				}
+			VStack {
+				PlantEntryHeaderView(vm: vm)
+				PlantEntryContent(vm: vm)
+					.padding(.horizontal)
 			}
 		}
 		.toolbar(.hidden)
@@ -180,28 +175,33 @@ struct PlantEntryHeaderView: View {
 	var body: some View {
 		ZStack(alignment: .bottomLeading) {
 			GeometryReader { gr in
-				if let pictureUrl = vm.plantEntry?.headerPictureUrl {
-					if (gr.frame(in: .global).minY <= 0) {
-						KFImage(URL(string: pictureUrl)!)
-							.resizable()
-							.scaledToFill()
-							.frame(width: gr.size.width, height: gr.size.height)
-							.offset(y: gr.frame(in: .global).minY/9)
-							.clipped()
+				Group {
+					if let pictureUrl = vm.plantEntry?.headerPictureUrl {
+						if (gr.frame(in: .global).minY <= 0) {
+							KFImage(URL(string: pictureUrl)!)
+								.resizable()
+								.scaledToFill()
+								.frame(width: gr.size.width, height: gr.size.height)
+								.offset(y: gr.frame(in: .global).minY/9)
+								.clipped()
+						} else {
+							KFImage(URL(string: pictureUrl)!)
+								.resizable()
+								.scaledToFill()
+								.frame(width: gr.size.width, height: gr.size.height + gr.frame(in: .global).minY)
+								.clipped()
+								.offset(y: -gr.frame(in: .global).minY)
+						}
 					} else {
-						KFImage(URL(string: pictureUrl)!)
-							.resizable()
-							.scaledToFill()
-							.frame(width: gr.size.width, height: gr.size.height + gr.frame(in: .global).minY)
-							.clipped()
-							.offset(y: -gr.frame(in: .global).minY)
+						Rectangle()
+							.foregroundColor(.sprinkledGray)
+							.shimmering()
+							.frame(width: gr.size.width, height: gr.frame(in: .global).minY <= 0 ? gr.size.height : gr.size.height + gr.frame(in: .global).minY)
+							.offset(y: gr.frame(in: .global).minY <= 0 ? 0 : -gr.frame(in: .global).minY)
 					}
-				} else {
-					Rectangle()
-						.foregroundColor(.sprinkledGray)
-						.shimmering()
-						.frame(width: gr.size.width, height: gr.frame(in: .global).minY <= 0 ? gr.size.height : gr.size.height + gr.frame(in: .global).minY)
-						.offset(y: gr.frame(in: .global).minY <= 0 ? 0 : -gr.frame(in: .global).minY)
+				}
+				.onChange(of: gr.frame(in: .global).minY) { minY in
+					vm.yOffset = minY
 				}
 			}
 			.frame(height: 200)
