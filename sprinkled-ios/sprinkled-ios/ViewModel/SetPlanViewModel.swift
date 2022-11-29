@@ -21,8 +21,8 @@ final class SetPlanViewModel: ObservableObject {
 	}
 	
 	func setPlan() async -> Bool {
-		let hour = Calendar.current.component(.hour, from: reminderTime)
-		let minute = Calendar.current.component(.minute, from: reminderTime)
+		let hour = reminderTime.utcHour()
+		let minute = reminderTime.utcMinute()
 		do {
 			try await api.setPlan(plantEntryId: plantEntryId, planId: planSelection, hour: hour, minute: minute)
 			await errorPopupsState.presentSuccessPopup(text: "Plant entry added")

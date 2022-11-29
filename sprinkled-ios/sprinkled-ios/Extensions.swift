@@ -96,6 +96,20 @@ extension Date {
 		self.ISO8601Format(.iso8601(timeZone: .gmt, includingFractionalSeconds: true)) + "Z"
 	}
 	
+	func utcHour() -> Int {
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = .gmt
+		dateFormatter.dateFormat = "H"
+		return Int(dateFormatter.string(from: self))!
+	}
+	
+	func utcMinute() -> Int {
+		let dateFormatter = DateFormatter()
+		dateFormatter.timeZone = .gmt
+		dateFormatter.dateFormat = "m"
+		return Int(dateFormatter.string(from: self))!
+	}
+	
 	func zeroSeconds() -> Date {
 		let calendar = Calendar.current
 		let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
