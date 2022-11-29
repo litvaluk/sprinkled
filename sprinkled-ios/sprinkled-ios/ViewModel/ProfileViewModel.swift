@@ -9,9 +9,8 @@ final class ProfileViewModel: ObservableObject {
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
 	@AppStorage("unitSystem") var unitSystem = "Metric"
-	
-	@Published var reminderNotificationsEnabled: Bool
-	@Published var eventNotificationsEnabled: Bool
+	@AppStorage("ReminderNotificationsEnabled") var reminderNotificationsEnabled = false
+	@AppStorage("EventNotificationsEnabled") var eventNotificationsEnabled = false
 	
 	private let errorPopupsState: ErrorPopupsState
 	private let tabBarState: TabBarState
@@ -21,8 +20,6 @@ final class ProfileViewModel: ObservableObject {
 		@Inject var api: APIProtocol
 		self.notificationManager = notificationManager
 		self.api = api
-		reminderNotificationsEnabled = notificationManager.reminderNotificationsEnabled()
-		eventNotificationsEnabled = notificationManager.eventNotificationsEnabled()
 		self.errorPopupsState = errorPopupsState
 		self.tabBarState = tabBarState
 	}

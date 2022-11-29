@@ -24,7 +24,6 @@ export class NotificationService {
 
   @Cron('0 * * * * *') // every minute
   async handleReminderNotifications() {
-    this.logger.log('Handling reminder notifications');
     for (let event of await this._getEventsToRemind()) {
       let usersLinkedToEvent = await this._getUsersLinkedToEvent(event.id);
       await this._sendNotificationToUsers(
