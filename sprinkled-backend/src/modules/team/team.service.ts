@@ -178,6 +178,11 @@ export class TeamService {
             id: userId,
           },
         },
+        admins: {
+          disconnect: {
+            id: userId,
+          },
+        },
       },
     });
   }
