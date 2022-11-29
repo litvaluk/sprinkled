@@ -121,6 +121,14 @@ export class NotificationService {
       },
     };
 
+    let loggedInConstraint = {
+      NOT: {
+        device: {
+          accessToken: '',
+        },
+      },
+    };
+
     let expiredConstraint = {
       device: {
         tokensUpdatedAt: {
@@ -148,7 +156,7 @@ export class NotificationService {
 
     let pushTokens = await this.prisma.pushToken.findMany({
       where: {
-        AND: [userConstraint, expiredConstraint, notificationsEnabledConstraint],
+        AND: [userConstraint, loggedInConstraint, expiredConstraint, notificationsEnabledConstraint],
       },
     });
     for (let pushToken of pushTokens) {
