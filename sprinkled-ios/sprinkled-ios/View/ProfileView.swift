@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
 	@StateObject var vm: ProfileViewModel
-	@AppStorage("showOnboarding") var showOnboarding: Bool = false
+	
 	
 	var body: some View {
 		NavigationStack {
@@ -23,21 +23,6 @@ struct ProfileView: View {
 				}
 				SprinkledListSection(headerText: "Other") {
 					SprinkledListMenuPicker(title: "Unit system", options: ["Metric", "Imperial"], selection: $vm.unitSystem)
-				}
-				SprinkledListSection(headerText: "Tutorial") {
-					Button {
-						showOnboarding = true
-					} label: {
-						HStack {
-							Spacer()
-							Text("Show tutorial")
-								.foregroundColor(.sprinkledGreen)
-							Spacer()
-						}
-						.padding(15)
-						.background(.thinMaterial)
-						.cornerRadius(10)
-					}
 				}
 				Spacer()
 				Button(role: .destructive) {

@@ -6,7 +6,6 @@ struct RootView: View {
 	@StateObject var tabBarState = TabBarState()
 	@StateObject var errorPopupsState: ErrorPopupsState
 	@StateObject var pictureViewState: PictureViewState
-	@AppStorage("showOnboarding") var showOnboarding: Bool = false
 	
 	init(vm: RootViewModel) {
 		self._vm = StateObject(wrappedValue: vm)
@@ -52,8 +51,8 @@ struct RootView: View {
 			.popup(isPresented: $errorPopupsState.showSuccess, type: .floater(verticalPadding: 70), position: .bottom, animation: .spring().speed(2), autohideIn: 3) {
 				SuccessPopupView(text: errorPopupsState.successPopupText)
 			}
-			.fullScreenCover(isPresented: $showOnboarding) {
-				OnboardingView(vm: OnboardingViewModel())
+			.fullScreenCover(isPresented: $vm.showOnboarding) {
+				OnboardingView(vm: OnboardingViewModel(errorPopupsState: errorPopupsState))
 			}
 			.environmentObject(pictureViewState)
 			.environmentObject(errorPopupsState)

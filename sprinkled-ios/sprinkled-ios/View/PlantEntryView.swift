@@ -389,7 +389,7 @@ struct PlantEntryContent: View {
 							.foregroundColor(.secondary)
 							.padding(50)
 					} else {
-						ForEach(plantEntry.events) { event in
+						ForEach(plantEntry.events.sorted().reversed()) { event in
 							PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", action: event.action.type, date: event.date) {
 								NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
 									Text("Edit")
@@ -427,7 +427,7 @@ struct PlantEntryContent: View {
 							.foregroundColor(.secondary)
 							.padding(50)
 					} else {
-						ForEach(plantEntry.reminders) { reminder in
+						ForEach(plantEntry.reminders.sorted().reversed()) { reminder in
 							let subtitle = reminder.period == 0 ? "One time" : "Every \(reminder.period) days"
 							PlantEntryListItem(title: "\(reminder.action.type)".capitalizedFirstLetter(), subtitle: subtitle, action: reminder.action.type, date: reminder.date) {
 								NavigationLink(value: PlantEntryReminderMenuAction.edit(plantEntry, reminder)) {
@@ -466,7 +466,7 @@ struct PlantEntryContent: View {
 						.padding(50)
 				} else {
 					LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-						ForEach(plantEntry.pictures) { picture in
+						ForEach(plantEntry.pictures.sorted().reversed()) { picture in
 							Button {
 								pictureViewState.set(selection: picture.id, pictures: plantEntry.pictures, onDelete: {
 									Task {

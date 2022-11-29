@@ -65,7 +65,6 @@ struct AddPlantEntryView: View {
 						TextField("Name", text: $vm.name)
 							.textFieldStyle(SprinkledTextFieldStyle())
 							.autocorrectionDisabled()
-							.textInputAutocapitalization(.never)
 						SprinkledListMenuPicker(title: "Team", options: vm.getTeamOptions(), selection: $vm.teamSelection)
 						SprinkledListMenuPicker(title: "Place", options: vm.getPlaceOptions(), selection: $vm.placeSelection)
 							.onChange(of: vm.teamSelection) { _ in

@@ -11,7 +11,7 @@ struct GenericErrorPopupView: View {
 				.font(.system(size: 16))
 		}
 		.padding(16)
-		.background(Color(hex: "FE504E").cornerRadius(12))
+		.background(Color.sprinkledRed.cornerRadius(12))
 		.padding(.horizontal, 16)
 	}
 }

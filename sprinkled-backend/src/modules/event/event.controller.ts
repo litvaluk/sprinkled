@@ -52,9 +52,9 @@ export class EventController {
       user.id,
       'User ' +
         user.username +
-        'has just added a new ' +
+        ' has just added a new ' +
         newEvent.action.type.toLowerCase() +
-        ' event to the' +
+        ' event to the ' +
         newEvent.plantEntry.name +
         '.',
     );

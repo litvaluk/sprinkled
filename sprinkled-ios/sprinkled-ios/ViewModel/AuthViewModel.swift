@@ -64,8 +64,7 @@ final class AuthViewModel: ObservableObject {
 		} catch {
 			errorMessage = "Something went wrong."
 		}
-		// MARK: Uncomment when onboarding is done
-		// showOnboarding = true
+		showOnboarding = true
 	}
 	
 	func toggleSignIn() {

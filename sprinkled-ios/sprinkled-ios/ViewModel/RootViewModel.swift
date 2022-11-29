@@ -6,4 +6,5 @@ final class RootViewModel: ObservableObject {
 
 	@AppStorage("accessToken") var accessToken = ""
 	@AppStorage("refreshToken") var refreshToken = ""
+	@AppStorage("showOnboarding") var showOnboarding: Bool = false
 }
