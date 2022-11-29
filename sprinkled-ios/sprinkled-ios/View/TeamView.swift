@@ -31,65 +31,16 @@ struct TeamView: View {
 					.redactedShimmering()
 				}
 			} else {
-				ForEach(vm.teamMembers) { member in
-					ZStack {
-						RoundedRectangle(cornerRadius: 10)
-							.foregroundColor(.sprinkledGray)
-						HStack {
-							Text(member.username)
-							if (member.isAdmin) {
-								Image(systemName: "gearshape.2.fill")
-							}
-							Spacer()
-							if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
-								Menu {
-									Button {
-										vm.teamMemberToBeRemoved = member
-										vm.showRemoveTeamMemberModal = true
-									} label: {
-										Text("Remove member")
-									}
-									if (!member.isAdmin) {
-										Button {
-											Task {
-												await vm.giveAdminRights(userId: member.id)
-												await vm.fetchTeamMembers()
-											}
-										} label: {
-											Text("Give admin rights")
-										}
-									} else if (vm.teamMembers.filter({$0.isAdmin}).count > 1) {
-										Button {
-											Task {
-												await vm.removeAdminRights(userId: member.id)
-												await vm.fetchTeamMembers()
-											}
-										} label: {
-											Text("Remove admin rights")
-										}
-									}
-								} label: {
-									Image(systemName: "ellipsis.circle")
-										.resizable()
-										.scaledToFit()
-										.frame(width: 20)
-										.foregroundColor(.sprinkledGreen)
-								}
-							}
-						}
-						.padding(.horizontal)
-					}
-					.frame(height: 45)
-				}
+				teamMemberList()
 			}
 			Spacer()
 		}
 		.padding()
 		.navigationTitle(vm.teamName)
 		.toolbar {
-			if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
-				ToolbarItem {
-					Menu {
+			ToolbarItem {
+				Menu {
+					if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
 						NavigationLink(value: TeamMenuAction.addMember) {
 							Text("Add member")
 						}
@@ -107,13 +58,19 @@ struct TeamView: View {
 						} label: {
 							Text("Delete team")
 						}
-					} label: {
-						Image(systemName: "ellipsis.circle")
-							.resizable()
-							.scaledToFit()
-							.frame(width: 25, height: 25)
-							.foregroundColor(.sprinkledGreen)
 					}
+					Button {
+						vm.showLeaveTeamModal = true
+					} label: {
+						Text("Leave team")
+					}
+					.disabled(leaveTeamDisabled())
+				} label: {
+					Image(systemName: "ellipsis.circle")
+						.resizable()
+						.scaledToFit()
+						.frame(width: 25, height: 25)
+						.foregroundColor(.sprinkledGreen)
 				}
 			}
 		}
@@ -187,6 +144,36 @@ struct TeamView: View {
 			.buttonStyle(.borderedProminent)
 			.cornerRadius(10)
 		}
+		.modal(title: "Are you sure?", showModal: $vm.showLeaveTeamModal) {
+			Text("This action will remove you from this team.")
+				.font(.title3)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.center)
+		} buttons: {
+			Button {
+				Task {
+					if (await vm.removeTeamMember(memberId: vm.getAuthenticatedUserId()!)) {
+						self.presentationMode.wrappedValue.dismiss()
+					}
+				}
+			} label: {
+				Text("Leave")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.tint(.sprinkledRed)
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+			Button {
+				withAnimation(.easeOut(duration: 0.07)) {
+					vm.showLeaveTeamModal = false
+				}
+			} label: {
+				Text("Cancel")
+					.frame(maxWidth: .infinity, minHeight: 28)
+			}
+			.buttonStyle(.borderedProminent)
+			.cornerRadius(10)
+		}
 		.modal(title: "Are you sure?", showModal: $vm.showRemoveTeamMemberModal) {
 			Text(vm.teamMemberToBeRemoved != nil ? "This action will remove user \(vm.teamMemberToBeRemoved!.username) from the team." : "This action will remove the user from the team.")
 				.font(.title3)
@@ -223,6 +210,68 @@ struct TeamView: View {
 		.task {
 			await vm.fetchTeamMembers()
 		}
+	}
+	
+	func teamMemberList() -> some View {
+		ForEach(vm.teamMembers) { member in
+			ZStack {
+				RoundedRectangle(cornerRadius: 10)
+					.foregroundColor(.sprinkledGray)
+				HStack {
+					Text(member.username)
+					if (member.isAdmin) {
+						Image(systemName: "gearshape.2.fill")
+					}
+					Spacer()
+					if (shouldDisplayMemberMenu(memberId: member.id)) {
+						Menu {
+							Button {
+								vm.teamMemberToBeRemoved = member
+								vm.showRemoveTeamMemberModal = true
+							} label: {
+								Text("Remove member")
+							}
+							if (!member.isAdmin) {
+								Button {
+									Task {
+										await vm.giveAdminRights(userId: member.id)
+										await vm.fetchTeamMembers()
+									}
+								} label: {
+									Text("Give admin rights")
+								}
+							} else if (vm.teamMembers.filter({$0.isAdmin}).count > 1) {
+								Button {
+									Task {
+										await vm.removeAdminRights(userId: member.id)
+										await vm.fetchTeamMembers()
+									}
+								} label: {
+									Text("Remove admin rights")
+								}
+							}
+						} label: {
+							Image(systemName: "ellipsis.circle")
+								.resizable()
+								.scaledToFit()
+								.frame(width: 20)
+								.foregroundColor(.sprinkledGreen)
+						}
+					}
+				}
+				.padding(.horizontal)
+			}
+			.frame(height: 45)
+		}
+	}
+	
+	func shouldDisplayMemberMenu(memberId: Int) -> Bool {
+		return memberId != vm.getAuthenticatedUserId() && vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})
+	}
+	
+	func leaveTeamDisabled() -> Bool {
+		let admins = vm.teamMembers.filter({ $0.isAdmin })
+		return admins.count == 1 && admins[0].id == vm.getAuthenticatedUserId()
 	}
 }
 

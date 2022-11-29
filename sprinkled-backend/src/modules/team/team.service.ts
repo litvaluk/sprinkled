@@ -168,6 +168,24 @@ export class TeamService {
   }
 
   async removeTeamMember(id: number, userId: number) {
+    let team = await this.prisma.team.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        users: true,
+        admins: true,
+      },
+    });
+
+    if (team.users.length === 1) {
+      throw new ForbiddenException('Unable to remove last team member');
+    }
+
+    if (team.admins.length === 1 && team.admins.find((admin) => admin.id === userId)) {
+      throw new ForbiddenException('Unable to remove last admin');
+    }
+
     return await this.prisma.team.update({
       where: {
         id: id,

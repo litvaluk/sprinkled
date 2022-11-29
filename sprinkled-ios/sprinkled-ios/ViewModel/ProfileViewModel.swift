@@ -27,6 +27,7 @@ final class ProfileViewModel: ObservableObject {
 		self.tabBarState = tabBarState
 	}
 	
+	@MainActor
 	func logout() {
 		if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
 			Task {

@@ -12,6 +12,7 @@ final class TeamViewModel: ObservableObject {
 	@Published var teamMembers: [TeamMember] = []
 	@Published var showDeleteTeamModal = false
 	@Published var showRenameTeamModal = false
+	@Published var showLeaveTeamModal = false
 	@Published var showRemoveTeamMemberModal = false
 	@Published var teamMemberToBeRemoved: TeamMember?
 	@Published var renameTeamModalValue = ""
