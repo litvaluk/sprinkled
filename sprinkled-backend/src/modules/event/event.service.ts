@@ -188,6 +188,15 @@ export class EventService {
         },
       });
     } else if (reminder) {
+      await this.prisma.reminder.update({
+        where: {
+          id: reminder.id,
+        },
+        data: {
+          date: this._addDays(reminder.date, reminder.period),
+        },
+      });
+
       let lastEvent = await this.prisma.event.findFirst({
         where: {
           reminderId: reminder.id,
@@ -196,6 +205,7 @@ export class EventService {
           date: 'desc',
         },
       });
+
       await this.prisma.event.create({
         data: {
           actionId: lastEvent.actionId,

@@ -51,8 +51,8 @@ struct EditReminderView: View {
 				.cornerRadius(10)
 			}
 			
-			SprinkledListDatePicker(title: vm.repeating ? "Starting date" : "Date", selection: $vm.date, displayedComponents: .date)
-			SprinkledListDatePicker(title: vm.repeating ? "Starting time" : "Time", selection: $vm.date, displayedComponents: .hourAndMinute)
+			SprinkledListDatePicker(title: vm.repeating ? "Next date" : "Date", selection: $vm.date, displayedComponents: .date)
+			SprinkledListDatePicker(title: vm.repeating ? "Next time" : "Time", selection: $vm.date, displayedComponents: .hourAndMinute)
 			if (!vm.errorMessage.isEmpty) {
 				Text("\(vm.errorMessage)")
 					.multilineTextAlignment(.center)
