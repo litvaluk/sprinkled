@@ -1,8 +1,11 @@
+-- CreateExtension
+CREATE EXTENSION IF NOT EXISTS "citext";
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "username" CITEXT NOT NULL,
+    "email" CITEXT NOT NULL,
     "password" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
@@ -33,7 +36,7 @@ CREATE TABLE "push_tokens" (
 -- CreateTable
 CREATE TABLE "teams" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" CITEXT NOT NULL,
 
     CONSTRAINT "teams_pkey" PRIMARY KEY ("id")
 );
