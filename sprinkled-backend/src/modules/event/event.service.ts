@@ -32,8 +32,32 @@ export class EventService {
     });
   }
 
-  async findAll(): Promise<Event[]> {
+  async findAllForUser(userId: number): Promise<Event[]> {
     return await this.prisma.event.findMany({
+      where: {
+        OR: [
+          {
+            plantEntry: {
+              place: {
+                userId: userId,
+              },
+            },
+          },
+          {
+            plantEntry: {
+              place: {
+                team: {
+                  users: {
+                    some: {
+                      id: userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
       include: {
         action: true,
         user: {
@@ -53,10 +77,32 @@ export class EventService {
     });
   }
 
-  async findUncompleted(): Promise<Event[]> {
+  async findUncompletedForUser(userId: number): Promise<Event[]> {
     return await this.prisma.event.findMany({
       where: {
         completed: false,
+        OR: [
+          {
+            plantEntry: {
+              place: {
+                userId: userId,
+              },
+            },
+          },
+          {
+            plantEntry: {
+              place: {
+                team: {
+                  users: {
+                    some: {
+                      id: userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
       include: {
         action: true,
@@ -77,10 +123,32 @@ export class EventService {
     });
   }
 
-  async findCompleted(): Promise<Event[]> {
+  async findCompletedForUser(userId: number): Promise<Event[]> {
     return await this.prisma.event.findMany({
       where: {
         completed: true,
+        OR: [
+          {
+            plantEntry: {
+              place: {
+                userId: userId,
+              },
+            },
+          },
+          {
+            plantEntry: {
+              place: {
+                team: {
+                  users: {
+                    some: {
+                      id: userId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
       include: {
         action: true,

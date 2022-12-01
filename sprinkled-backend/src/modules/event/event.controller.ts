@@ -62,13 +62,13 @@ export class EventController {
   }
 
   @Get()
-  async getEvents(@Query('completed') completed?: string): Promise<Event[]> {
+  async getEvents(@UserId() userId: number, @Query('completed') completed?: string): Promise<Event[]> {
     if (completed === undefined) {
-      return await this.eventService.findAll();
+      return await this.eventService.findAllForUser(userId);
     } else if (completed === 'true') {
-      return await this.eventService.findCompleted();
+      return await this.eventService.findCompletedForUser(userId);
     } else if (completed === 'false') {
-      return await this.eventService.findUncompleted();
+      return await this.eventService.findUncompletedForUser(userId);
     } else {
       throw new BadRequestException('Invalid value for query parameter completed');
     }
