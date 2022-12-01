@@ -66,6 +66,18 @@ export class UserService {
   }
 
   async delete(userId: number) {
+    await this.prisma.device.updateMany({
+      where: {
+        loggedUserId: userId,
+      },
+      data: {
+        loggedUserId: null,
+        accessToken: '',
+        refreshToken: '',
+        tokensUpdatedAt: new Date(),
+      },
+    });
+    await this._updateOrDeleteTeams(userId);
     await this.prisma.user.delete({
       where: {
         id: userId,
@@ -73,7 +85,68 @@ export class UserService {
     });
   }
 
-  async updateTokens(deviceId: string, accessToken: string, refreshToken: string) {
+  private async _updateOrDeleteTeams(userId: number) {
+    let teams = await this.prisma.team.findMany({
+      where: {
+        users: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+      include: {
+        users: true,
+        admins: true,
+      },
+    });
+    for (const team of teams) {
+      if (team.users.length === 1) {
+        await this.prisma.team.delete({
+          where: {
+            id: team.id,
+          },
+        });
+      } else {
+        let updatedTeam = await this.prisma.team.update({
+          where: {
+            id: team.id,
+          },
+          data: {
+            users: {
+              disconnect: {
+                id: userId,
+              },
+            },
+            admins: {
+              disconnect: {
+                id: userId,
+              },
+            },
+          },
+          include: {
+            users: true,
+            admins: true,
+          },
+        });
+        if (updatedTeam.admins.length == 0) {
+          await this.prisma.team.update({
+            where: {
+              id: team.id,
+            },
+            data: {
+              admins: {
+                connect: {
+                  id: updatedTeam.users[0].id,
+                },
+              },
+            },
+          });
+        }
+      }
+    }
+  }
+
+  async updateTokens(userId: number, deviceId: string, accessToken: string, refreshToken: string) {
     const hashedAccessToken = await argon2.hash(accessToken);
     const hashedRefreshToken = await argon2.hash(refreshToken);
 
@@ -82,6 +155,7 @@ export class UserService {
         deviceId: deviceId,
       },
       data: {
+        loggedUserId: userId,
         accessToken: hashedAccessToken,
         refreshToken: hashedRefreshToken,
         tokensUpdatedAt: new Date(),
@@ -95,8 +169,10 @@ export class UserService {
         deviceId: deviceId,
       },
       data: {
+        loggedUserId: null,
         accessToken: '',
         refreshToken: '',
+        tokensUpdatedAt: new Date(),
       },
     });
   }

@@ -19,7 +19,7 @@ export class AuthService {
       const deviceId = await this.userService.addDeviceIfNeeded(createUserDto.deviceId, createdUser.id);
 
       const tokens = await this._generateTokens(createdUser.id, createdUser.username);
-      await this.userService.updateTokens(deviceId, tokens.accessToken, tokens.refreshToken);
+      await this.userService.updateTokens(createdUser.id, deviceId, tokens.accessToken, tokens.refreshToken);
 
       return {
         id: createdUser.id,
@@ -64,7 +64,7 @@ export class AuthService {
     const deviceId = await this.userService.addDeviceIfNeeded(loginDto.deviceId, user.id);
 
     const tokens = await this._generateTokens(user.id, user.username);
-    await this.userService.updateTokens(deviceId, tokens.accessToken, tokens.refreshToken);
+    await this.userService.updateTokens(user.id, deviceId, tokens.accessToken, tokens.refreshToken);
     return tokens;
   }
 
@@ -94,7 +94,7 @@ export class AuthService {
     }
 
     const tokens = await this._generateTokens(user.id, user.username);
-    await this.userService.updateTokens(device.deviceId, tokens.accessToken, tokens.refreshToken);
+    await this.userService.updateTokens(user.id, device.deviceId, tokens.accessToken, tokens.refreshToken);
     return tokens;
   }
 

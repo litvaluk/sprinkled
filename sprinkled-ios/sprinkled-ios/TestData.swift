@@ -231,7 +231,7 @@ struct TestData {
 	]
 
 	static let events = [
-		Event(id: 1, date: Date(), userId: 1, plantEntryId: 1, actionId: 1, user: users[0], action: actions[0], completed: true, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
+		Event(id: 1, date: Date(), userId: nil, plantEntryId: 1, actionId: 1, user: nil, action: actions[0], completed: true, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
 		Event(id: 2, date: Date(), userId: 2, plantEntryId: 1, actionId: 2, user: users[1], action: actions[1], completed: true, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
 		Event(id: 3, date: Date(timeIntervalSince1970: 1696327200), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: false, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1")),
 		Event(id: 3, date: Date(timeIntervalSince1970: 1696397200), userId: 1, plantEntryId: 1, actionId: 2, user: users[0], action: actions[2], completed: false, reminded: nil, reminderId: nil, plantEntry: Event.PlantEntryIdAndName(id: 1, name: "Plant entry 1"))

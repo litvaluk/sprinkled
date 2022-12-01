@@ -30,7 +30,7 @@ struct PictureView: View {
 								}))
 							if (!(pictureViewState.offsetDistance() > 0 || pictureViewState.scale > 1)) {
 								HStack(alignment: .top) {
-									Text("\(picture.user.username)")
+									Text("\(picture.user?.username ?? "Unknown user")")
 										.foregroundColor(.white)
 										.padding(.horizontal)
 										.padding(.vertical, 3)

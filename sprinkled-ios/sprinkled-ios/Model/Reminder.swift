@@ -6,7 +6,7 @@ struct Reminder: Codable, Identifiable, Hashable, Equatable, Comparable {
 	let period: Int
 	let actionId: Int
 	let plantEntryId: Int
-	let creatorId: Int
+	let creatorId: Int?
 	let action: Action
 	
 	static func < (lhs: Reminder, rhs: Reminder) -> Bool {

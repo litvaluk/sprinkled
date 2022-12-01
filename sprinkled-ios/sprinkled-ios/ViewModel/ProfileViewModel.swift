@@ -12,6 +12,8 @@ final class ProfileViewModel: ObservableObject {
 	@AppStorage("ReminderNotificationsEnabled") var reminderNotificationsEnabled = false
 	@AppStorage("EventNotificationsEnabled") var eventNotificationsEnabled = false
 	
+	@Published var showDeleteAccountModal = false
+	
 	private let errorPopupsState: ErrorPopupsState
 	private let tabBarState: TabBarState
 	
@@ -26,22 +28,46 @@ final class ProfileViewModel: ObservableObject {
 	
 	@MainActor
 	func logout() {
-		if let deviceId = UIDevice.current.identifierForVendor?.uuidString {
-			Task {
-				do {
-					try await api.logout(deviceId: deviceId)
-				} catch {
-					// nothing
-				}
-				accessToken = ""
-				refreshToken = ""
-				tabBarState.selection = 0
-			}
+		guard let deviceId = UIDevice.current.identifierForVendor?.uuidString else {
+			errorPopupsState.showGenericError = true
+			return
 		}
+		Task {
+			do {
+				try await api.logout(deviceId: deviceId)
+			} catch {
+				// nothing
+			}
+			accessToken = ""
+			refreshToken = ""
+			tabBarState.selection = 0
+		}
+	}
+	
+	@MainActor
+	func deleteAccount() async -> Bool {
+		guard let userId = getAuthenticatedUserId() else {
+			errorPopupsState.showGenericError = true
+			return false
+		}
+		do {
+			try await api.deleteAccount(userId: userId)
+		} catch {
+			errorPopupsState.showGenericError = true
+			return false
+		}
+		accessToken = ""
+		refreshToken = ""
+		tabBarState.selection = 0
+		return true
 	}
 	
 	func getAuthenticatedUser() -> String? {
 		return try? decode(jwt: accessToken).username
+	}
+	
+	func getAuthenticatedUserId() -> Int? {
+		return try? decode(jwt: self.accessToken).userId
 	}
 	
 	@MainActor

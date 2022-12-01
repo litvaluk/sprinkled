@@ -10,18 +10,19 @@ datasource db {
 }
 
 model User {
-  id           Int          @id @default(autoincrement())
-  username     String       @unique @db.Citext
-  email        String       @unique @db.Citext
-  password     String
-  teams        Team[]
-  pictures     Picture[]
-  places       Place[]
-  plantEntries PlantEntry[]
-  events       Event[]
-  reminders    Reminder[]
-  devices      Device[]
-  adminOf      Team[]       @relation("admins")
+  id            Int          @id @default(autoincrement())
+  username      String       @unique @db.Citext
+  email         String       @unique @db.Citext
+  password      String
+  teams         Team[]
+  pictures      Picture[]
+  places        Place[]
+  plantEntries  PlantEntry[]
+  events        Event[]
+  reminders     Reminder[]
+  devices       Device[]
+  loggedDevices Device[]     @relation("loggedDevices")
+  adminOf       Team[]       @relation("admins")
 
   @@map("users")
 }
@@ -36,6 +37,8 @@ model Device {
   eventNotificationsEnabled    Boolean     @default(false)
   pushTokens                   PushToken[]
   users                        User[]
+  loggedUser                   User?       @relation("loggedDevices", fields: [loggedUserId], references: [id])
+  loggedUserId                 Int?
 
   @@map("devices")
 }
@@ -62,9 +65,9 @@ model Team {
 model Place {
   id           Int          @id @default(autoincrement())
   name         String
-  team         Team?        @relation(fields: [teamId], references: [id])
+  team         Team?        @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId       Int?
-  user         User?        @relation(fields: [userId], references: [id])
+  user         User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int?
   plantEntries PlantEntry[]
 
@@ -75,8 +78,8 @@ model Picture {
   id           Int        @id @default(autoincrement())
   url          String
   createdAt    DateTime   @default(now())
-  user         User       @relation(fields: [userId], references: [id])
-  userId       Int
+  user         User?      @relation(fields: [userId], references: [id])
+  userId       Int?
   plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id], onDelete: Cascade)
   plantEntryId Int
 
@@ -87,8 +90,8 @@ model PlantEntry {
   id               Int        @id @default(autoincrement())
   name             String
   createdAt        DateTime   @default(now())
-  creator          User       @relation(fields: [creatorId], references: [id])
-  creatorId        Int
+  creator          User?      @relation(fields: [creatorId], references: [id])
+  creatorId        Int?
   place            Place      @relation(fields: [placeId], references: [id], onDelete: Cascade)
   placeId          Int
   plant            Plant      @relation(fields: [plantId], references: [id])
@@ -157,8 +160,8 @@ model Reminder {
   actionId     Int
   plantEntry   PlantEntry @relation(fields: [plantEntryId], references: [id], onDelete: Cascade)
   plantEntryId Int
-  creator      User       @relation(fields: [creatorId], references: [id])
-  creatorId    Int
+  creator      User?      @relation(fields: [creatorId], references: [id])
+  creatorId    Int?
   events       Event[]
 
   @@map("reminders")

@@ -20,6 +20,7 @@ CREATE TABLE "devices" (
     "tokensUpdatedAt" TIMESTAMP(3),
     "reminderNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
     "eventNotificationsEnabled" BOOLEAN NOT NULL DEFAULT false,
+    "loggedUserId" INTEGER,
 
     CONSTRAINT "devices_pkey" PRIMARY KEY ("id")
 );
@@ -56,7 +57,7 @@ CREATE TABLE "pictures" (
     "id" SERIAL NOT NULL,
     "url" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" INTEGER NOT NULL,
+    "userId" INTEGER,
     "plantEntryId" INTEGER NOT NULL,
 
     CONSTRAINT "pictures_pkey" PRIMARY KEY ("id")
@@ -67,7 +68,7 @@ CREATE TABLE "plant_entries" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "creatorId" INTEGER NOT NULL,
+    "creatorId" INTEGER,
     "placeId" INTEGER NOT NULL,
     "plantId" INTEGER NOT NULL,
     "headerPictureUrl" TEXT,
@@ -124,7 +125,7 @@ CREATE TABLE "reminders" (
     "period" INTEGER NOT NULL,
     "actionId" INTEGER NOT NULL,
     "plantEntryId" INTEGER NOT NULL,
-    "creatorId" INTEGER NOT NULL,
+    "creatorId" INTEGER,
 
     CONSTRAINT "reminders_pkey" PRIMARY KEY ("id")
 );
@@ -200,22 +201,25 @@ CREATE UNIQUE INDEX "_admins_AB_unique" ON "_admins"("A", "B");
 CREATE INDEX "_admins_B_index" ON "_admins"("B");
 
 -- AddForeignKey
+ALTER TABLE "devices" ADD CONSTRAINT "devices_loggedUserId_fkey" FOREIGN KEY ("loggedUserId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "push_tokens" ADD CONSTRAINT "push_tokens_deviceId_fkey" FOREIGN KEY ("deviceId") REFERENCES "devices"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "places" ADD CONSTRAINT "places_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "teams"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "places" ADD CONSTRAINT "places_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "teams"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "places" ADD CONSTRAINT "places_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "places" ADD CONSTRAINT "places_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "pictures" ADD CONSTRAINT "pictures_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pictures" ADD CONSTRAINT "pictures_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "pictures" ADD CONSTRAINT "pictures_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "plant_entries" ADD CONSTRAINT "plant_entries_placeId_fkey" FOREIGN KEY ("placeId") REFERENCES "places"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -242,7 +246,7 @@ ALTER TABLE "reminders" ADD CONSTRAINT "reminders_actionId_fkey" FOREIGN KEY ("a
 ALTER TABLE "reminders" ADD CONSTRAINT "reminders_plantEntryId_fkey" FOREIGN KEY ("plantEntryId") REFERENCES "plant_entries"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "reminders" ADD CONSTRAINT "reminders_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "reminder_blueprints" ADD CONSTRAINT "reminder_blueprints_actionId_fkey" FOREIGN KEY ("actionId") REFERENCES "actions"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -21,7 +21,7 @@ export class UserController {
     return this.userService.findOneSafe(id);
   }
 
-  @Delete('delete')
+  @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUser(@UserId() userId: number) {
     return this.userService.delete(userId);

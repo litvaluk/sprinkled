@@ -390,7 +390,7 @@ struct PlantEntryContent: View {
 							.padding(50)
 					} else {
 						ForEach(plantEntry.events.sorted().reversed()) { event in
-							PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user!.username)", action: event.action.type, date: event.date) {
+							PlantEntryListItem(title: "\(event.action.type)".capitalizedFirstLetter(), subtitle: "\(event.user?.username ?? "Unknown user")", action: event.action.type, date: event.date) {
 								NavigationLink(value: PlantEntryEventMenuAction.edit(plantEntry, event)) {
 									Text("Edit")
 									Image(systemName: "slider.horizontal.3")
