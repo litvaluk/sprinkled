@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { HttpRequestLoggerMiddleware } from '../middleware';
-import { ActionModule } from './action';
 import { AuthModule } from './auth';
 import { EventModule } from './event';
 import { NotificationModule } from './notification';
@@ -22,7 +21,6 @@ import { UserModule } from './user';
     PlaceModule,
     PictureModule,
     PlantEntryModule,
-    ActionModule,
     EventModule,
     ReminderModule,
     NotificationModule,
