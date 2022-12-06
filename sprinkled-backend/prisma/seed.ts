@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import plants from './plants.json';
 
 const prisma = new PrismaClient();
 
@@ -15,215 +16,74 @@ async function main() {
 }
 
 async function createPlants() {
-  // --------------------------------------- Zamioculcas zamifolia ----------------------------------------------
-  let plant = await prisma.plant.create({
-    data: {
-      latinName: 'Zamioculcas zamifolia',
-      commonName: 'ZZ Plant',
-      description:
-        'The ZZ plant is a popular houseplant that is easy to care for. It is a slow grower and can tolerate low light conditions.',
-      pictureUrl:
-        'https://www.thespruce.com/thmb/ps12JCvC8KyGmeQPIa9YWUCPo0M=/941x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/zz-zanzibar-gem-plant-profile-4796783-02-e80e5506091f4dcfb226c5a21718deb6.jpg',
-      minHeight: 0.4,
-      maxHeight: 0.7,
-      minSpread: 0.3,
-      maxSpread: 0.6,
-      minTemp: 12,
-      maxTemp: 30,
-      water: 'Moderate',
-      difficulty: 'Easy',
-      light: 'Strong light',
-    },
-  });
+  plants.forEach(async (plant) => {
+    let createdPlant = await prisma.plant.create({
+      data: plant,
+    });
 
-  let plan = await prisma.plan.create({
-    data: {
-      name: 'Just watering',
-      plantId: plant.id,
-    },
-  });
+    let period: number;
+    if (createdPlant.water === 'Low') {
+      period = 14;
+    } else if (createdPlant.water === 'Moderate') {
+      period = 8;
+    } else {
+      period = 5;
+    }
 
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
+    let plan = await prisma.plan.create({
+      data: {
+        name: 'Just watering',
+        plantId: createdPlant.id,
+      },
+    });
 
-  plan = await prisma.plan.create({
-    data: {
-      name: 'Complete care',
-      plantId: plant.id,
-    },
-  });
+    await prisma.reminderBlueprint.create({
+      data: {
+        actionId: 1,
+        planId: plan.id,
+        period: period,
+      },
+    });
 
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
+    plan = await prisma.plan.create({
+      data: {
+        name: 'Complete care',
+        plantId: createdPlant.id,
+      },
+    });
 
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 3,
-      planId: plan.id,
-      period: 90,
-    },
-  });
+    await prisma.reminderBlueprint.create({
+      data: {
+        actionId: 1,
+        planId: plan.id,
+        period: period,
+      },
+    });
 
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 4,
-      planId: plan.id,
-      period: 180,
-    },
-  });
+    await prisma.reminderBlueprint.create({
+      data: {
+        actionId: 3,
+        planId: plan.id,
+        period: 90,
+      },
+    });
 
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 5,
-      planId: plan.id,
-      period: 14,
-    },
-  });
-  // --------------------------------------- Ficus benjamina ----------------------------------------------------
-  plant = await prisma.plant.create({
-    data: {
-      latinName: 'Ficus benjamina',
-      commonName: 'Weeping Fig',
-      description: 'The weeping fig is a popular houseplant that is easy to care for.',
-      pictureUrl:
-        'https://www.thespruce.com/thmb/FkCnwYhQvE6wjH9THATcC6JcMiA=/941x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/grow-ficus-trees-1902757-1-80b8738caf8f42f28a24af94c3d4f314.jpg',
-      minHeight: 22.0,
-      maxHeight: 30.0,
-      minSpread: 10.0,
-      maxSpread: 15.0,
-      minTemp: 10,
-      maxTemp: 30,
-      water: 'Moderate',
-      difficulty: 'Medium',
-      light: 'Full sun',
-    },
-  });
+    await prisma.reminderBlueprint.create({
+      data: {
+        actionId: 4,
+        planId: plan.id,
+        period: 180,
+      },
+    });
 
-  plan = await prisma.plan.create({
-    data: {
-      name: 'Just watering',
-      plantId: plant.id,
-    },
+    await prisma.reminderBlueprint.create({
+      data: {
+        actionId: 5,
+        planId: plan.id,
+        period: 14,
+      },
+    });
   });
-
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
-  // --------------------------------------- Disocactus ackermannii -----------------------------------------------
-  plant = await prisma.plant.create({
-    data: {
-      latinName: 'Disocactus ackermannii',
-      commonName: 'Orchid Cactus',
-      description: 'The orchid cactus is a popular houseplant that is easy to care for.',
-      pictureUrl: 'https://i.pinimg.com/originals/6e/1b/7c/6e1b7ca6173870fb9f1ba4bbc7409aa7.jpg',
-      minHeight: 22.0,
-      maxHeight: 30.0,
-      minSpread: 10.0,
-      maxSpread: 15.0,
-      minTemp: 10,
-      maxTemp: 30,
-      water: 'Moderate',
-      difficulty: 'Easy',
-      light: 'Full sun',
-    },
-  });
-
-  plan = await prisma.plan.create({
-    data: {
-      name: 'Just watering',
-      plantId: plant.id,
-    },
-  });
-
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
-  // --------------------------------------- Dracaena marginata -------------------------------------------------
-  plant = await prisma.plant.create({
-    data: {
-      latinName: 'Dracaena marginata',
-      commonName: 'Madagascar dragon tree',
-      description: 'The Madagascar dragon tree is a popular houseplant that is easy to care for.',
-      pictureUrl: 'https://www.plantvine.com/plants/Dracaena-Marginata-Cane-2.jpg',
-      minHeight: 5.0,
-      maxHeight: 7.2,
-      minSpread: 2.5,
-      maxSpread: 3.2,
-      minTemp: 10,
-      maxTemp: 30,
-      water: 'Light',
-      difficulty: 'Hard',
-      light: 'Full sun',
-    },
-  });
-
-  plan = await prisma.plan.create({
-    data: {
-      name: 'Just watering',
-      plantId: plant.id,
-    },
-  });
-
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
-  // --------------------------------------- Fragaria x ananassa --------------------------------------------------
-  plant = await prisma.plant.create({
-    data: {
-      latinName: 'Fragaria x ananassa',
-      commonName: 'Garden strawberry ',
-      description:
-        'The garden strawberry is a widely grown hybrid species of the genus Fragaria, collectively known as the strawberries, which are cultivated worldwide for their fruit.',
-      pictureUrl: 'https://www.jahodarnabrozany.cz/user/articles/images/vysadba_jahod.jpg',
-      minHeight: 0.5,
-      maxHeight: 1.5,
-      minSpread: 2.0,
-      maxSpread: 3.0,
-      minTemp: 14,
-      maxTemp: 25,
-      water: 'Moderate',
-      difficulty: 'Medium',
-      light: 'Full sun',
-    },
-  });
-
-  plan = await prisma.plan.create({
-    data: {
-      name: 'Just watering',
-      plantId: plant.id,
-    },
-  });
-
-  await prisma.reminderBlueprint.create({
-    data: {
-      actionId: 1,
-      planId: plan.id,
-      period: 7,
-    },
-  });
-  // ------------------------------------------------------------------------------------------------------------
 }
 
 async function createUsers() {
