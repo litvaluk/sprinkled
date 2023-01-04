@@ -1,0 +1,21 @@
+describe('Register', () => {
+    it('should register a new user', () => {
+      const dto: CreateUserDto = {
+        username: 'newUser',
+        email: 'newUser@gmail.com',
+        password: 'passw0rd',
+        deviceId: '06ab9f3b-302e-4cf3-93f1-8549e242caf4',
+      };
+      return pactum
+        .spec()
+        .post('http://localhost:3001/auth/register')
+        .withJson(dto)
+        .expectStatus(201)
+        .expectJsonMatch({
+          id: 3,
+          username: 'newUser',
+          accessToken: regex(JWT_TOKEN_REGEX),
+          refreshToken: regex(JWT_TOKEN_REGEX),
+        });
+    });
+});

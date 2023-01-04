@@ -1,0 +1,14 @@
+@Cron('0 * * * * *') // every minute
+async handleReminderNotifications() {
+  for (let event of await this._getEventsToRemind()) {
+    let usersLinkedToEvent = await this._getUsersLinkedToEvent(event.id);
+    await this._sendNotificationToUsers(
+      usersLinkedToEvent,
+      'Sprinkled',
+      'It is time to ' + event.action.type.toLowerCase()
+      + ' the ' + event.plantEntry.name + '.',
+      NotificationType.REMINDER,
+    );
+    await this._markEventAsReminded(event.id);
+  }
+}

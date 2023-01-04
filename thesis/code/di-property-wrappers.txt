@@ -1,0 +1,16 @@
+@propertyWrapper struct Inject<T> {
+  var wrappedValue: T
+	
+  init() {
+    self.wrappedValue = DependencyInjector.resolve()
+  }
+}
+
+@propertyWrapper struct Provider<T> {
+  var wrappedValue: T
+	
+  init(wrappedValue: T) {
+    self.wrappedValue = wrappedValue
+    DependencyInjector.register(dependency: wrappedValue)
+  }
+}
