@@ -7,6 +7,9 @@ final class MyPlantsViewModel: ObservableObject {
 	@Published var teamSummaries: [TeamSummary] = []
 	@Published var loading = false
 	@Published var navigationPath = NavigationPath()
+	@Published var createNewTeamLinkActive = false
+	@Published var createNewPlaceLinkActive = false
+	@Published var addPlantEntryLinkActive = false
 	
 	private let errorPopupsState: ErrorPopupsState
 	

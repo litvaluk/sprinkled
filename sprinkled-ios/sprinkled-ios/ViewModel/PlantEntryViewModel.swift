@@ -17,6 +17,8 @@ final class PlantEntryViewModel: ObservableObject {
 	@Published var showRenamePlantEntryModal = false
 	@Published var renamePlantEntryModalValue = ""
 	@Published var yOffset: CGFloat = 0
+	@Published var addEventLinkActive = false
+	@Published var addReminderLinkActive = false
 	
 	let plantEntryId: Int
 	

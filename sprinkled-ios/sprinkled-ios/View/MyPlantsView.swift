@@ -2,9 +2,7 @@ import SwiftUI
 import Kingfisher
 
 enum MyPlantsMenuAction: Hashable, Equatable {
-	case createNewTeam
 	case createNewPlace(Int)
-	case addPlantEntry
 }
 
 struct MyPlantsView: View {
@@ -33,15 +31,34 @@ struct MyPlantsView: View {
 			.toolbar {
 				ToolbarItem {
 					Menu {
-						NavigationLink(value: MyPlantsMenuAction.createNewTeam) {
+						Button {
+							viewModel.createNewTeamLinkActive = true
+						} label: {
 							Text("Create new team")
 						}
-						NavigationLink(value: MyPlantsMenuAction.createNewPlace(0)) {
+						.navigationDestination(isPresented: $viewModel.createNewTeamLinkActive) {
+							CreateTeamView(vm: CreateTeamViewModel(errorPopupsState: errorPopupsState))
+						}
+						
+						Button {
+							viewModel.createNewPlaceLinkActive = true
+						} label: {
 							Text("Create new place")
 						}
-						NavigationLink(value: MyPlantsMenuAction.addPlantEntry) {
+						.navigationDestination(isPresented: $viewModel.createNewPlaceLinkActive) {
+							CreatePlaceView(vm: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: 0, errorPopupsState: errorPopupsState))
+						}
+						
+						Button {
+							viewModel.addPlantEntryLinkActive = true
+						} label: {
 							Text("Add plant entry")
 						}
+						.navigationDestination(isPresented: $viewModel.addPlantEntryLinkActive) {
+							SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: $viewModel.navigationPath))
+						}
+						
+						
 					} label: {
 						Image(systemName: "plus.app.fill")
 							.resizable()
@@ -56,16 +73,6 @@ struct MyPlantsView: View {
 			}
 			.navigationDestination(for: TeamSummary.self) { team in
 				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name, errorPopupsState: errorPopupsState))
-			}
-			.navigationDestination(for: MyPlantsMenuAction.self) { action in
-				switch (action) {
-				case .createNewTeam:
-					CreateTeamView(vm: CreateTeamViewModel(errorPopupsState: errorPopupsState))
-				case .createNewPlace(let teamId):
-					CreatePlaceView(vm: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
-				case .addPlantEntry:
-					SearchView(viewModel: SearchViewModel(errorPopupsState: errorPopupsState, navigationPathBinding: $viewModel.navigationPath))
-				}
 			}
 			.onChange(of: viewModel.navigationPath) { newNavigationPath in
 				if (newNavigationPath.isEmpty) {

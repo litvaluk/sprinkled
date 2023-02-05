@@ -17,6 +17,7 @@ final class TeamViewModel: ObservableObject {
 	@Published var teamMemberToBeRemoved: TeamMember?
 	@Published var renameTeamModalValue = ""
 	@Published var loading = false
+	@Published var addMemberLinkActive = false
 	
 	private let errorPopupsState: ErrorPopupsState
 	

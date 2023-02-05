@@ -2,11 +2,6 @@ import SwiftUI
 import Kingfisher
 import Shimmer
 
-enum PlantEntryMenuAction: Hashable, Equatable {
-	case addEvent(PlantEntry)
-	case addReminder(PlantEntry)
-}
-
 enum PlantEntryReminderMenuAction: Hashable, Equatable {
 	case edit(PlantEntry, Reminder)
 }
@@ -310,12 +305,24 @@ struct PlantEntryHeaderView: View {
 			Spacer()
 			Menu {
 				if let plantEntry = vm.plantEntry {
-					NavigationLink(value: PlantEntryMenuAction.addEvent(plantEntry)) {
+					Button {
+						vm.addEventLinkActive = true
+					} label: {
 						Text("Add event")
 					}
-					NavigationLink(value: PlantEntryMenuAction.addReminder(plantEntry)) {
+					.navigationDestination(isPresented: $vm.addEventLinkActive) {
+						AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
+					}
+					
+					Button {
+						vm.addReminderLinkActive = true
+					} label: {
 						Text("Add reminder")
 					}
+					.navigationDestination(isPresented: $vm.addReminderLinkActive) {
+						AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
+					}
+					
 					Button {
 						vm.showImagePickerChoiceSheet = true
 					} label: {
@@ -335,14 +342,6 @@ struct PlantEntryHeaderView: View {
 				}
 			}
 			.disabled(vm.plantEntry == nil)
-			.navigationDestination(for: PlantEntryMenuAction.self) { action in
-				switch (action) {
-				case PlantEntryMenuAction.addEvent(let plantEntry):
-					AddEventView(vm: AddEventViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
-				case PlantEntryMenuAction.addReminder(let plantEntry):
-					AddReminderView(vm: AddReminderViewModel(plantEntryId: plantEntry.id, plantEntryName: plantEntry.name, errorPopupsState: errorPopupsState))
-				}
-			}
 		}
 		.padding(.horizontal)
 	}

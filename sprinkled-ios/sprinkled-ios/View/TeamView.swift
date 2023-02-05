@@ -41,8 +41,13 @@ struct TeamView: View {
 			ToolbarItem {
 				Menu {
 					if (vm.teamMembers.contains(where: {$0.id == vm.getAuthenticatedUserId() && $0.isAdmin})) {
-						NavigationLink(value: TeamMenuAction.addMember) {
+						Button {
+							vm.addMemberLinkActive = true
+						} label: {
 							Text("Add member")
+						}
+						.navigationDestination(isPresented: $vm.addMemberLinkActive) {
+							AddMemberView(vm: AddMemberViewModel(teamId: vm.teamId, teamName: vm.teamName, teamMemberIds: vm.teamMembers.map{$0.id}, errorPopupsState: errorPopupsState))
 						}
 						Button {
 							withAnimation(.easeIn(duration: 0.07)) {
@@ -72,12 +77,6 @@ struct TeamView: View {
 						.frame(width: 25, height: 25)
 						.foregroundColor(.sprinkledGreen)
 				}
-			}
-		}
-		.navigationDestination(for: TeamMenuAction.self) { action in
-			switch(action) {
-			case .addMember:
-				AddMemberView(vm: AddMemberViewModel(teamId: vm.teamId, teamName: vm.teamName, teamMemberIds: vm.teamMembers.map{$0.id}, errorPopupsState: errorPopupsState))
 			}
 		}
 		.modal(title: "Are you sure?", showModal: $vm.showDeleteTeamModal) {
