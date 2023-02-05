@@ -50,7 +50,9 @@ struct ProfileView: View {
 			Button {
 				Task {
 					if (await vm.deleteAccount()) {
-						self.presentationMode.wrappedValue.dismiss()
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+							self.presentationMode.wrappedValue.dismiss()
+						}
 					}
 				}
 			} label: {

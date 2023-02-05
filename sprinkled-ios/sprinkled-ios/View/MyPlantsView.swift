@@ -74,6 +74,12 @@ struct MyPlantsView: View {
 			.navigationDestination(for: TeamSummary.self) { team in
 				TeamView(vm: TeamViewModel(teamId: team.id, teamName: team.name, errorPopupsState: errorPopupsState))
 			}
+			.navigationDestination(for: MyPlantsMenuAction.self) { action in
+				switch (action) {
+				case .createNewPlace(let teamId):
+					CreatePlaceView(vm: CreatePlaceViewModel(teamSummaries: viewModel.teamSummaries, teamSelection: teamId, errorPopupsState: errorPopupsState))
+				}
+			}
 			.onChange(of: viewModel.navigationPath) { newNavigationPath in
 				if (newNavigationPath.isEmpty) {
 					Task {

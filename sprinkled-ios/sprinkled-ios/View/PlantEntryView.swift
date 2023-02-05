@@ -82,7 +82,9 @@ struct PlantEntryView: View {
 			Button {
 				Task {
 					if (await vm.deletePlantEntry()) {
-						self.presentationMode.wrappedValue.dismiss()
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+							self.presentationMode.wrappedValue.dismiss()
+						}
 					}
 				}
 			} label: {

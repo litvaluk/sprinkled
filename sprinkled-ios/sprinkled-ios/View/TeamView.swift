@@ -88,7 +88,9 @@ struct TeamView: View {
 			Button {
 				Task {
 					if (await vm.deleteTeam()) {
-						self.presentationMode.wrappedValue.dismiss()
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+							self.presentationMode.wrappedValue.dismiss()
+						}
 					}
 				}
 			} label: {
