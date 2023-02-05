@@ -49,6 +49,7 @@ struct PlantDetailView: View {
 		.ignoresSafeArea(.all, edges: [.top])
 		.fullScreenCover(isPresented: $vm.addPlantEntryPresented) {
 			AddPlantEntryView(vm: AddPlantEntryViewModel(plant: vm.plant, errorPopupsState: errorPopupsState, setupPlanPresented: $vm.setupPlanPresented, lastCreatedPlantEntry: $vm.lastCreatedPlantEntry))
+				.onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
 				.ignoresSafeArea(.keyboard, edges: .bottom)
 		}
 		.fullScreenCover(isPresented: $vm.setupPlanPresented) {

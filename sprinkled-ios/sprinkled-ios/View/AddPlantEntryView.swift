@@ -38,6 +38,7 @@ struct AddPlantEntryView: View {
 									if (!vm.imagePicked) {
 										Text("Choose/take\na photo")
 											.multilineTextAlignment(.center)
+											.foregroundColor(.black)
 									}
 								}
 							if (!vm.imagePicked) {
@@ -45,6 +46,7 @@ struct AddPlantEntryView: View {
 									.resizable()
 									.frame(width: 30, height: 30)
 									.padding(10)
+									.foregroundColor(.black)
 							}
 						}
 						.onChange(of: vm.image) { _ in
@@ -54,7 +56,7 @@ struct AddPlantEntryView: View {
 						.aspectRatio(1, contentMode: .fit)
 						.padding(.horizontal, 60)
 					}
-					.tint(.black)
+					.disabled(vm.isKeyboardPresented)
 					Text(vm.plant.commonName)
 						.foregroundColor(.primary)
 						.font(.title)
@@ -135,6 +137,9 @@ struct AddPlantEntryView: View {
 				}
 				.task {
 					await vm.fetchTeamSummaries()
+				}
+				.onReceive(keyboardPublisher) { value in
+					vm.isKeyboardPresented = value
 				}
 			}
 			.frame(width: gr.size.width)

@@ -28,6 +28,7 @@
 		8F24E76828EEF5AF008D5AEE /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76728EEF5AF008D5AEE /* AuthViewModel.swift */; };
 		8F24E76A28EEF664008D5AEE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F24E76928EEF664008D5AEE /* Extensions.swift */; };
 		8F2FBE18290176CD00614EB4 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2FBE17290176CD00614EB4 /* SearchViewModelTests.swift */; };
+		8F55CE1B298FC85E00F6B93C /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 8F55CE1A298FC85E00F6B93C /* Sentry */; };
 		8F66E1BD28FD9D950071C879 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F66E1BC28FD9D950071C879 /* GoogleService-Info-dev.plist */; };
 		8F69375C291FF3D30061A93E /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69375B291FF3D30061A93E /* EditEventView.swift */; };
 		8F69375E291FF3EF0061A93E /* EditReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69375D291FF3EF0061A93E /* EditReminderView.swift */; };
@@ -203,6 +204,7 @@
 				8F6B23E028F8268F0079F0FC /* Kingfisher in Frameworks */,
 				8FB43FF0290EBF36009202F4 /* Collections in Frameworks */,
 				8F693768292129AC0061A93E /* FirebaseStorage in Frameworks */,
+				8F55CE1B298FC85E00F6B93C /* Sentry in Frameworks */,
 				8FA3C83F28F1992E00F1D070 /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +225,7 @@
 				8F24E74728EECB86008D5AEE /* sprinkled-ios */,
 				8F2FBE16290176CD00614EB4 /* sprinkled-ios-tests */,
 				8F24E74628EECB86008D5AEE /* Products */,
+				8F55CE19298FC85E00F6B93C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -335,6 +338,13 @@
 			path = "sprinkled-ios-tests";
 			sourceTree = "<group>";
 		};
+		8F55CE19298FC85E00F6B93C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8F6937632920F9480061A93E /* States */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +428,7 @@
 				8FB43FEF290EBF36009202F4 /* Collections */,
 				8F693767292129AC0061A93E /* FirebaseStorage */,
 				8F69376C29224E5F0061A93E /* PopupView */,
+				8F55CE1A298FC85E00F6B93C /* Sentry */,
 			);
 			productName = "sprinkled-ios";
 			productReference = 8F24E74528EECB86008D5AEE /* sprinkled-ios.app */;
@@ -476,6 +487,7 @@
 				8FB43FEE290EBF36009202F4 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				8F693766292129AB0061A93E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8F69376B29224E5E0061A93E /* XCRemoteSwiftPackageReference "PopupView" */,
+				8F55CE16298F987F00F6B93C /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = 8F24E74628EECB86008D5AEE /* Products */;
 			projectDirPath = "";
@@ -874,6 +886,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8F55CE16298F987F00F6B93C /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		8F693766292129AB0061A93E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -925,6 +945,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8F55CE1A298FC85E00F6B93C /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F55CE16298F987F00F6B93C /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
 		8F693767292129AC0061A93E /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8F693766292129AB0061A93E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

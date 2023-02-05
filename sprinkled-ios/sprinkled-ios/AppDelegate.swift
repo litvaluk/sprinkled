@@ -1,5 +1,6 @@
 import UIKit
 import FirebaseCore
+import Sentry
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -27,6 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		@Provider var api = API() as APIProtocol
 		@Provider var notificationManager = NotificationManager() as NotificationManagerProtocol
 		@Provider var storageManager = StorageManager() as StorageManagerProtocol
+		
+		SentrySDK.start { options in
+			options.dsn = "<SENTRY_DSN>"
+			options.attachScreenshot = true
+			options.tracesSampleRate = 1.0
+		}
+		
 		return true
 	}
 }

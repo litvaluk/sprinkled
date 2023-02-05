@@ -4,7 +4,7 @@ import SwiftUI
 final class AuthViewModel: ObservableObject {
 	@Inject private var api: APIProtocol
 	
-	@Published var isSignInViewDisplayed = true
+	@Published var isSignInViewDisplayed = false
 	@Published var isProcessing = false
 	@Published var errorMessage = ""
 	@Published var signInUsername = ""

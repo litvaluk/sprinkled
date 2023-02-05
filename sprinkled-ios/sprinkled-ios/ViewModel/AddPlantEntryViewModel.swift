@@ -16,6 +16,7 @@ final class AddPlantEntryViewModel: ObservableObject {
 	@Published var imagePicked = false
 	@Published var isProcessing = false
 	@Published var errorMessage = ""
+	@Published var isKeyboardPresented = false
 	
 	let plant: Plant
 	var setupPlanPresented: Binding<Bool>
