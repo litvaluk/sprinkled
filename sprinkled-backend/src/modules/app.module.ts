@@ -1,5 +1,7 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { HttpException, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SentryInterceptor, SentryModule } from '@ntegral/nestjs-sentry';
 import { HttpRequestLoggerMiddleware } from '../middleware';
 import { AuthModule } from './auth';
 import { EventModule } from './event';
@@ -25,6 +27,26 @@ import { UserModule } from './user';
     ReminderModule,
     NotificationModule,
     ScheduleModule.forRoot(),
+    SentryModule.forRoot({
+      dsn: process.env.SENTRY_DSN,
+      environment: process.env.SENTRY_ENV,
+      debug: false,
+      tracesSampleRate: 1.0,
+    }),
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useFactory: () =>
+        new SentryInterceptor({
+          filters: [
+            {
+              type: HttpException,
+              filter: (exception: HttpException) => 500 > exception.getStatus(), // Only report 500 errors
+            },
+          ],
+        }),
+    },
   ],
 })
 export class AppModule implements NestModule {
